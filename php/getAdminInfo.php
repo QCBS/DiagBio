@@ -1,4 +1,6 @@
 <?php
+	include '/misc/dbaminfo.php';
+
 	$path = $_SERVER['DOCUMENT_ROOT'];
 	chdir($path);
 	define('DRUPAL_ROOT', getcwd());
@@ -25,7 +27,7 @@
 	$parties_prenantes = field_get_items('profile2', $profile['administration'], 'field_parties_prenantes');
 
 	// Connect to the Database
-	$con = mysql_connect('DATABASE COMMECTION INFORMATION REMOVED') or die('Could Not Connect To The Database.');
+	$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
 
 	mysql_select_db('qcbscartographie', $con);
 

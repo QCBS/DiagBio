@@ -1,6 +1,7 @@
 <?php
+include '/misc/dbaminfo.php';
 	// Connect to the Database
-	$con = mysql_connect('"DATABASE CONNECTION INFORMATION REMOVED!!"') or die('Could Not Connect To The Database.');
+	$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
 
 	mysql_select_db('qcbscartographie', $con);
 

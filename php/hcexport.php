@@ -1,4 +1,6 @@
 <?php
+include '/misc/dbaminfo.php';
+
 $SVGBF=$_POST['chartBF'];
 $SVGBS=$_POST['chartBS'];
 $SVGSF=$_POST['chartSF'];

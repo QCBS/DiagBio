@@ -104,21 +104,21 @@ function getRole($data){
 						<h3>Objectifs de l'outil:</h3>
 						<ol>
 							<li>Aider les organisations à mieux comprendre leurs relations à la BSE.</li>
-							<li>Guider la prise de décision stratégique interne.</li>
+							<li>Guider la prise de décisions stratégiques interne.</li>
 							<li>Identifier les risques et opportunités.</li>
 							<li>Assister les organisations dans leurs communications avec leurs parties prenantes a l’externes.</li>
 						</ol>
 
 						<h3>Organisation de l'outil diagnostic:</h3>
 						<ul>
-							<li>Définir l'objectif et la portée du diagnostic.</li>
-							<li>Établir le portrait du système.</li>
+							<li>Definir l'objectif et la portee du diagnostic.</li>
+							<li>Eatblir le portrait du systeme.</li>
 							<li>Identifier les interdendances aux BSE.</li>
-							<li>Déterminer les interdépendances principales de l'organisation avec la B. et les SE.</li>
-							<li>Définir une stratégie interne et externe de l'organisation au regard de son interdépendance aux BSE</li>
-							<li>Elaborer un plan de gestion de la B. et des SE.</li>
+							<li>Determiner les interdependances principales de l'organisation aux BSE.</li>
+							<li>Definir une strategie interne et externe de l'organisation au regard de son interdependance aux BSE.</li>
+							<li>Elaborer un plan de gestion des BSE.</li>
 							<li>Suivi des indicateurs.</li>
-							<li>Elaborer un plan de gestion de la B. et des SE.</li>
+							<li>Revision du processus.</li>
 						</ul>
 
 						<h3>Rapports:</h3>
@@ -137,26 +137,26 @@ function getRole($data){
 						<div style="float: left; width: 400px;">
 							<h3>Organisation de l'outil diagnostic:</h3>
 							<ul>
-								<li>La B. et les SE ont une influence sur les activités de l'entreprise (intrant, force externe affectant la productivité)</li>
-								<li>La B&SE donne lieu à des transactions monétaires associées aux dépendances (chiffre d'affaires / ventes, dépenses)</li>
+								<li>La B&SE a une influence sur les activités de l'entreprise  (intrant, force externe affectant la productivité)</li>
+								<li>La B&SE donne lieu a des transactions monétaires associées aux dépendances (chiffre d'affaires / ventes, dépenses)</li>
 								<li>Impact de l'organisation sur la disponibilité du SE (quantité, qualité)</li>
 								<li>Impact de l'organisation sur la capacité d'autres agents à bénéficier du SE (quantité, qualité)</li>
 								<li>Impact sur la biodiversité liés aux interactions de l'organisation avec le SE (continuités écologiques, habitats, espèces - dont diversité génétique) </li>
-								<li>Transactions monétaires associées aux impacts</li>
+								<li>Transactions monétaires associees aux impacts</li>
 							</ul>
 						</div>
 						<div style="float: left; width: 400px;">
 							<h3>Organisation de l'outil diagnostic:</h3>
 							<ul>
-								<li>Influence les fonctions prioritaires organisations</li>
-								<li>Influence les fonctions secondaires de l'organisation</li>
-								<li>Existence de couts et/ou transactions monétaires pour bénéficier de ce SE</li>
-								<li>Ce SE apporte-t-il un bénéfice et/ou une transaction monétaire (chiffre affaire)</li>
+								<li>Influence fonctions prioritaires organisations</li>
+								<li>Influence fonctions secondaires de l'organisation</li>
+								<li>Existance de couts et/ou transactions monetaires pour beneficier de ce SE</li>
+								<li>Ce SE apporte un benefice et/ou une transaction monetaire (chiffre affaire)</li>
 								<li>Impact sur un SE qui affecte l'organisation</li>
 								<li>Impact sur un SE qui affecte les autres agents</li>
 								<li>Interactions positives de l'organisation avec le SE </li>
-								<li>interactions négatives de l'organisation avec le SE</li>
-								<li>Existence de paiement de compensation</li>
+								<li>interactions negatives de l'organisation avec le SE </li>
+								<li>Existance de paiement de compensation</li>
 							</ul>
 						</div>
 						<br style="clear: left;" />
@@ -287,6 +287,39 @@ function getRole($data){
 				<div id="tab7">
 					<h3>Choisissez une de ces classifications</h3>
 					<!--10 lists of selectable for differents classification lists-->
+					
+					
+						<?php  
+										
+						$count=1;
+						while($count <= 10)
+						{
+									
+							echo '<div id="list'.$count.'">';
+							echo '<ol id="selectable'.$count.'">';
+						
+							
+							$query = "SELECT * FROM classification WHERE se_id = '$count'";
+							$results = mysql_query($query) or die('Error Fetching List From Database.');
+
+							while ($row = mysql_fetch_assoc($results)) { 
+								?>
+								<li class="ui-state-default" title="choisissez une de ces classifications" id=<?php echo "\"" . $row['c_id'] . "\""; ?>><?php echo $row['c_name'];?></li>
+								<?php
+						}
+							?>
+						</ol>
+					</div>
+					
+					
+					<?php 
+									$count++;
+								}
+					?>					
+					
+					
+					
+					<!--
 					<div id="list1">
 						<ol id="selectable1">
 							<?php
@@ -443,6 +476,7 @@ function getRole($data){
 							?>
 						</ol>
 					</div>
+					-->
 					<div class="centreBTN1">
 						<button type="button" id="C_BTN_BACK">Précédent</button> <!--Go back to tab 2-->
 						<button type="button" id="C_BTN_NEXT">Suivant</button> <!--Go to tab 4-->

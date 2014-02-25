@@ -189,7 +189,7 @@ function getRole($data){
 							// Temporary Data -IGNORE
 							$id = $_GET['reportid']; // Making Sure The URL Links in The E-mails Were Properly Formated.
 							echo $id;
-							$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
+							$con = mysql_connect("DATABASE CONNECTION INFORMATION REMOVED!!") or die('Could Not Connect To The Database.');
 							mysql_select_db('qcbscartographie', $con);
 							mysql_query("SET NAMES 'utf8");
 							mysql_query("SET CHARACTER SET 'utf8'");
@@ -287,6 +287,45 @@ function getRole($data){
 				<div id="tab7">
 					<h3>Choisissez une de ces classifications</h3>
 					<!--10 lists of selectable for differents classification lists-->
+					
+					
+					
+					
+					<!--
+					
+					<?php  
+										
+						$count=1;
+						while($count <= 10)
+						{
+									
+							echo '<div id="list'.$count.'">';
+							echo '<ol id="selectable'.$count.'">';
+						
+							
+							$query = "SELECT * FROM classification WHERE se_id = ($count)";
+							$results = mysql_query($query) or die('Error Fetching List From Database.');
+
+							while ($row = mysql_fetch_assoc($results)) { 
+								?>
+								<li class="ui-state-default" title="choisissez une de ces classifications" id=<?php echo "\"" . $row['c_id'] . "\""; ?>><?php echo $row['c_name'];?></li>
+								<?php
+						}
+							?>
+						</ol>
+					</div>
+					
+					
+					<?php 
+									$count++;
+								}
+					?>
+					
+					
+					-->
+					
+					
+					
 					<div id="list1">
 						<ol id="selectable1">
 							<?php
@@ -297,6 +336,7 @@ function getRole($data){
 								?>
 								<li class="ui-state-default" title="choisissez une de ces classifications" id=<?php echo "\"" . $row['c_id'] . "\""; ?>><?php echo $row['c_name'];?></li>
 								<?php
+
 							}
 							?>
 						</ol>
@@ -443,6 +483,7 @@ function getRole($data){
 							?>
 						</ol>
 					</div>
+					
 					<div class="centreBTN1">
 						<button type="button" id="C_BTN_BACK">Précédent</button> <!--Go back to tab 2-->
 						<button type="button" id="C_BTN_NEXT">Suivant</button> <!--Go to tab 4-->

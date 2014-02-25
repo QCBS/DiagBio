@@ -15,23 +15,79 @@ function getUrlVars() {
         	
 (function ($) {
         		$(document).ready(function() {
+
+        			$('.infoDivs').hide();  //hide all the information blocks on the ecological services
+
+        			$(".ui-state-default").hover(function(){  //display the info of the currently selected ecological service and hide all other info divs
+							var id=$(this).attr('id');
+							$('[id^=infoDiv]').hide();
+							$('#infoDiv'+id).show();
+							
+						})
+
+        			$('.infoClassDivs').hide();  //hide all the information blocks on the classification of ecological services
+
+
+        			$('.classExampleDivs').hide();  //hide all the examples of the classifications
+
+        			$(".ui-state-default").hover(function(){  //display the info of the currently selected classification and hide all other info divs
+							$(this).addClass('ui-selecting');
+							var id=$(this).attr('id');
+
+							$('[id^=classExampleDiv]').hide();
+							$('#classExampleDiv'+id).show();
+
+							$('[id^=infoClassDiv]').hide();
+							$('#infoClassDiv'+id).show();
+
+						})
+
+
+					$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
+							var id=$(this).attr('id');
+							$('#classExampleDiv'+id).hide();
+							$('#infoClassDiv'+id).hide();
+					})
+					
+
+					$('.ui-state-default').mouseleave(function(){  //hide the current ecological service descriptions
+							var id=$(this).attr('id');
+							$('#infoDiv'+id).hide();
+							$(this).removeClass('ui-selecting');
+					})
+
+
+					//so this where you put the tabs and it gets set to a number so far tere's 1-4, easy enough
+
 					var userRole = jQuery('#userRole').val();
         			if ( userRole == "Unauthenticated" ){
-        				var elem = document.getElementById('tab5');
+        				var elem = document.getElementById('tab5');  //1
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('userview');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab6');
+        				var elem = document.getElementById('tab6');  //2
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('servicetab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab7');
+        				var elem = document.getElementById('tab7');  //3
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('classificationtab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab8');
+        				var elem = document.getElementById('tab8');  //4
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('entreprisetab');
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab9'); //5
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('naturetab');
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab10'); //6
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('evaltab');
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab11'); //7
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('moneytab');
         				elem.parentNode.removeChild(elem);
 						$('#tabs').tabs(); // Generate Tabs With The Default Settings.
 					}
@@ -55,11 +111,11 @@ function getUrlVars() {
 						var elem = document.getElementById('login');
 						elem.parentNode.removeChild(elem);
 						if ( userRole == "Administration" ){
-							var disableTabs = [2, 3, 4];
+							var disableTabs = [2, 3, 4,5,6,7];
 							var compensateTab = 1;
 						}
 						else {
-							var disableTabs = [1, 2, 3];
+							var disableTabs = [1, 2, 3,4,5,6];
 							var compensateTab = 0;
 						}
 						$('#tabs').tabs({disabled: disableTabs}); // Generate Tabs With The Default Settings.
@@ -71,9 +127,8 @@ function getUrlVars() {
 						var report_id;
 						var valid_input;
 
-						for(var i=1;i<10;i++){ // hiding all 10 divs which are corresponding to different classification selectable lists
-							$('#list'+i).hide();
-						}
+						$('.lists').hide(); // hiding all 10 divs which are corresponding to different classification selectable lists
+							
 						// Selectable list of tab 1
 						$("#selectable0").selectable({ //creating a selectable list which contains all the reports anwsered by certain user 
 							selected: function(event, ui) { 
@@ -95,10 +150,10 @@ function getUrlVars() {
 						}); 
 							}
 						});
-						// Selectable lists of tab 3	
-						for(var i=1;i<=10;i++){ // 10 list based on whichever service ecologic is selected
+						// Selectable lists of tab 3
+						//for(var i=1;i<=10;i++){ // 10 list based on whichever service ecologic is selected
 
-							$("#selectable"+i).selectable({
+							$(".selectable_c").selectable({
 								selected: function(event, ui) { 
 									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 									var result = $( "#select-result" ).empty();
@@ -108,7 +163,7 @@ function getUrlVars() {
 								}
 								
 							});
-						}
+					//	}
 
 						$('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 
@@ -178,11 +233,13 @@ function getUrlVars() {
 						
 						$('#SE_BTN_NEXT').button().click(function() { // NEXT button on the 2rd tab
 							
-							for(var i=1;i<=10;i++){ // hindding all the seletable list
-								$('#list'+i).hide();
-							}
+							$('.lists').hide();// hindding all the seletable list
+								
+		
 							if(se_item){ // than only showing the one which conrresponds to the selected sevive ecologic
-								if (se_item == '1'){
+							 	$('#list'+se_item).show();	
+							 	
+								/*if (se_item == '1'){
 									$('#list1').show();	
 								}
 								else if (se_item == '2'){
@@ -211,7 +268,7 @@ function getUrlVars() {
 								}
 								else if (se_item == '10'){
 									$('#list10').show();
-								}
+								}*/
 								$("#se_i").val(se_item);
 								$( "#tabs" ).tabs('enable', 2+compensateTab).tabs('select', 2+compensateTab); // go to the next tab (3rd tab) and disable the 2rd one
 								$( "#tabs" ).tabs( 'disable', 1+compensateTab );
@@ -222,6 +279,59 @@ function getUrlVars() {
 							
 						});
 
+$('#TAB9_BTN_NEXT').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 5).tabs('select', 5);;
+							$( "#tabs" ).tabs( 'disable', 4);
+						});
+$('#TAB9_BTN_BACK').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 4 ).tabs('select', 4);;
+							$( "#tabs" ).tabs( 'disable', 5);
+						});
+
+
+$(function() {
+   // var select = $( "#slides" );
+    $( "#slider" ).slider( "enable" );
+    $('#slider').slider();
+    /*var slider = $('#slider').slider({
+      min: 1,
+      max: 5,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#slides" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+    });
+*/
+  });
+
+$('#TAB10_BTN_NEXT').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 6).tabs('select', 6);;
+							$( "#tabs" ).tabs( 'disable', 5);
+						});
+$('#TAB10_BTN_BACK').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 5 ).tabs('select', 5);;
+							$( "#tabs" ).tabs( 'disable', 6);
+						});
+
+$('#TAB11_BTN_NEXT').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 7).tabs('select', 7);;
+							$( "#tabs" ).tabs( 'disable', 6);
+						});
+$('#TAB11_BTN_BACK').button().click(function() {
+						
+							$( "#tabs" ).tabs( "enable", 6 ).tabs('select', 6);;
+							$( "#tabs" ).tabs( 'disable', 7);
+						});
+
 $('#C_BTN_BACK').button().click(function() {
 							$( "#tabs" ).tabs('enable', 1+compensateTab).tabs('select', 1+compensateTab); //go back to tab 2 and disable the tab 3
 							$( "#tabs" ).tabs( 'disable', 2+compensateTab );
@@ -230,6 +340,8 @@ $('#C_BTN_BACK').button().click(function() {
 
 $('#C_BTN_NEXT').button().click(function() { 
 	if(c_item){
+		alert(c_item);
+
 		$("#c_i").val(c_item);
 								var theDropdownDiv = $(document.createElement('div')) // a div which will contain a textbox
 								.attr("id", 'theDD');
@@ -359,7 +471,6 @@ function removeHTMLElements(){
 			     			var newSDDiv = $(document.createElement('div'))  // a div which will contain label for standard deviation
 			     			.attr("id", 'nSD' + newCounter);
 
-			     			
 
 			     			if(newCounter == 1) // if it's the first time creating the row of HTML elements! It will contain the label heading for each one of them
 			     			{
@@ -410,7 +521,7 @@ function removeHTMLElements(){
 									'<option name="newTheNature' + newCounter +'" value="Atout">Atout</option>'+
 									'<option name="newTheNature' + newCounter +'" value="Opportunité">Opportunité</option>'+
 									'</select>'+'</div>');
-
+															
 
 								newSelect1Div.html('<div style="float: left; width: 150px;">'+'<br>'+
 									'<select name="newTheEvalu' + newCounter +'" title="Accordez une importance a votre exemple ou 1 est une trés base et 10 est une trés haute"  >'+
@@ -525,7 +636,7 @@ function removeHTMLElements(){
 								'</select>'+'</div>');
 
 
-							newSelect1Div.html('<div style="float: left; width: 150px;">' +'<br>'+
+							newSelect1Div.html('<div style="float: left; cwidth: 150px;">' +'<br>'+
 								'<select name="exiTheEvalu' + exiCounter +'" title="Accordez une importance a votre exemple ou 1 est une trés base et 10 est une trés haute" >'+
 								'<option name="exiTheEvalu' + exiCounter +'" value="1">1</option>'+
 								'<option name="exiTheEvalu' + exiCounter +'" value="2">2</option>'+
@@ -539,7 +650,7 @@ function removeHTMLElements(){
 
 
 							newSelect2Div.html('<div style="float: left; width: 100px;">'+'<br>'+
-								'<select name="exiTheMoney' + exiCounter +'" title="Accordez une importance monétaire ou 1 est une trés base et 10 est une trés haute" >'+
+								'<select name="exiTheMoney' + exiCouncter +'" title="Accordez une importance monétaire ou 1 est une trés base et 10 est une trés haute" >'+
 								'<option name="exiTheMoney' + exiCounter +'" value="1" >1</option>'+
 								'<option name="exiTheMoney' + exiCounter +'" value="2" >2</option>'+
 								'<option name="exiTheMoney' + exiCounter +'" value="3" >3</option>'+

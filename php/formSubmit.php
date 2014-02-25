@@ -1,4 +1,6 @@
 <?php
+	include '/misc/dbaminfo.php';
+
 	$path = $_SERVER['DOCUMENT_ROOT'];
 	chdir($path);
 	define('DRUPAL_ROOT', getcwd());
@@ -7,7 +9,7 @@
 
 	// this file is in progress and it will  be done by 8th of may 2013
 	// Connect to the Database
-	$con = mysql_connect('DATABASE CONNECTION INFORMATION REMOVED!!') or die('Could Not Connect To The Database.');
+	$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
 
 	mysql_select_db('qcbscartographie', $con);
 	mysql_query("SET NAMES 'utf8");
