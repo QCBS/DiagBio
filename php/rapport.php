@@ -1,9 +1,8 @@
 <?php
-include '/misc/dbaminfo.php';
+include('/var/www/quebio.ca/misc/dbaminfo.php');
 	// Connect to the Database
-	$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
-
-	mysql_select_db('qcbscartographie', $con);
+	$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+	mysql_select_db($mys_base, $con);
 
 	// Are You Switching Viewability?
 	if ( $_POST['viewable'] ){

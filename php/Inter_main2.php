@@ -27,8 +27,8 @@ drupal_add_js("testing/Jason/js/Inter_main.js");
 
 drupal_add_css('testing/Jason/css/CSS.css');
 
-include 'Inter_main_php.php';
-include '/misc/dbaminfo.php';
+include('Inter_main_php.php');
+include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 ?>
 	<!--<link href="testing/Jason/css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
@@ -58,9 +58,9 @@ include '/misc/dbaminfo.php';
 
 					<fieldset class="infoList">
 					<ul>
-						<li>Au cours des 50 dernières années, accélération et une extension du déclin des écosystèmes ces 50 dernières années,</li>
-						<li> à un rythme inédit dans l’histoire de l’humanité. Si elle n’est pas maîtrisée, cette dégradation mettra en péril </li>
-						<li> non seulement la biodiversité mondiale mais également les activités économiques de la planète.</li>
+						<li>	Au cours des 50 dernières années, accélération et une extension du déclin des écosystèmes ces 50 dernières</li>
+						<li>années, à un rythme inédit dans l’histoire de l’humanité. Si elle n’est pas maîtrisée, cette dégradation mettra en péril</li>
+						<li>non seulement la biodiversité mondiale, mais également les activités économiques de la planète.</li>
 					</ul>
 					</fieldset>
 
@@ -96,26 +96,26 @@ include '/misc/dbaminfo.php';
 						
 						<img src="/testing/Jason/images/picWtihPpl.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>1. De gérer les communications avec les parties prenantes à l’interne (et externe).</b>
+							<b>4. De gérer les communications avec les parties prenantes à l’interne (et externe).</b>
 						</div>
 					</div>
 					<div id="imageTwo">
 
 						<img src="/testing/Jason/images/lightBulb.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>2. D’identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.</b>
+							<b>3. D’identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.</b>
 						</div>
 					</div>
 					<div id="imageThree">
 						<img src="/testing/Jason/images/lightbulbWithFlowers.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>3. De trouver des pistes de réflexion pour la prise de décisions stratégiques interne.</b>
+							<b>2. De trouver des pistes de réflexion pour la prise de décisions stratégiques interne.</b>
 						</div>
 					</div>
 					<div id="imageFour">
 						<img src="/testing/Jason/images/bubbles.png"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>4. De mieux comprendre vos relations à la Biodiversité et aux SE.</b>
+							<b>1. De mieux comprendre vos relations à la Biodiversité et aux SE.</b>
 						</div>
 					</div>
 
@@ -218,36 +218,8 @@ include '/misc/dbaminfo.php';
 					  <li>du système. Cela permettra d’identifier les risques et opportunités potentiels liés à ses interdépendances avec la biodiversité.</li>
 				</ul>
 				</fieldset>
-
-					<div style="width: 800px;">
-						<div style="float: left; width: 400px;">
-							<h3>Organisation de l'outil diagnostic:</h3>
-							<ul>
-								<li>La B&SE a une influence sur les activités de l'entreprise  (intrant, force externe affectant la productivité)</li>
-								<li>La B&SE donne lieu a des transactions monétaires associées aux dépendances (chiffre d'affaires / ventes, dépenses)</li>
-								<li>Impact de l'organisation sur la disponibilité du SE (quantité, qualité)</li>
-								<li>Impact de l'organisation sur la capacité d'autres agents à bénéficier du SE (quantité, qualité)</li>
-								<li>Impact sur la biodiversité liés aux interactions de l'organisation avec le SE (continuités écologiques, habitats, espèces - dont diversité génétique) </li>
-								<li>Transactions monétaires associees aux impacts</li>
-							</ul>
-						</div>
-						<div style="float: left; width: 400px;">
-							<h3>Organisation de l'outil diagnostic:</h3>
-							<ul>
-								<li>Influence fonctions prioritaires organisations</li>
-								<li>Influence fonctions secondaires de l'organisation</li>
-								<li>Existance de couts et/ou transactions monetaires pour beneficier de ce SE</li>
-								<li>Ce SE apporte un benefice et/ou une transaction monetaire (chiffre affaire)</li>
-								<li>Impact sur un SE qui affecte l'organisation</li>
-								<li>Impact sur un SE qui affecte les autres agents</li>
-								<li>Interactions positives de l'organisation avec le SE </li>
-								<li>interactions negatives de l'organisation avec le SE </li>
-								<li>Existance de paiement de compensation</li>
-							</ul>
-						</div>
-						<br style="clear: left;" />
-					</div>
 				</div>
+
 				<div id="tab3">
 					<div style="width: 800px;">
 						<div style="float: left; width: 400px;">
@@ -275,8 +247,8 @@ include '/misc/dbaminfo.php';
 							// Temporary Data -IGNORE
 							$id = $_GET['reportid']; // Making Sure The URL Links in The E-mails Were Properly Formated.
 							echo $id;
-							$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
-							mysql_select_db('qcbscartographie', $con);
+							$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+							mysql_select_db($mys_base, $con);
 							mysql_query("SET NAMES 'utf8");
 							mysql_query("SET CHARACTER SET 'utf8'");
 							// Get list of all available services
@@ -374,7 +346,7 @@ include '/misc/dbaminfo.php';
 						$results = mysql_query($query) or die('Error Fetching List From Database.');
 						while ($row = mysql_fetch_assoc($results))  //create the information blocks for the ecological services
 						{ 
-							echo '<fieldset class="infoDivs" id="infoDiv'.$row['se_id'].'">'.'<legend class="font_legend"><strong>Description:</strong></legend>'.$row['se_description'].'</fieldset>';
+							echo '<fieldset class="infoDivs" id="infoDiv'.$row['se_id'].'">'.'<legend class="font_legend"><strong>Description</strong></legend>'.$row['se_description'].'</fieldset>';
 						}
 
 					?>	
@@ -387,18 +359,15 @@ include '/misc/dbaminfo.php';
 				
 				</div>
 				<div id="tab7">
-					<h3>Choisissez une de ces classifications</h3>
 					<!--10 lists of selectable for differents classification lists-->
-					
+					<h3>Choisissez une de ces classifications</h3>
 					
 				<?php  
-
-
 						$query = "SELECT * FROM classification WHERE se_id = '$count'";
 						$numOfRows = mysql_query($query) or die('Error Fetching List From Database.');
 										
 						$count=1;
-						while($count <= $numOfRows)		//creates the 10 selectble classifications of examples
+						while($count <= $numOfRows)		//creates the selectble classifications 
 						{
 									
 							echo '<div class="lists" id="list'.$count.'">';
@@ -409,6 +378,22 @@ include '/misc/dbaminfo.php';
 
 							while ($row = mysql_fetch_assoc($results)) 
 							{ 
+								if($row['c_name'] == "Matières minérales")
+								{
+									echo '<h4>Ressources naturelles non issues du vivant</h4>'; 
+									echo 'Minéraux, substances nutritionnelles et énergie renouvelable<br><br>';
+								}
+
+								if($row['c_name'] == "Énergie non renouvelable abiotique")
+								{
+									echo '<br><br><h4>Ressources naturelles issues du vivant</h4>';
+									echo 'Les ressources naturelles issues du vivant sont le résultat des interactions<br>';
+									echo 'entre les différents éléments de la biodiversité et donc du vivant. Par<br>'; 
+									echo 'exemple, le pétrole n’est pas en soi un SE, mais plutôt le résultat des<br>';
+									echo 'processus de décomposition, de stockage et d’assimilation, propre aux<br>';
+									echo 'écosystèmes. Son extraction et la consommation de pétrole font pression<br>';
+									echo 'sur le service : régulation de la qualité de l’air. <br><br>';
+								}
 				?>
 								<li class="ui-state-default" title="choisissez une de ces classifications" id=<?php echo "\"" . $row['c_id'] . "\""; ?>><?php echo $row['c_name'];?></li>
 							<?php
@@ -420,23 +405,29 @@ include '/misc/dbaminfo.php';
 					
 					
 					<?php 
-
-							$query = "SELECT * FROM classification where se_id = $count ";
-							$results = mysql_query($query) or die('Error Fetching List From Database.');
-
-							while ($row = mysql_fetch_assoc($results)) 
-							{ 
-								echo '<fieldset class="infoClassDivs" id="infoClassDiv'.$row['c_id'].'"> <legend class="font_legend"><strong>Description:</strong></legend>'.$row['c_description'].'</fieldset>';  //create the information blocks for the classifications
-								echo '<fieldset class="classExampleDivs" id="classExampleDiv'.$row['c_id'].'"><legend class="font_legend"><strong>Example:</strong></legend>'.$row['c_example'].'</fieldset>';  //create the class example divs
-							}
-
 							$count++;
+						}
+							
+						$counter=1;
+
+						while($counter <= $numOfRows)		//creates the descriptions and example blocks
+						{
+							$query = "SELECT * FROM classification where se_id = $counter ";
+							$results = mysql_query($query) or die('Error Fetching List From Database.');
+							
+							while ($row = mysql_fetch_assoc($results)) 
+							{	echo '<div class="infoAndExamples">';
+								echo '<div><fieldset class="infoClassDivs" id="infoClassDiv'.$row['c_id'].'"> <legend class="font_legend"><strong>Description</strong></legend>'.$row['c_description'].'</fieldset></div>';  //create the information blocks for the classifications
+								echo '<div><fieldset class="classExampleDivs" id="classExampleDiv'.$row['c_id'].'"><legend class="font_legend"><strong>Example</strong></legend>'.$row['c_example'].'</fieldset></div>';  //create the class example divs
+								echo '</div>';
+							}
+							$counter++;
 						}
 
 					?>
-					
 
-					
+
+					<br>
 					<div class="centreBTN1">
 						<button type="button" id="C_BTN_BACK">Précédent</button> <!--Go back to tab 2-->
 						<button type="button" id="C_BTN_NEXT">Suivant</button> <!--Go to tab 4-->
@@ -448,9 +439,53 @@ include '/misc/dbaminfo.php';
 
 				<div id="tab8">
 					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="get" >
+
+					<h3><b>Choisizzes une de ses Examples:</b></h3>
+
+					 <?php
+					
+						$query = "SELECT c_id as cnt FROM classification ORDER BY c_id DESC LIMIT 1";
+						$result = mysql_query($query) or die('Error Fetching List From Database.');
+						$fetch=mysql_fetch_array($result);
+						$numOfRows=$fetch['cnt'];
+
+						$count=1;
+						while($count <= $numOfRows)	 //go throguh each classification
+						{
+							echo '<div class="selectExamples" id="example'.$count.'">';
+							echo '<ol class="select_example selectables" id="selectable'.$count.'">';
+
+							$query = "SELECT * FROM c_examples WHERE c_id = '$count'";
+							$results = mysql_query($query) or die('Error Fetching List From Database.');
+
+							while ($row = mysql_fetch_assoc($results)) //get all the examples with the associated classification and create them as selectables
+							{ 
+								if( $row['example'] == "aucune example")
+								{
+									echo 'aucune exemple';
+								}
+								else
+								{
+						?>
+								<li class="ui-state-default" title="choisissez une de ces examples" id=<?php echo "\"" . $row['example_id'] . "\""; ?>><?php echo $row['example'];?></li>
+						<?php
+								}
+								
+							}
+
+							$count++;  //go to the next example
+							echo '</ol>';
+							echo  '</div>';
+						}
+						?>
+
+						<br><br>
+						<h3><b>Ajoutez votre propre example:</b></h3>
+						 <input type="text" name="newExample" id="newExample"><br>
+						 <br><br>
+						
+						
 						<div id="theFirstGroup"> <!-- div which contains all the HTML element createdz-->
-
-
 						</div>
 						<div id="divDD" class="centreBTN2">
 						</div>
@@ -466,11 +501,9 @@ include '/misc/dbaminfo.php';
 					</div>
 
 					<div class="centreBTN2">
-						<button type="button" id="theNewExample">Inserer un nouvel exemple</button><br><br> <!--button which insert a new interdependance example-->
-						<input id="submit" type="submit" value="Enregistrer vos données"> <!--POST BACK--><br><br>
+						<!--<button type="button" id="theNewExample">Inserer un nouvel exemple</button><br><br> button which insert a new interdependance example-->
+						<!--<input id="submit" type="submit" value="Enregistrer vos données"> POST BACK-->
 						<button type="button" id="LAST_BTN_BACK">Précédent</button>  <!--Go back to tab 3-->
-						<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
-						<button type="button" id="BTN_QUIT">Quitter</button>
 						<button type="button" id="TAB9_BTN_NEXT">Suivant</button> <!--go to tab 9 -->
 					</div>
 
@@ -480,28 +513,45 @@ include '/misc/dbaminfo.php';
 					<input type="hidden" id="c_i" name="c_i" value="">
 					<input type="hidden" id="hiddenExistingExamples" name="hiddenExistingExamples" value="">
 					<input type="hidden" id="hiddenNewExamples" name="hiddenNewExamples" value="">
-				</form> 
+			
 			</div>
 
 
 				<div id="tab9">
-					<h1 style="color:#0B8EB5;"><b>Nature d'interdependance</b></h1>
-					<h4 style="color:#0b8eb5">Choisissez la nature de votre exemple</h4>
-					<input type="radio" name="nature" value="Dépendance">Dépendance<br>
-					<input type="radio" name="nature" value="Opportunité">Opportunité<br>
-					<input type="radio" name="nature" value="Atout">Atout<br>
-					<input type="radio" name="nature" value="Dimension monétaire">Dimension monétaire<br><br>
-
-					<!-- <?php 
+					
+					<h3>Choisissez la nature de votre exemple</h3>
+					<!--<?php 
 						//$_SESSION['nature_choice'][$counter] = $_GET['nature']
 						//$counter++;
 					?> -->
+					<?php
+						$nature=array("Dépendance","Opportunité","Atout","Dimension monétaire");
+						$count=1;
+						echo '<div class="selectInter" id="selectInter'.$count.'">';
+						echo '<ol class="selectable_i selectables" id="selectable'.$count.'">';
+						while($count <= 4)	 //go through each nature
+						{
+							
+
+					?>
+								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" id="nature"+$count ><?php echo $nature[$count-1]; ?></li>
+					<?php
+
+							$count++;  //go to the next nature
+					
+						}
+						echo '</ol>';
+						echo  '</div>';
+					?>					
+
 
 					<button type="button" id="TAB9_BTN_BACK">Précédent</button>  <!-- go to tab 8 -->
 					<button type="button" id="TAB10_BTN_NEXT">Suivant</button> <!--go to tab 10 -->
 				</div>
 
-				<div id="tab10">
+				<div id="tab10" class="ui-state-hidden">
+					
+					<h3> Interdependance</h3>
 					Evaluez Votre Interdependance
 					<select name="slides" id="slides">
 				    <option>1</option>
@@ -510,23 +560,30 @@ include '/misc/dbaminfo.php';
 				    <option>4</option>
 				    <option>5</option>
 				  </select>
-					<div id="slider" style='width:400px;'></div><br>
+				   <br><br><br><br><br><br>
+					<div id="slider" style="height:200px;"></div><br>
 					
 					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
 				</div>
-				<div id="tab11">
-					Impact Monétaire
-					<select name="slides" id="slides">
+				<div id="tab11" >
+					<h3>Impact Monétaire</h3><br>
+					Evaluez Votre Impact Monétaire
+					<select name="moneyRank" id="moneyRank">
 				    <option>1</option>
 				    <option>2</option>
 				    <option>3</option>
 				    <option>4</option>
 				    <option>5</option>
 				  </select>
-					<div id="sliderMoney"></div><br>
+				  <br><br><br><br><br><br>
+					<div id="moneySlider" style="height:200px;"></div><br>
+
 					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
+					<button type="button" id="BTN_QUIT">Quitter</button>
 				</div>
+				</form>
 
 		</div>	
 		<!-- Hidden Container To Generate The Highchart Before Exporting it to The Server. -->

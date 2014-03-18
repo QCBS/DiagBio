@@ -189,8 +189,8 @@ function getRole($data){
 							// Temporary Data -IGNORE
 							$id = $_GET['reportid']; // Making Sure The URL Links in The E-mails Were Properly Formated.
 							echo $id;
-							$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
-							mysql_select_db('qcbscartographie', $con);
+							$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+							mysql_select_db($mys_base, $con);
 							mysql_query("SET NAMES 'utf8");
 							mysql_query("SET CHARACTER SET 'utf8'");
 							// Get list of all available services

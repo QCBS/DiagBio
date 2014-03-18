@@ -1,9 +1,9 @@
 <?php
-include '/misc/dbaminfo.php';
+include('/var/www/quebio.ca/misc/dbaminfo.php');
 
-$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
+$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+mysql_select_db($mys_base, $con);
 
-mysql_select_db('qcbscartographie', $con);
 mysql_query("SET NAMES 'utf8");
 	mysql_query("SET CHARACTER SET 'utf8'");
 

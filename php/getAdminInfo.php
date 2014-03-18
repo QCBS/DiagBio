@@ -1,6 +1,5 @@
 <?php
-	include '/misc/dbaminfo.php';
-
+	include('/var/www/quebio.ca/misc/dbaminfo.php');
 	$path = $_SERVER['DOCUMENT_ROOT'];
 	chdir($path);
 	define('DRUPAL_ROOT', getcwd());
@@ -27,9 +26,8 @@
 	$parties_prenantes = field_get_items('profile2', $profile['administration'], 'field_parties_prenantes');
 
 	// Connect to the Database
-	$con = mysql_connect('localhost', 'qcbscartographie', 'dsbWVmveVY3Xy4JX') or die('Could Not Connect To The Database.');
-
-	mysql_select_db('qcbscartographie', $con);
+	$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+	mysql_select_db($mys_base, $con);
 
 	$query = "SELECT Direction, Interne, Externe FROM report WHERE reportid = '$reportid'";
 	$results = mysql_query($query) or die('Error Fetching List From Database.');

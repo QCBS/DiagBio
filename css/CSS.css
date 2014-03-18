@@ -44,7 +44,9 @@
 
 .font_legend{
 	color:#0B8EB5;
-	font-size: 25; 
+	font-size: 18px;
+	padding: 0px 10px 0px 10px;
+	text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white; 
 }
 
 #makeSpace{
@@ -88,17 +90,23 @@ padding: 10px;
 	padding:10px;
 }
 
+.infoAndExamples{
+	right: 20px;
+	top: 80px;
+	position: absolute;
+	width: 45%;
+}
+
 .infoClassDivs{
 	background-color: #dfeffc;
 	border-style: solid;
 	border-width: medium;
 	border-color: #0B8EB5;
-	right: 20px;
-	top: 80px;
-	position: absolute;
-	width: 45%;
+	/*min-height: 150px;*/
+	/*position: absolute;*/
 	padding:10px;
 	border-radius: 10px;
+	overflow:auto;
 }
 
 .classExampleDivs{
@@ -106,13 +114,20 @@ padding: 10px;
 	border-color: #0B8EB5;
 	border-style: solid;
 	border-width: medium;
-	position: absolute;
-	width: 45%;
-	right: 20px;
-	top: 340px;
+	/*position: absolute;*/
+	min-height: 150px;
 	padding: 10px;
 	border-radius: 10px;
 	display: none;
+	overflow:auto;
+	/*top: 250px;*/
+}
+
+.descOfResources{
+	border-radius: 10px;
+	padding: 10px;
+	background-color: #B0F7F6;
+	border-color: #82E8E7;
 }
 
 #hiddenForSpace{
@@ -146,6 +161,17 @@ padding: 10px;
 body{
 	background-size: 1000px;
 }
+
+ol[id^= 'selectable'] .ui-selecting { background: #FECA40;}
+ol[id^= 'selectable'] .ui-selected { background: #F39814; color: white;}
+
+
+/*
+
+.ui-selecting { background: #FECA40; }
+.ui-selected { background: #F39814; color: white; }
+
+
 
 #selectable .ui-selecting { background: #FECA40; }
 #selectable .ui-selected { background: #F39814; color: white; }
@@ -192,6 +218,87 @@ body{
 #selectable14 .ui-selecting { background: #FECA40; }
 #selectable14 .ui-selected { background: #F39814; color: white; }
 
+#selectable15 .ui-selecting { background: #FECA40; }
+#selectable15 .ui-selected { background: #F39814; color: white; }
+
+#selectable16 .ui-selecting { background: #FECA40; }
+#selectable16 .ui-selected { background: #F39814; color: white; }
+
+#selectable17 .ui-selecting { background: #FECA40; }
+#selectable17 .ui-selected { background: #F39814; color: white; }
+
+#selectable18 .ui-selecting { background: #FECA40; }
+#selectable18 .ui-selected { background: #F39814; color: white; }
+
+#selectable19 .ui-selecting { background: #FECA40; }
+#selectable19 .ui-selected { background: #F39814; color: white; }
+
+#selectable20 .ui-selecting { background: #FECA40; }
+#selectable20 .ui-selected { background: #F39814; color: white; }
+
+#selectable21 .ui-selecting { background: #FECA40; }
+#selectable21 .ui-selected { background: #F39814; color: white; }
+
+#selectable22 .ui-selecting { background: #FECA40; }
+#selectable22 .ui-selected { background: #F39814; color: white; }
+
+#selectable23 .ui-selecting { background: #FECA40; }
+#selectable23 .ui-selected { background: #F39814; color: white; }
+
+#selectable24 .ui-selecting { background: #FECA40; }
+#selectable24 .ui-selected { background: #F39814; color: white; }
+
+#selectable25 .ui-selecting { background: #FECA40; }
+#selectable25 .ui-selected { background: #F39814; color: white; }
+
+#selectable26 .ui-selecting { background: #FECA40; }
+#selectable26 .ui-selected { background: #F39814; color: white; }
+
+#selectable27 .ui-selecting { background: #FECA40; }
+#selectable27 .ui-selected { background: #F39814; color: white; }
+
+#selectable28 .ui-selecting { background: #FECA40; }
+#selectable28 .ui-selected { background: #F39814; color: white; }
+
+#selectable29 .ui-selecting { background: #FECA40; }
+#selectable29 .ui-selected { background: #F39814; color: white; }
+
+#selectable30 .ui-selecting { background: #FECA40; }
+#selectable30 .ui-selected { background: #F39814; color: white; }
+
+#selectable31 .ui-selecting { background: #FECA40; }
+#selectable31 .ui-selected { background: #F39814; color: white; }
+
+#selectable32 .ui-selecting { background: #FECA40; }
+#selectable32 .ui-selected { background: #F39814; color: white; }
+
+#selectable33 .ui-selecting { background: #FECA40; }
+#selectable33 .ui-selected { background: #F39814; color: white; }
+
+#selectable34 .ui-selecting { background: #FECA40; }
+#selectable34 .ui-selected { background: #F39814; color: white; }
+
+#selectable35 .ui-selecting { background: #FECA40; }
+#selectable35 .ui-selected { background: #F39814; color: white; }
+
+#selectable36 .ui-selecting { background: #FECA40; }
+#selectable36 .ui-selected { background: #F39814; color: white; }
+
+#selectable37 .ui-selecting { background: #FECA40; }
+#selectable37 .ui-selected { background: #F39814; color: white; }
+
+#selectable38 .ui-selecting { background: #FECA40; }
+#selectable38 .ui-selected { background: #F39814; color: white; }
+
+#selectable39 .ui-selecting { background: #FECA40; }
+#selectable39 .ui-selected { background: #F39814; color: white; }
+
+#selectable40 .ui-selecting { background: #FECA40; }
+#selectable40 .ui-selected { background: #F39814; color: white; }
+
+#selectable41 .ui-selecting { background: #FECA40; }
+#selectable41 .ui-selected { background: #F39814; color: white; }
+*/
 #feedback { font-size: 1.4em; }
 
 #selectableadmin .ui-selecting { background: #FECA40; }

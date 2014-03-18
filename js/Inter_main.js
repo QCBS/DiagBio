@@ -10,7 +10,6 @@ function getUrlVars() {
 	return vars;
 }
 
-
         	// These Are All The jQuery UI Element Function Call.
         	
 (function ($) {
@@ -33,20 +32,21 @@ function getUrlVars() {
         			$(".ui-state-default").hover(function(){  //display the info of the currently selected classification and hide all other info divs
 							$(this).addClass('ui-selecting');
 							var id=$(this).attr('id');
+							
+							$('[id^=infoClassDiv]').hide();
+							$('#infoClassDiv'+id).show();
 
 							$('[id^=classExampleDiv]').hide();
 							$('#classExampleDiv'+id).show();
-
-							$('[id^=infoClassDiv]').hide();
-							$('#infoClassDiv'+id).show();
 
 						})
 
 
 					$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
 							var id=$(this).attr('id');
-							$('#classExampleDiv'+id).hide();
 							$('#infoClassDiv'+id).hide();
+							$('#classExampleDiv'+id).hide();
+							
 					})
 					
 
@@ -56,36 +56,33 @@ function getUrlVars() {
 							$(this).removeClass('ui-selecting');
 					})
 
-
-					//so this where you put the tabs and it gets set to a number so far tere's 1-4, easy enough
-
 					var userRole = jQuery('#userRole').val();
         			if ( userRole == "Unauthenticated" ){
-        				var elem = document.getElementById('tab5');  //1
+        				var elem = document.getElementById('tab5');  //2
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('userview');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab6');  //2
+        				var elem = document.getElementById('tab6');  //3
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('servicetab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab7');  //3
+        				var elem = document.getElementById('tab7');  //4
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('classificationtab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab8');  //4
+        				var elem = document.getElementById('tab8');  //5
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('entreprisetab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab9'); //5
+        				var elem = document.getElementById('tab9'); //6
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('naturetab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab10'); //6
+        				var elem = document.getElementById('tab10'); //7
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('evaltab');
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab11'); //7
+        				var elem = document.getElementById('tab11'); //8
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('moneytab');
         				elem.parentNode.removeChild(elem);
@@ -97,35 +94,40 @@ function getUrlVars() {
 						var elem = document.getElementById('admintools');
 						elem.parentNode.removeChild(elem);
 					}
-					if ( userRole != "Unauthenticated" ){
-						var elem = document.getElementById('tab1');
-						elem.parentNode.removeChild(elem);
-						var elem = document.getElementById('info');
-						elem.parentNode.removeChild(elem);
-						var elem = document.getElementById('tab2');
-						elem.parentNode.removeChild(elem);
-						var elem = document.getElementById('question');
-						elem.parentNode.removeChild(elem);
+					if ( userRole != "Unauthenticated" ){  //removes the following tab(s) 
 						var elem = document.getElementById('tab3');
 						elem.parentNode.removeChild(elem);
 						var elem = document.getElementById('login');
 						elem.parentNode.removeChild(elem);
+
+						$('#servicetab').hide();
+						$('#classificationtab').hide();
+						$('#naturetab').hide();
+						$('#evaltab').hide();
+						$('#moneytab').hide();
+
 						if ( userRole == "Administration" ){
-							var disableTabs = [2, 3, 4,5,6,7];
+							var disableTabs = [4,5,6];
 							var compensateTab = 1;
 						}
 						else {
-							var disableTabs = [1, 2, 3,4,5,6];
+							var disableTabs = [3,4,5];
 							var compensateTab = 0;
 						}
 						$('#tabs').tabs({disabled: disableTabs}); // Generate Tabs With The Default Settings.
-
+					
 						var se_item; // keeping track of selected service ecologic
 						var c_item; // keeing track of selected classification
+						var c_example;//gets the id of the selected example
+						var i_item; //gets the id of the selected interdependency
 						var newCounter = 1; // counter for the new HTML element
 						var exiCounter = 1; // counter for the existing HTML elements
 						var report_id;
 						var valid_input;
+						if(userRole	== "Participant")  //there should be one less tab for participant
+							var tabCounter = 2; //keeps track of which tab we're at
+						else
+							var tabCounter = 3; //keeps track of which tab we're at
 
 						$('.lists').hide(); // hiding all 10 divs which are corresponding to different classification selectable lists
 							
@@ -146,32 +148,83 @@ function getUrlVars() {
 								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 								var result = $( "#select-result" ).empty();
 								$( ".ui-selected", this ).each(function() {
-							se_item = $(this).attr("id"); // getting the id of selected service ecologic
+									se_item = $(this).attr("id"); // getting the id of selected service ecologic
 						}); 
 							}
 						});
-						// Selectable lists of tab 3
-						//for(var i=1;i<=10;i++){ // 10 list based on whichever service ecologic is selected
 
-							$(".selectable_c").selectable({
+							$(".selectable_c").selectable({  //make the classification selectable
 								selected: function(event, ui) { 
 									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 									var result = $( "#select-result" ).empty();
 									$( ".ui-selected", this ).each(function() {
-							c_item = $(this).attr("id"); // getting the id of selected classification
+										c_item = $(this).attr("id"); // getting the id of selected classification
+									}); 
+								}
+								
+							});
+
+							$(".select_example").selectable({  //make the examples selectable
+								selected: function(event, ui) { 
+									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+									var result = $( "#select-result" ).empty();
+									$( ".ui-selected", this ).each(function() {
+										c_example = $(this).attr("id"); // getting the id of selected example
 						}); 
 								}
 								
 							});
-					//	}
+
+					
+						$(".selectable_i").selectable({  //make the interdependencies selectable
+								selected: function(event, ui) { 
+									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+									var result = $( "#select-result" ).empty();
+									$( ".ui-selected", this ).each(function() {
+										i_item = $(this).attr("id"); // getting the id of selected interdependency
+									}); 
+								}
+								
+						});
+
+
+		function goToNextTab()  //this counter will allow us to navigate forward through the tabs, starting at tab 3(reports list)
+		{
+			tabCounter++;  //increment to the current tab
+			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab (3rd tab) and disable the 2rd one
+			tabCounter--;  //decrememnt to last tab
+			$( "#tabs" ).tabs( 'disable',tabCounter );
+			tabCounter++;  //incrememnt back to current tab
+		}
+
+		function goToPrevTab()  //this counter will allow us to navigate backward through the tabs, starting at tab 3(reports list)
+		{
+			tabCounter--;  //decrememnt to current tab
+			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab (3rd tab) and disable the 2rd one
+			tabCounter++;  //incrememnt to last tab
+			$( "#tabs" ).tabs( 'disable',tabCounter );
+			tabCounter--;  //decrement back to current tab
+		}
 
 						$('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 
 							if(report_id){
 
 								$("#the_report").val(report_id);
-								$( "#tabs" ).tabs('enable', 1+compensateTab).tabs('select', 1+compensateTab);
-								$( "#tabs" ).tabs( 'disable', 0+compensateTab );
+
+
+								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+									if (tabCounter > 2)
+									{
+										tabCounter=2;
+										$('#tabs').tabs('disable', 5);  //disable the examples part
+									}
+								else
+									if(tabCounter > 3)
+										tabCounter=3;
+
+								goToNextTab();
+								$('#tabs').tabs('enable', tabCounter-1);  //leave this tab enabled
 
 							}
 							else{
@@ -225,19 +278,20 @@ function getUrlVars() {
 
 						});
 
-						$('#SE_BTN_BACK').button().click(function() {// BACK button on the 1st tab
-							$( "#tabs" ).tabs('enable', 0+compensateTab).tabs('select', 0+compensateTab); // go to the pervious tab and disable the current one
-							$( "#tabs" ).tabs( 'disable', 1+compensateTab );
+
+						$('#SE_BTN_BACK').button().click(function() {  //Back button on the ecological services
+							
+							goToPrevTab();  //disable tab 3, enable and select tab 2
 							
 						});
 						
-						$('#SE_BTN_NEXT').button().click(function() { // NEXT button on the 2rd tab
+						$('#SE_BTN_NEXT').button().click(function() { // NEXT button on the ecological services tab
 							
-							$('.lists').hide();// hindding all the seletable list
+							$('.lists').hide();// hiding all of the seletables
 								
 		
 							if(se_item){ // than only showing the one which conrresponds to the selected sevive ecologic
-							 	$('#list'+se_item).show();	
+							 	$('#list'+se_item).show();
 							 	
 								/*if (se_item == '1'){
 									$('#list1').show();	
@@ -270,8 +324,8 @@ function getUrlVars() {
 									$('#list10').show();
 								}*/
 								$("#se_i").val(se_item);
-								$( "#tabs" ).tabs('enable', 2+compensateTab).tabs('select', 2+compensateTab); // go to the next tab (3rd tab) and disable the 2rd one
-								$( "#tabs" ).tabs( 'disable', 1+compensateTab );
+
+								goToNextTab();						
 							}
 							else{
 								alert("Aucune valeur n'a été sélectionnée"); //else give an error
@@ -279,23 +333,54 @@ function getUrlVars() {
 							
 						});
 
-$('#TAB9_BTN_NEXT').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 5).tabs('select', 5);;
-							$( "#tabs" ).tabs( 'disable', 4);
-						});
-$('#TAB9_BTN_BACK').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 4 ).tabs('select', 4);;
-							$( "#tabs" ).tabs( 'disable', 5);
-						});
+$('#TAB9_BTN_NEXT').button().click(function() 
+{
+						if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
+						{
+							alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
+							$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
+							c_example = 0;  //0 means that there are no examples selected
+							$('#newExample').val(""); //clear the text from the example textbox
+						}
+						else
+						{
+							if(c_example)  //was one of the examples selected 
+							{
+								goToNextTab();
+							}
+							else if( $('#newExample').val() != '')  //was the testbox used?
+							{
+								goToNextTab();
+							}
+							else  //were there no examples given?
+							{
+								alert("Vous devez choisir une de ses examples ou creer un nouveau example(rien n'etez choisi)!");
+							}
 
 
-$(function() {
-   // var select = $( "#slides" );
-    $( "#slider" ).slider( "enable" );
-    $('#slider').slider();
-    /*var slider = $('#slider').slider({
+							/*if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+									if (tabCounter > 3)
+										tabCounter=3;
+								else
+									if(tabCounter > 4)
+										tabCounter=4;*/
+
+							$('#tabs').tabs('enable', tabCounter-1);  //enab le this tab for the rest of the evaluation
+							alert(tabCounter);
+
+						}
+
+});
+$('#TAB9_BTN_BACK').button().click(function() 
+{
+		goToPrevTab();
+});
+
+
+$(function() {  //slider for the interdependencies
+    var select = $( "#slides" );
+    var slider = $('#slider').slider({
+      orientation: "vertical",
       min: 1,
       max: 5,
       range: "min",
@@ -307,38 +392,58 @@ $(function() {
     $( "#slides" ).change(function() {
       slider.slider( "value", this.selectedIndex + 1 );
     });
-*/
   });
 
 $('#TAB10_BTN_NEXT').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 6).tabs('select', 6);;
-							$( "#tabs" ).tabs( 'disable', 5);
-						});
-$('#TAB10_BTN_BACK').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 5 ).tabs('select', 5);;
-							$( "#tabs" ).tabs( 'disable', 6);
-						});
+		alert(i_item);
+		if(i_item)
+		{
+			goToNextTab();
+		}
+		else  //tell the user to enter a choice
+			alert("SVP choissisez une de ses choix!");
+	});
+
+$('#TAB10_BTN_BACK').button().click(function() 
+{		
+	goToPrevTab();
+});
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 7).tabs('select', 7);;
-							$( "#tabs" ).tabs( 'disable', 6);
-						});
+	goToNextTab();
+
+});
 $('#TAB11_BTN_BACK').button().click(function() {
-						
-							$( "#tabs" ).tabs( "enable", 6 ).tabs('select', 6);;
-							$( "#tabs" ).tabs( 'disable', 7);
-						});
+	goToPrevTab();
+});
+
+
+$(function() {  //slider for the monetary impact
+    var moneySelect = $( "#moneyRank" );
+    var moneySlider = $('#moneySlider').slider({
+      orientation: "vertical",
+      min: 1,
+      max: 5,
+      range: "min",
+      value: moneySelect[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        moneySelect[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#moneyRank" ).change(function() {
+      moneySlider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+
 
 $('#C_BTN_BACK').button().click(function() {
-							$( "#tabs" ).tabs('enable', 1+compensateTab).tabs('select', 1+compensateTab); //go back to tab 2 and disable the tab 3
-							$( "#tabs" ).tabs( 'disable', 2+compensateTab );
-							
-						});
+	goToPrevTab();
+});
 
 $('#C_BTN_NEXT').button().click(function() { 
+	
+	
+
 	if(c_item){
 		alert(c_item);
 
@@ -371,9 +476,13 @@ $('#C_BTN_NEXT').button().click(function() {
 										$("#divDD").hide(); // hide the div which has the dropdown list
 										$("#dd_btn").hide();
 
-									}
-								$( "#tabs" ).tabs('enable', 3+compensateTab).tabs('select', 3+compensateTab); // go to tab 4 and disable tab 3
-								$( "#tabs" ).tabs( 'disable', 2+compensateTab );
+								}
+								
+								goToNextTab();
+
+								$('.selectExamples').hide(); //hide all the examples
+								$('#example'+c_item).show();  //show the corresponding examples
+
 							}
 							else{
 								
@@ -395,22 +504,33 @@ $('#BTN_QUIT').button().click(function() { // close the window which is not curr
 	}
 });
 
-$('#BTN_RE_SE').button().click(function() { // retour to services ecologique
-
+$('#BTN_RE_SE').button().click(function() // retour to services ecologique
+{ 
+	$('#newExample').val(""); //clear the text from the example textbox
 	event.preventDefault();
 	removeHTMLElements();
-							$( "#tabs" ).tabs('enable', 1+compensateTab).tabs('select', 1+compensateTab); // go to tab 4 and disable tab 3
-							$( "#tabs" ).tabs( 'disable', 3+compensateTab );
-						});
+
+	if(userRole	== "Participant") //reset the counter
+		tabCounter=2; 
+	else
+		tabCounter=3;
+
+	goToNextTab();
+	
+});
 
 $('#submit').button().click(function() {}); //just to style the submit button
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
 
+							$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
+							c_example = 0;  //0 means that there are no examples selected
+
+							$('#newExample').val(""); //clear the text from the example textbox
+
 							event.preventDefault(); // preventing from doing a post back when the button is clicked
 
-							$( "#tabs" ).tabs('enable', 2+compensateTab).tabs('select', 2+compensateTab); //go back to tab 3 and disable tab 4
-							$( "#tabs" ).tabs( 'disable', 3+compensateTab );
+							goToPrevTab();
 
 							removeHTMLElements(); // remove all HTML elements
 							
