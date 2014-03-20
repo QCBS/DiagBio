@@ -18,11 +18,10 @@ function getUrlVars() {
         			$('.infoDivs').hide();  //hide all the information blocks on the ecological services
 
         			$(".ui-state-default").hover(function(){  //display the info of the currently selected ecological service and hide all other info divs
-							var id=$(this).attr('id');
+							var id=$(this).attr('id'); //get the id of the highlighted selectable
 							$('[id^=infoDiv]').hide();
 							$('#infoDiv'+id).show();
-							
-						})
+					})
 
         			$('.infoClassDivs').hide();  //hide all the information blocks on the classification of ecological services
 
@@ -41,7 +40,6 @@ function getUrlVars() {
 
 						})
 
-
 					$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
 							var id=$(this).attr('id');
 							$('#infoClassDiv'+id).hide();
@@ -55,6 +53,17 @@ function getUrlVars() {
 							$('#infoDiv'+id).hide();
 							$(this).removeClass('ui-selecting');
 					})
+
+					$('.infoInterDivs').hide();
+
+					$(".ui-state-default").hover(function(){  //display the info for the highlighted nature of the interdependency
+        				var id=$(this).attr('id');
+        				$('[id^=inter]').hide();
+						$('#inter'+id).show();
+        			})
+
+					$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
+					$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
 
 					var userRole = jQuery('#userRole').val();
         			if ( userRole == "Unauthenticated" ){
@@ -80,9 +89,17 @@ function getUrlVars() {
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('tab10'); //7
         				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('evaltab');
+        				var elem = document.getElementById('risktab');
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('tab11'); //8
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('dependencetab');
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab12'); //9
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('impacttab');
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab13'); //10
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('moneytab');
         				elem.parentNode.removeChild(elem);
@@ -103,8 +120,10 @@ function getUrlVars() {
 						$('#servicetab').hide();
 						$('#classificationtab').hide();
 						$('#naturetab').hide();
-						$('#evaltab').hide();
+						$('#dependencetab').hide();
 						$('#moneytab').hide();
+						$('#impacttab').hide();
+						$('#risktab').hide();
 
 						if ( userRole == "Administration" ){
 							var disableTabs = [4,5,6];
@@ -129,7 +148,7 @@ function getUrlVars() {
 						else
 							var tabCounter = 3; //keeps track of which tab we're at
 
-						$('.lists').hide(); // hiding all 10 divs which are corresponding to different classification selectable lists
+						$('.lists').hide(); // hiding all the divs corresponding to different classification selectable lists
 							
 						// Selectable list of tab 1
 						$("#selectable0").selectable({ //creating a selectable list which contains all the reports anwsered by certain user 
@@ -182,6 +201,17 @@ function getUrlVars() {
 									var result = $( "#select-result" ).empty();
 									$( ".ui-selected", this ).each(function() {
 										i_item = $(this).attr("id"); // getting the id of selected interdependency
+									}); 
+								}
+								
+						});
+
+						$(".selectable_r").selectable({  //make the interdependencies selectable
+								selected: function(event, ui) { 
+									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+									var result = $( "#select-result" ).empty();
+									$( ".ui-selected", this ).each(function() {
+										r_item = $(this).attr("id"); // getting the id of selected interdependency
 									}); 
 								}
 								
@@ -266,8 +296,20 @@ function getUrlVars() {
 								if(theValid > 0){
 									report_id = ridInput.value;// assigning the textbox value to the global variable REPORT
 									$("#the_report").val(report_id);
-									$( "#tabs" ).tabs('enable', 1+compensateTab).tabs('select', 1+compensateTab);
-									$( "#tabs" ).tabs( 'disable', 0+compensateTab );
+									
+									if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+										if (tabCounter > 2)
+										{
+											tabCounter=2;
+											$('#tabs').tabs('disable', 5);  //disable the examples part
+										}
+									else
+										if(tabCounter > 3)
+											tabCounter=3;
+
+								goToNextTab();
+								$('#tabs').tabs('enable', tabCounter-1);  //leave this tab enabled
+
 								}
 								else{
 									report_id = null;
@@ -335,6 +377,7 @@ function getUrlVars() {
 
 $('#TAB9_BTN_NEXT').button().click(function() 
 {
+
 						if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
 						{
 							alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
@@ -344,6 +387,14 @@ $('#TAB9_BTN_NEXT').button().click(function()
 						}
 						else
 						{
+								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+									if (tabCounter > 5)
+										tabCounter=5;
+								else
+									if(tabCounter > 6)
+										tabCounter=6;
+
+
 							if(c_example)  //was one of the examples selected 
 							{
 								goToNextTab();
@@ -357,45 +408,21 @@ $('#TAB9_BTN_NEXT').button().click(function()
 								alert("Vous devez choisir une de ses examples ou creer un nouveau example(rien n'etez choisi)!");
 							}
 
-
-							/*if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
-									if (tabCounter > 3)
-										tabCounter=3;
-								else
-									if(tabCounter > 4)
-										tabCounter=4;*/
-
-							$('#tabs').tabs('enable', tabCounter-1);  //enab le this tab for the rest of the evaluation
-							alert(tabCounter);
+							$('#tabs').tabs('enable', tabCounter-1);  //enable this tab for the rest of the evaluation
+							
 
 						}
 
 });
 $('#TAB9_BTN_BACK').button().click(function() 
 {
+	$('.selectable_i'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	i_item = 0; 
 		goToPrevTab();
 });
 
-
-$(function() {  //slider for the interdependencies
-    var select = $( "#slides" );
-    var slider = $('#slider').slider({
-      orientation: "vertical",
-      min: 1,
-      max: 5,
-      range: "min",
-      value: select[ 0 ].selectedIndex + 1,
-      slide: function( event, ui ) {
-        select[ 0 ].selectedIndex = ui.value - 1;
-      }
-    });
-    $( "#slides" ).change(function() {
-      slider.slider( "value", this.selectedIndex + 1 );
-    });
-  });
-
 $('#TAB10_BTN_NEXT').button().click(function() {
-		alert(i_item);
+		
 		if(i_item)
 		{
 			goToNextTab();
@@ -406,46 +433,30 @@ $('#TAB10_BTN_NEXT').button().click(function() {
 
 $('#TAB10_BTN_BACK').button().click(function() 
 {		
+	$('.selectable_r'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	r_item = 0; //reset the chosen_id to null
 	goToPrevTab();
 });
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-	goToNextTab();
-
+	if(r_item)  //did the user select a risk and/or oppurtunity
+		goToNextTab();
+	else  //the user did not select anything
+		alert("SVP choisissez une de ses choix!");
 });
+
 $('#TAB11_BTN_BACK').button().click(function() {
 	goToPrevTab();
 });
-
-
-$(function() {  //slider for the monetary impact
-    var moneySelect = $( "#moneyRank" );
-    var moneySlider = $('#moneySlider').slider({
-      orientation: "vertical",
-      min: 1,
-      max: 5,
-      range: "min",
-      value: moneySelect[ 0 ].selectedIndex + 1,
-      slide: function( event, ui ) {
-        moneySelect[ 0 ].selectedIndex = ui.value - 1;
-      }
-    });
-    $( "#moneyRank" ).change(function() {
-      moneySlider.slider( "value", this.selectedIndex + 1 );
-    });
-  });
-
 
 $('#C_BTN_BACK').button().click(function() {
 	goToPrevTab();
 });
 
 $('#C_BTN_NEXT').button().click(function() { 
-	
-	
 
 	if(c_item){
-		alert(c_item);
+	
 
 		$("#c_i").val(c_item);
 								var theDropdownDiv = $(document.createElement('div')) // a div which will contain a textbox
@@ -510,12 +521,23 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	event.preventDefault();
 	removeHTMLElements();
 
-	if(userRole	== "Participant") //reset the counter
-		tabCounter=2; 
+	if(userRole	== "Participant") 
+	{	
+		tabCounter=2; //reset the counter
+		$('#tabs').tabs('disable', 5);  //disable the examples tab
+	}
 	else
-		tabCounter=3;
-
+	{
+		tabCounter=3; //reset the counter
+		$('#tabs').tabs('disable', 6);  //disable the examples tab
+	}
+	
 	goToNextTab();
+	if(userRole	== "Participant") 
+		$('#tabs').tabs('enable', 2);  //keep this tab enabled
+	else
+		$('#tabs').tabs('enable', 3);  //keep this tab enabled
+	
 	
 });
 
@@ -523,18 +545,100 @@ $('#submit').button().click(function() {}); //just to style the submit button
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
 
-							$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
-							c_example = 0;  //0 means that there are no examples selected
+		
+		if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+			if (tabCounter > 5)
+				tabCounter=5;
+		else
+			if(tabCounter > 6)
+				tabCounter=6;
 
-							$('#newExample').val(""); //clear the text from the example textbox
+	$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
+	c_example = 0;  //0 means that there are no examples selected
 
-							event.preventDefault(); // preventing from doing a post back when the button is clicked
+	$('#newExample').val(""); //clear the text from the example textbox
 
-							goToPrevTab();
+	event.preventDefault(); // preventing from doing a post back when the button is clicked
 
-							removeHTMLElements(); // remove all HTML elements
+	goToPrevTab();
+
+	removeHTMLElements(); // remove all HTML elements
 							
 });
+
+$('#impact_btn_next').button().click(function() { 
+	goToNextTab();
+});
+
+$('#back_to_money').button().click(function() { 
+	goToPrevTab();
+});
+
+$('#after_impact_btn').button().click(function() { 
+	goToNextTab();
+});
+
+$('#back_to_impact_btn').button().click(function() { 
+	goToPrevTab();
+});
+
+$(function() {  //slider for the interdependencies
+    var select = $( "#slides" );
+    var slider = $('#slider').slider({
+      orientation: "vertical",
+      min: 1,
+      max: 5,
+      range: "min",
+      value: select[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        select[ 0 ].selectedIndex = ui.value - 1;
+        $('.OptionDivs').hide();
+        var id= ui.value;
+		$('#displayOption'+id).show();
+      }
+    });
+    $( "#slides" ).change(function() {
+      slider.slider( "value", this.selectedIndex + 1 );
+      $('.OptionDivs').hide();
+      var id= this.selectedIndex + 1;
+	  $('#displayOption'+id).show();
+    });
+  });
+
+$(function() {  //slider for the monetary impact
+    var moneySelect = $( "#moneyRank" );
+    var moneySlider = $('#moneySlider').slider({
+      orientation: "vertical",
+      min: 1,
+      max: 5,
+      range: "min",
+      value: moneySelect[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        moneySelect[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#moneyRank" ).change(function() {
+      moneySlider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+
+$(function() {  //slider for impact ranking
+    var impact = $( "#impact" );
+    var impactSlider = $('#impactSlider').slider({
+      orientation: "vertical",
+      min: 1,
+      max: 11,
+      range: "min",
+      value: impact[ 0 ].selectedIndex + 1,
+      slide: function( event, ui ) {
+        impact[ 0 ].selectedIndex = ui.value - 1;
+      }
+    });
+    $( "#impact" ).change(function() {
+      impactSlider.slider( "value", this.selectedIndex + 1 );
+    });
+  });
+
 
 function removeHTMLElements(){
 

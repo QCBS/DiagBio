@@ -2,6 +2,26 @@
 #sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.0em; height: auto; }
 #sortable li span { position: absolute; margin-left: -1.3em; }
 
+.infoInterDivs{
+	background-color: #dfeffc;
+	border-style: solid;
+	border-width: medium;
+	border-color: #0B8EB5;
+	width: 45%;
+	right:10px;
+	top: 50px;
+	position: absolute;
+	border-radius: 10px;
+	padding:10px;
+}
+
+.exampleForInter{
+	right:50px;
+	bottom: 100px;
+	width:55%;
+	position:absolute;
+}
+
 .selectables{
 	position:relative;
 	left: -20px;
@@ -9,6 +29,17 @@
 	list-style-type: none;
 	margin: 0; 
 	padding: 0; 
+}
+
+.OptionDivs{
+	border-style: solid;
+	border-width: medium;
+	border-color: #0B8EB5;
+	padding:10px;
+	position: absolute;
+	right:710px;
+	bottom:140px;
+	width:5%;
 }
 
 .infoList{
@@ -19,7 +50,6 @@
 	border-radius: 10px;
 	padding:10px;
 }
-
 #imageOne{
 	position: absolute;
 	right: 55px;

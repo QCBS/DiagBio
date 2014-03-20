@@ -22,18 +22,16 @@ drupal_add_library('system', 'ui.widget');
 module_load_include('inc', 'profile2_page', 'profile2_page');
 drupal_add_js("http://code.highcharts.com/highcharts.js");
 drupal_add_js("http://code.highcharts.com/highcharts-more.js");
-drupal_add_js("http://code.highcharts.com/modules/exporting.js");
 drupal_add_js("testing/Jason/js/Inter_main.js");
 
 drupal_add_css('testing/Jason/css/CSS.css');
+drupal_add_js("http://code.highcharts.com/modules/exporting.js");
 
 include('Inter_main_php.php');
 include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 ?>
-	<!--<link href="testing/Jason/css/smoothness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-	<script src="testing/Jason/js/jquery-1.10.2.js"></script>
-	<script src="testing/Jason/js/jquery-ui-1.10.4.custom.js"></script> -->
+
 			<body>
 				<div id="accinfo">
 				<input type="hidden" id="userRole" value=<?php echo json_encode($role); ?>>
@@ -51,8 +49,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="classificationtab"><a href="#tab7">Classification</a></li>	
 						<li id="entreprisetab"><a href="#tab8">Analysez votre entreprise</a></li>
 						<li id="naturetab"><a href="#tab9">Nature dinterdependance</a></li>
-						<li id="evaltab"><a href="#tab10">Evaluez Votre Interdependance</a></li>
-						<li id="moneytab"><a href="#tab11">Impact Monétaire</a></li>
+						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
+						<li id="dependencetab"><a href="#tab11"></a>Evaluez Votre Interdependance</li>
+						<li id="impacttab"><a href="#tab12">Niveau d'Impact</a></li>
+						<li id="moneytab"><a href="#tab13">Impact Monétaire</a></li>
 					</ul>
 					<div id="tab1"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
@@ -418,7 +418,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 							while ($row = mysql_fetch_assoc($results)) 
 							{	echo '<div class="infoAndExamples">';
 								echo '<div><fieldset class="infoClassDivs" id="infoClassDiv'.$row['c_id'].'"> <legend class="font_legend"><strong>Description</strong></legend>'.$row['c_description'].'</fieldset></div>';  //create the information blocks for the classifications
-								echo '<div><fieldset class="classExampleDivs" id="classExampleDiv'.$row['c_id'].'"><legend class="font_legend"><strong>Example</strong></legend>'.$row['c_example'].'</fieldset></div>';  //create the class example divs
+								echo '<div><fieldset class="classExampleDivs" id="classExampleDiv'.$row['c_id'].'"><legend class="font_legend"><strong>Exemple</strong></legend>'.$row['c_example'].'</fieldset></div>';  //create the class example divs
 								echo '</div>';
 							}
 							$counter++;
@@ -440,7 +440,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab8">
 					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="get" >
 
-					<h3><b>Choisizzes une de ses Examples:</b></h3>
+					<h3><b>Choisissez une de ses Exemples:</b></h3>
 
 					 <?php
 					
@@ -467,7 +467,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								else
 								{
 						?>
-								<li class="ui-state-default" title="choisissez une de ces examples" id=<?php echo "\"" . $row['example_id'] . "\""; ?>><?php echo $row['example'];?></li>
+								<li class="ui-state-default" title="choisissez une de ces exemples" id=<?php echo "\"" . $row['example_id'] . "\""; ?>><?php echo $row['example'];?></li>
 						<?php
 								}
 								
@@ -480,7 +480,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						?>
 
 						<br><br>
-						<h3><b>Ajoutez votre propre example:</b></h3>
+						<h3><b>Ajoutez votre propre exemple:</b></h3>
 						 <input type="text" name="newExample" id="newExample"><br>
 						 <br><br>
 						
@@ -519,22 +519,21 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<div id="tab9">
 					
-					<h3>Choisissez la nature de votre exemple</h3>
+					<h3>Choisissez la nature de l'interdépendence</h3>
 					<!--<?php 
 						//$_SESSION['nature_choice'][$counter] = $_GET['nature']
 						//$counter++;
 					?> -->
 					<?php
-						$nature=array("Dépendance","Opportunité","Atout","Dimension monétaire");
+						$nature=array("Dépendance","Impact","Dépendance et Impact");
 						$count=1;
-						echo '<div class="selectInter" id="selectInter'.$count.'">';
+						echo '<div id="selectInter'.$count.'">';
 						echo '<ol class="selectable_i selectables" id="selectable'.$count.'">';
-						while($count <= 4)	 //go through each nature
+						while($count <= 3)	 //go through each nature
 						{
-							
 
 					?>
-								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" id="nature"+$count ><?php echo $nature[$count-1]; ?></li>
+								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" <?php echo 'id="Nature'.$count.'">'.$nature[$count-1];?></li>
 					<?php
 
 							$count++;  //go to the next nature
@@ -543,7 +542,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						echo '</ol>';
 						echo  '</div>';
 					?>					
-
+					<fieldset id="interNature1" class="infoInterDivs"><legend class="font_legend">Définition</legend>Ce service vous est avantageux, car il sert d’intrant ou offre des<br> 
+						conditions propices au bon fonctionnement de votre organisation.</fieldset>
+					<fieldset id="interNature2" class="infoInterDivs"><legend class="font_legend">Définition</legend>Votre organisation peut avoir un impact positif ou négatif sur le<br>
+					service écosystémique et donc sur la biodiversité. Cet impact<br>
+					affecte	la qualité du service en question (et éventuellement sa disponibilité.)</fieldset>
 
 					<button type="button" id="TAB9_BTN_BACK">Précédent</button>  <!-- go to tab 8 -->
 					<button type="button" id="TAB10_BTN_NEXT">Suivant</button> <!--go to tab 10 -->
@@ -551,37 +554,135 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<div id="tab10" class="ui-state-hidden">
 					
-					<h3> Interdependance</h3>
-					Evaluez Votre Interdependance
-					<select name="slides" id="slides">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
-				    <option>5</option>
-				  </select>
-				   <br><br><br><br><br><br>
-					<div id="slider" style="height:200px;"></div><br>
+					<?php
+						$choices=array("Risque","Opportunité","Risque et Opportunité");
+						$count=1;
+						echo '<div id="selectRisk'.$count.'">';
+						echo '<ol class="selectable_r selectables" id="selectable'.$count.'">';
+						while($count <= 3)	 //go through each choice to create a selectable
+						{
+
+					?>
+								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" <?php echo 'id="risk'.$count.'">'.$choices[$count-1];?></li>
+					<?php
+
+							$count++;  //go to the next choice
 					
+						}
+						echo '</ol>';
+						echo  '</div>';
+					?>				
+				 
+				 
 					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
 				</div>
 				<div id="tab11" >
+					<h3>Evaluez Votre Interdependance</h3>
+					
+					<div><fieldset><legend><b>Legend</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
+					Très forte : Le SE choisi est un facteur clef de vos activités, celles-ci<br>
+
+					<?php 
+							$loop=0;
+							while($loop < 16)
+							{
+								echo '&nbsp;';
+								$loop++;
+							}
+
+					?>
+
+					 en dépendent donc en grande partie.<br>
+					 </fieldset></div>
+
+					<select name="slides" id="slides">
+				   
+				    <?php 
+				    	$counting=1;
+				    	while($counting <= 5)
+				    	{
+				    		echo ' <option>'.$counting.'</option>';
+				    		$counting++;
+				    	}
+				    ?>
+				     </select>
+				   <br><br><br><br><br><br>
+
+				   <div id="displayOption1" class="OptionDivs">Très faible</div>
+				   <div id="displayOption2" class="OptionDivs">Faible</div>
+				   <div id="displayOption3" class="OptionDivs">Modéré</div>
+				   <div id="displayOption4" class="OptionDivs">Forte</div>
+				   <div id="displayOption5" class="OptionDivs">Très forte</b></div>
+
+					<div id="slider" style="height:200px;"></div><br>
+
+					<div><fieldset class="exampleForInter"><legend><b>Exemple</b></legend>Si vous construisez un barrage dans une zone naturelle vous avez un impact<br>
+					négatif sur le service : « protection des habitats naturels », mais vous <br>
+					avez aussi un impact positif sur « la régulation de la qualité de l’air »<br>
+					(l’énergie hydraulique étant une alternative aux émissions de GES du pétrole)<br>
+					</fieldset></div>
+					<br>
+
+					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="impact_btn_next">Suivant</button>
+				</div>
+
+				<div id="tab12" >
+					<h4>Qualifier le niveau d’impact de -5 à +5 :</h4>
+					<div><fieldset><legend><b>Legend</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
+					Un impact positif (0 à +5) a un effet avantageux sur le service écosystémique choisi.</b>
+				</fieldset></div>
+					<select name="impact" id="impact">
+				   
+				    <?php 
+				    	$counting=-5;
+				    	while($counting <= 5)
+				    	{
+				    		echo ' <option>'.$counting.'</option>';
+				    		$counting++;
+				    	}
+				    ?>
+				 
+				  </select>
+
+				    <br><br><br><br><br><br>
+					<div id="impactSlider" style="height:200px;"></div><br>
+
+					<div ><fieldset class="exampleForInter"><legend><b>Exemple</b></legend>Si la qualité du service ecosystémique choisi venait à être altérée par vous,<br>
+					 ou un autre utilisateur et que cela affecte une, ou plusieurs activités<br>
+					 de votre organisation au point de ne plus pouvoir l’exercer, alors, la<br>
+					 dépendance est très forte. Si cela n’a pas, ou peu, d’effet(s) sur vos<br>
+					 activité, alors votre dépendance est faible, voire très faible.</fieldset></div>
+					<br>
+
+					<button type="button" id="back_to_money">Précédent</button>
+					<button type="button" id="after_impact_btn">Suivant</button>
+				</div>
+				<div id="tab13" >
+
 					<h3>Impact Monétaire</h3><br>
-					Evaluez Votre Impact Monétaire
+					<b>Evaluez Votre Impact Monétaire</b>
 					<select name="moneyRank" id="moneyRank">
-				    <option>1</option>
-				    <option>2</option>
-				    <option>3</option>
-				    <option>4</option>
-				    <option>5</option>
+
+				 <?php
+				 	$counting=1;
+				 	while($counting <= 5)
+				 	{
+				    	echo ' <option>'.$counting.'</option>';
+				    	$counting++;
+				 	}
+				 ?>
+				 
 				  </select>
 				  <br><br><br><br><br><br>
 					<div id="moneySlider" style="height:200px;"></div><br>
 
-					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="back_to_impact_btn">Précédent</button>
+					<!--<button type="button" id="after_risk_btn">Suivant</button>	-->
 					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
 					<button type="button" id="BTN_QUIT">Quitter</button>
+					
 				</div>
 				</form>
 
