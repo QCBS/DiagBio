@@ -15,6 +15,15 @@ function getUrlVars() {
 (function ($) {
         		$(document).ready(function() {
 
+    					$( "#tabs-2" ).tabs(//the tab that displays mroe info on the first page
+    					{
+     				 		collapsible: true,
+     				 		selected: -1  //collapse the "en savoir plus" tab by default
+    					});
+  					
+
+        			$( ".ui-selected" ).selectable({ tolerance: "fit" });  //fixes the issue with the click event not firing from time to time
+
         			$('.infoDivs').hide();  //hide all the information blocks on the ecological services
 
         			$(".ui-state-default").hover(function(){  //display the info of the currently selected ecological service and hide all other info divs
@@ -23,7 +32,7 @@ function getUrlVars() {
 							$('#infoDiv'+id).show();
 					})
 
-        			$('.infoClassDivs').hide();  //hide all the information blocks on the classification of ecological services
+        			$('.infoClassDivs').hide();  //hide all the information blocks on the classifications
 
 
         			$('.classExampleDivs').hide();  //hide all the examples of the classifications
@@ -64,6 +73,11 @@ function getUrlVars() {
 
 					$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
 					$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
+					
+					$('.ImpactDivs').hide(); 
+					$('#displayImpact1').show();
+
+					//$('#title1').on('selectstart dragstart', function(evt){ evt.preventDefault(); return false; });
 
 					var userRole = jQuery('#userRole').val();
         			if ( userRole == "Unauthenticated" ){
@@ -145,7 +159,7 @@ function getUrlVars() {
 						var valid_input;
 						if(userRole	== "Participant")  //there should be one less tab for participant
 							var tabCounter = 2; //keeps track of which tab we're at
-						else
+						if(userRole == "Administration" || userRole== "Unauthenticated")
 							var tabCounter = 3; //keeps track of which tab we're at
 
 						$('.lists').hide(); // hiding all the divs corresponding to different classification selectable lists
@@ -206,12 +220,12 @@ function getUrlVars() {
 								
 						});
 
-						$(".selectable_r").selectable({  //make the interdependencies selectable
+						$(".selectable_n").selectable({  //make the nature of the risk/opuurtunity selectable
 								selected: function(event, ui) { 
 									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 									var result = $( "#select-result" ).empty();
 									$( ".ui-selected", this ).each(function() {
-										r_item = $(this).attr("id"); // getting the id of selected interdependency
+										n_item = $(this).attr("id"); // getting the id of selected slectable
 									}); 
 								}
 								
@@ -249,7 +263,7 @@ function getUrlVars() {
 										tabCounter=2;
 										$('#tabs').tabs('disable', 5);  //disable the examples part
 									}
-								else
+								if(userRole == "Administration" || userRole== "Unauthenticated")
 									if(tabCounter > 3)
 										tabCounter=3;
 
@@ -303,7 +317,7 @@ function getUrlVars() {
 											tabCounter=2;
 											$('#tabs').tabs('disable', 5);  //disable the examples part
 										}
-									else
+									if(userRole == "Administration" || userRole== "Unauthenticated")
 										if(tabCounter > 3)
 											tabCounter=3;
 
@@ -377,7 +391,7 @@ function getUrlVars() {
 
 $('#TAB9_BTN_NEXT').button().click(function() 
 {
-
+						alert(tabCounter);
 						if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
 						{
 							alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
@@ -390,10 +404,10 @@ $('#TAB9_BTN_NEXT').button().click(function()
 								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
 									if (tabCounter > 5)
 										tabCounter=5;
-								else
+								if(userRole == "Administration" || userRole== "Unauthenticated")
 									if(tabCounter > 6)
 										tabCounter=6;
-
+									alert(tabCounter);
 
 							if(c_example)  //was one of the examples selected 
 							{
@@ -424,25 +438,32 @@ $('#TAB9_BTN_BACK').button().click(function()
 $('#TAB10_BTN_NEXT').button().click(function() {
 		
 		if(i_item)
-		{
 			goToNextTab();
-		}
 		else  //tell the user to enter a choice
 			alert("SVP choissisez une de ses choix!");
 	});
 
 $('#TAB10_BTN_BACK').button().click(function() 
 {		
-	$('.selectable_r'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
-	r_item = 0; //reset the chosen_id to null
+	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the selected selectable
+	n_item = 0; //reset the selected id to null
+
 	goToPrevTab();
 });
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-	if(r_item)  //did the user select a risk and/or oppurtunity
-		goToNextTab();
+	if(n_item != "")  //did the user select a risk and/or oppurtunity?
+	{
+			if(i_item == "Nature1" || i_item == "Nature3")  //go to the dependence tab
+				goToNextTab();
+			if(i_item == "Nature2")  //go to impact tab
+			{
+				tabCounter++;
+				goToNextTab();
+			}
+	}
 	else  //the user did not select anything
-		alert("SVP choisissez une de ses choix!");
+		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
 });
 
 $('#TAB11_BTN_BACK').button().click(function() {
@@ -518,6 +539,26 @@ $('#BTN_QUIT').button().click(function() { // close the window which is not curr
 $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 { 
 	$('#newExample').val(""); //clear the text from the example textbox
+	
+	$('.selectable_i'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	i_item=0;  //resets the value
+	
+	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	i_item=0;  //resets the value
+	
+	$('.select_example'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	c_example=0;  //resets the value
+	
+	$("#slider").slider('value', 1);  //set the value back to default for the slider
+	$( "#slides" ).val('1'); //set the value back to default for the dropdown 
+	$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
+	$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
+
+	$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
+	$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
+	$('.ImpactDivs').hide();
+	$('#displayImpact1').show();
+
 	event.preventDefault();
 	removeHTMLElements();
 
@@ -526,16 +567,17 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 		tabCounter=2; //reset the counter
 		$('#tabs').tabs('disable', 5);  //disable the examples tab
 	}
-	else
+	if(userRole == "Administration" || userRole== "Unauthenticated")
 	{
 		tabCounter=3; //reset the counter
 		$('#tabs').tabs('disable', 6);  //disable the examples tab
 	}
 	
 	goToNextTab();
+
 	if(userRole	== "Participant") 
 		$('#tabs').tabs('enable', 2);  //keep this tab enabled
-	else
+	if(userRole == "Administration" || userRole== "Unauthenticated")
 		$('#tabs').tabs('enable', 3);  //keep this tab enabled
 	
 	
@@ -549,7 +591,7 @@ $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back
 		if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
 			if (tabCounter > 5)
 				tabCounter=5;
-		else
+		if(userRole == "Administration" || userRole== "Unauthenticated")
 			if(tabCounter > 6)
 				tabCounter=6;
 
@@ -567,10 +609,14 @@ $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back
 });
 
 $('#impact_btn_next').button().click(function() { 
+	if(i_item == "Nature1")
+		tabCounter++;
 	goToNextTab();
 });
 
 $('#back_to_money').button().click(function() { 
+	if(i_item == "Nature2")
+		tabCounter--;
 	goToPrevTab();
 });
 
@@ -579,6 +625,8 @@ $('#after_impact_btn').button().click(function() {
 });
 
 $('#back_to_impact_btn').button().click(function() { 
+	if(i_item == "Nature1")
+		tabCounter--;
 	goToPrevTab();
 });
 
@@ -593,15 +641,15 @@ $(function() {  //slider for the interdependencies
       slide: function( event, ui ) {
         select[ 0 ].selectedIndex = ui.value - 1;
         $('.OptionDivs').hide();
-        var id= ui.value;
-		$('#displayOption'+id).show();
+        var id= ui.value;  //get the id from the slider
+		$('#displayOption'+id).show();  //show the ranking
       }
     });
     $( "#slides" ).change(function() {
       slider.slider( "value", this.selectedIndex + 1 );
       $('.OptionDivs').hide();
-      var id= this.selectedIndex + 1;
-	  $('#displayOption'+id).show();
+      var id= this.selectedIndex + 1; //get the id from the drop dwon list
+	  $('#displayOption'+id).show();  //show the ranking
     });
   });
 
@@ -631,11 +679,17 @@ $(function() {  //slider for impact ranking
       range: "min",
       value: impact[ 0 ].selectedIndex + 1,
       slide: function( event, ui ) {
-        impact[ 0 ].selectedIndex = ui.value - 1;
+        impact[ 0 ].selectedIndex = ui.value - 1; 
+        var impactID= ui.value;  //get the id from the slider
+        $('.ImpactDivs').hide();
+        $('#displayImpact'+impactID).show();  //show the ranking
       }
     });
     $( "#impact" ).change(function() {
       impactSlider.slider( "value", this.selectedIndex + 1 );
+      var impactID= this.selectedIndex + 1;  //get the id from the drop down list
+      $('.ImpactDivs').hide();
+      $("#displayImpact" + impactID).show(); //show the ranking
     });
   });
 

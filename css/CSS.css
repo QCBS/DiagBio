@@ -42,6 +42,17 @@
 	width:5%;
 }
 
+.ImpactDivs{
+	border-style: solid;
+	border-width: medium;
+	border-color: #0B8EB5;
+	padding:10px;
+	position: absolute;
+	right:710px;
+	bottom:140px;
+	width:5%;
+}
+
 .infoList{
 	background-color: #dfeffc;
 	border-style: solid;
@@ -109,7 +120,7 @@ padding: 10px;
 
 .infoDivs{
 	right: 50px;
-	top: 200px;
+	top: 300px;
 	background-color: #dfeffc;
 	border-style: solid;
 	border-width: medium;

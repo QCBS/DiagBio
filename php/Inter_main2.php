@@ -144,14 +144,18 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								</ol>
 							</ul>
 
-							<div id="example">**en savoir plus** <br>
-							En effet, la biodiversité et ses interdépendances sont complexes à évaluer pour plusieurs raisons : elles sont difficiles à percevoir,<br>
-							 quantifier et mesurer. N’ayant pas encore mis au point de référentiel générique pour mesurer l’ensemble des interactions avec l<br>a <br>
+							<div id="tabs-2">
+  								<ul>
+    							<li><a href="#example">En savoir plus</a></li>
+    							</ul>
+							<div id="example"><br>
+							 En effet, la biodiversité et ses interdépendances sont complexes à évaluer pour plusieurs raisons : elles sont difficiles à percevoir,<br>
+							 quantifier et mesurer. N’ayant pas encore mis au point de référentiel générique pour mesurer l’ensemble des interactions avec la <br>
 							 biodiversité, les indicateurs nécessaires pour leur évaluation peuvent parfois nécessiter des données délicates à obtenir. <br>
 							 Par ailleurs, les indicateurs de biodiversité sont souvent évalués à différentes échelles (gènes, espèces, écosystèmes), et donc,<br> 
 							 très nombreux. Enfin, les résultats qu’ils permettent d’obtenir sont souvent plus orientés vers la conservation de la biodiversité <br>
-							 que sur son intégration au sein même des organisations (Levrel 2007).<br></div>
-
+							 que sur son intégration au sein même des organisations.<br></div>
+							</div>
 					</fieldset>
 
 					<fieldset class="infoList"><legend class="font_legend"><b>Rapports:</b></legend>
@@ -326,16 +330,45 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 				<div id="tab6">	
 					<h3>Choisissez un de ces services écologiques</h3>
-					<ol class="selectables" id="selectable">
+
+					<ol class="selectables" id="selectable">	
 						<?php
-
-
 						$query = "SELECT * FROM services_ecologiques order by se_id";
 						$results = mysql_query($query) or die('Error Fetching List From Database.');
 						while ($row = mysql_fetch_assoc($results)) { 
+
+							if($row['se_id'] <= 3 )
+							{
+								if ($row['se_id'] == 1)
+									echo '<h3 style="color:blue;">Services d’approvisionnement<br></h3>';
 							?>
-							<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" style="color:blue;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
+							}
+							if($row['se_id'] <= 7 && $row['se_id'] >= 4 ){
+								if ($row[se_id] == 4) {
+									echo '<h3 style="color:green;">Services de régulation<br></h3>';
+								}
+							?>
+								<li class="ui-state-default" style="color:green;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+							<?php
+							}
+							if($row['se_id'] <= 13 && $row['se_id'] > 9 ){
+								if ($row[se_id] == 11) {
+									echo '<h3 style="color:red;">Services culturels<br></h3>';
+								}
+							?>	
+								<li class="ui-state-default" style="color:red;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+							<?php
+							}
+							if($row['se_id'] == 14 ){
+							?>
+								<br>
+								<br>
+								<h3 style="color:purple;">Ressources naturelles<br></h3>
+								<li class="ui-state-default" style="color:purple;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+							<?php
+							}
 						}
 						?>
 					</ol>
@@ -381,7 +414,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								if($row['c_name'] == "Matières minérales")
 								{
 									echo '<h4>Ressources naturelles non issues du vivant</h4>'; 
-									echo 'Minéraux, substances nutritionnelles et énergie renouvelable<br><br>';
+									echo 'Les minéraux, substances nutritionnelles et énergie renouvelable nous sont<br>
+									 	  bénéfiques mais ne sont pas issus du vivant et ne peuvent donc pas être <br>
+									 	  considérés comme des services écosystémiques. Cependant, ils ont un rôle<br>
+									 	  à jouer pour la biodiversité et sont donc à prendre en compte lors de<br>
+									 	  l’évaluation.<br><br>';
 								}
 
 								if($row['c_name'] == "Énergie non renouvelable abiotique")
@@ -440,7 +477,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab8">
 					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="get" >
 
-					<h3><b>Choisissez une de ses Exemples:</b></h3>
+					<h3><b>Choisissez une de ses choix:</b></h3>
 
 					 <?php
 					
@@ -481,7 +518,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 						<br><br>
 						<h3><b>Ajoutez votre propre exemple:</b></h3>
-						 <input type="text" name="newExample" id="newExample"><br>
+						 <input type="text" name="newExample" id="newExample" style="width: 300px;"><br>
 						 <br><br>
 						
 						
@@ -553,17 +590,19 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 
 				<div id="tab10" class="ui-state-hidden">
-					
+
+					<h4>Nature de la Risque/Opportunité</h4>
+
 					<?php
-						$choices=array("Risque","Opportunité","Risque et Opportunité");
+						$natures=array("Opérationnel","Règlementaire et juridique","Réputation et image", "Marché et produits", "Financement");
 						$count=1;
-						echo '<div id="selectRisk'.$count.'">';
-						echo '<ol class="selectable_r selectables" id="selectable'.$count.'">';
-						while($count <= 3)	 //go through each choice to create a selectable
+						echo '<div id="selectNature'.$count.'">';
+						echo '<ol class="selectable_n selectables" id="selectableNature'.$count.'">';
+						while($count <= 5)	 //go through each choice to turn it into a selectable
 						{
 
 					?>
-								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" <?php echo 'id="risk'.$count.'">'.$choices[$count-1];?></li>
+								<li class="ui-state-default" title="choisissez une de ces natures" <?php echo 'id="NatureRisk'.$count.'">'.$natures[$count-1]; ?> </li>
 					<?php
 
 							$count++;  //go to the next choice
@@ -571,16 +610,16 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						}
 						echo '</ol>';
 						echo  '</div>';
-					?>				
-				 
-				 
+						?>
+
 					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
 				</div>
+
 				<div id="tab11" >
 					<h3>Evaluez Votre Interdependance</h3>
 					
-					<div><fieldset><legend><b>Legend</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
+					<div><fieldset><legend><b>légende</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
 					Très forte : Le SE choisi est un facteur clef de vos activités, celles-ci<br>
 
 					<?php 
@@ -630,14 +669,14 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<div id="tab12" >
 					<h4>Qualifier le niveau d’impact de -5 à +5 :</h4>
-					<div><fieldset><legend><b>Legend</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
+					<div><fieldset><legend><b>légende</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
 					Un impact positif (0 à +5) a un effet avantageux sur le service écosystémique choisi.</b>
 				</fieldset></div>
 					<select name="impact" id="impact">
 				   
 				    <?php 
 				    	$counting=-5;
-				    	while($counting <= 5)
+				    	while($counting <= 5)  //make the options for the drop down list
 				    	{
 				    		echo ' <option>'.$counting.'</option>';
 				    		$counting++;
@@ -645,6 +684,16 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				    ?>
 				 
 				  </select>
+
+				  	 <?php 
+				    	$counting=1;
+				    	while($counting <= 11)  //make the divs that go witht the options
+				    	{
+				    		$displayCount = $counting-6;
+				    		echo '<div id="displayImpact'.$counting.'" class="ImpactDivs"><b>'.$displayCount.'</b></div>';
+				    		$counting++;
+				    	}
+				    ?>
 
 				    <br><br><br><br><br><br>
 					<div id="impactSlider" style="height:200px;"></div><br>
