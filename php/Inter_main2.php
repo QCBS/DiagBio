@@ -548,11 +548,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<input type="hidden" id="the_report" name="the_report" value=""/>
 					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
 					<input type="hidden" id="c_i" name="c_i" value="">
+					<input type="hidden" id="chosenExample" name="chosenExample" value="">
 					<input type="hidden" id="hiddenExistingExamples" name="hiddenExistingExamples" value="">
 					<input type="hidden" id="hiddenNewExamples" name="hiddenNewExamples" value="">
 			
 			</div>
-
 
 				<div id="tab9">
 					
@@ -570,7 +570,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						{
 
 					?>
-								<li class="ui-state-default" title="choisissez une de ces nature d'exemples" <?php echo 'id="Nature'.$count.'">'.$nature[$count-1];?></li>
+							<li class="ui-state-default" title="choisissez une de ces nature d'exemples" <?php echo 'id="Nature'.$count.'" value="'.$nature[$count-1].'">'.$nature[$count-1];?></li>
 					<?php
 
 							$count++;  //go to the next nature
@@ -585,6 +585,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					service écosystémique et donc sur la biodiversité. Cet impact<br>
 					affecte	la qualité du service en question (et éventuellement sa disponibilité.)</fieldset>
 
+					<input type="hidden" id="inter" name="inter" value="">
 					<button type="button" id="TAB9_BTN_BACK">Précédent</button>  <!-- go to tab 8 -->
 					<button type="button" id="TAB10_BTN_NEXT">Suivant</button> <!--go to tab 10 -->
 				</div>
@@ -611,7 +612,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						echo '</ol>';
 						echo  '</div>';
 						?>
-
+					<input type="hidden" id="riskOrOpp" name="riskOrOpp" value="">
 					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
 				</div>
@@ -662,7 +663,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					(l’énergie hydraulique étant une alternative aux émissions de GES du pétrole)<br>
 					</fieldset></div>
 					<br>
-
+					<input type="hidden" id="interdependance" name="interdependance" value="">
 					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
 					<button type="button" id="impact_btn_next">Suivant</button>
 				</div>
@@ -704,7 +705,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					 dépendance est très forte. Si cela n’a pas, ou peu, d’effet(s) sur vos<br>
 					 activité, alors votre dépendance est faible, voire très faible.</fieldset></div>
 					<br>
-
+					<input type="hidden" id="hiddenImpact" name="hiddenImpact" value="">
 					<button type="button" id="back_to_money">Précédent</button>
 					<button type="button" id="after_impact_btn">Suivant</button>
 				</div>
@@ -726,10 +727,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				  </select>
 				  <br><br><br><br><br><br>
 					<div id="moneySlider" style="height:200px;"></div><br>
-
 					<button type="button" id="back_to_impact_btn">Précédent</button>
 					<!--<button type="button" id="after_risk_btn">Suivant</button>	-->
 					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
+					<input type="hidden" id="numOfExamples" name="numOfExamples" value="">
+					<input id="submit" type="submit" value="Enregistrer vos données">
 					<button type="button" id="BTN_QUIT">Quitter</button>
 					
 				</div>

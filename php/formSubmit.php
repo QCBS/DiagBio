@@ -7,7 +7,7 @@
 	require_once './includes/bootstrap.inc';
 	drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
-	// this file is in progress and it will  be done by 8th of may 2013
+	// this file is in progress and it will  be done by 8th of may 2014
 	// Connect to the Database
 	$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
 
@@ -16,11 +16,13 @@
 	mysql_query("SET CHARACTER SET 'utf8'");
 
 	// Get Data from Post.
-	$newExamples = $_GET['hiddenNewExamples'];
-	$existingExamples = $_GET['hiddenExistingExamples'];
 	$reportid = $_GET['the_report'];
 	$userid = $_GET['the_user'];
 	$cid = $_GET['c_i'];
+	$example = $_POST['chosenExample'];
+	$risksAndOpp = $_POST['riskOrOpp'];
+	$hidenDependance = $_POST['interdependance'];
+	$hiddenImpact = $_POST['hiddenImpact'];
 
 	$account = user_load($userid); // Load Themporary User with "Administration" Role.
 	$profile = profile2_load_by_user($account); // Load The Profile2 Data Associated to The User.
@@ -65,13 +67,13 @@
 			$evalu = $_GET['newTheEvalu'.$i];
 			$money = $_GET['newTheMoney'.$i];
 
-			$query = mysql_query("INSERT INTO interdependances VALUES ('$reportid', $userid, $cid, \"" . $example . "\",'$nature', $evalu, $money )");
+			$query = mysql_query("INSERT INTO interdependances VALUES ('$reportid', $userid, $cid, $example ,'$nature', $evalu, $money )");
 			
 		}
 
 	}
 
-	if($existingExamples){
+	/*if($existingExamples){
 		
 		for($i = 1; $i<=$existingExamples;$i++){
 			$example = $_GET['exiTheExample'.$i];
@@ -81,7 +83,7 @@
 
 			$query = mysql_query("INSERT INTO interdependances VALUES ('$reportid', $userid, $cid, \"" . $example . "\",'$nature', $evalu, $money )");
 		}
-	}
+	}*/
 
 	mysql_close($con);
 

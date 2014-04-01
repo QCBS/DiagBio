@@ -77,8 +77,6 @@ function getUrlVars() {
 					$('.ImpactDivs').hide(); 
 					$('#displayImpact1').show();
 
-					//$('#title1').on('selectstart dragstart', function(evt){ evt.preventDefault(); return false; });
-
 					var userRole = jQuery('#userRole').val();
         			if ( userRole == "Unauthenticated" ){
         				var elem = document.getElementById('tab5');  //2
@@ -153,6 +151,8 @@ function getUrlVars() {
 						var c_item; // keeing track of selected classification
 						var c_example;//gets the id of the selected example
 						var i_item; //gets the id of the selected interdependency
+						var n_item;  //gets the id of the selected nature of the risk
+						var examplesCounter;  //number of examples submitted by the user
 						var newCounter = 1; // counter for the new HTML element
 						var exiCounter = 1; // counter for the existing HTML elements
 						var report_id;
@@ -412,10 +412,12 @@ $('#TAB9_BTN_NEXT').button().click(function()
 							if(c_example)  //was one of the examples selected 
 							{
 								goToNextTab();
+								$("#chosenExample").val(c_example);  //get the example for the database
 							}
 							else if( $('#newExample').val() != '')  //was the testbox used?
 							{
 								goToNextTab();
+								$("#chosenExample").val($('#newExample').val());  //get the example for the database
 							}
 							else  //were there no examples given?
 							{
@@ -438,7 +440,12 @@ $('#TAB9_BTN_BACK').button().click(function()
 $('#TAB10_BTN_NEXT').button().click(function() {
 		
 		if(i_item)
+		{
+			$("#inter").val($("#"+i_item).text());
+			alert($("#"+i_item).text());
+			alert(i_item);
 			goToNextTab();
+		}
 		else  //tell the user to enter a choice
 			alert("SVP choissisez une de ses choix!");
 	});
@@ -454,8 +461,12 @@ $('#TAB10_BTN_BACK').button().click(function()
 $('#TAB11_BTN_NEXT').button().click(function() {
 	if(n_item != "")  //did the user select a risk and/or oppurtunity?
 	{
+		$("#riskOrOpp").val($("#"+n_item).text());
+		alert($("#"+n_item).text());
 			if(i_item == "Nature1" || i_item == "Nature3")  //go to the dependence tab
+			{
 				goToNextTab();
+			}
 			if(i_item == "Nature2")  //go to impact tab
 			{
 				tabCounter++;
@@ -583,16 +594,16 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	
 });
 
-$('#submit').button().click(function() {}); //just to style the submit button
+$('#submit').button().click(function() {  //submit to the databse
+	examplesCounter++;
+	$("#numOfExamples").val(examplesCounter);
+}); 
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
-
-		
+	
 		if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
-			if (tabCounter > 5)
 				tabCounter=5;
 		if(userRole == "Administration" || userRole== "Unauthenticated")
-			if(tabCounter > 6)
 				tabCounter=6;
 
 	$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
@@ -612,6 +623,8 @@ $('#impact_btn_next').button().click(function() {
 	if(i_item == "Nature1")
 		tabCounter++;
 	goToNextTab();
+
+	$("#interdependance").val($( "#slides option:selected" ).text());  //inserts the chosen value into a hidden field
 });
 
 $('#back_to_money').button().click(function() { 
@@ -622,6 +635,7 @@ $('#back_to_money').button().click(function() {
 
 $('#after_impact_btn').button().click(function() { 
 	goToNextTab();
+	$("#hiddenImpact").val($( "#impact option:selected" ).text());
 });
 
 $('#back_to_impact_btn').button().click(function() { 
