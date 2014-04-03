@@ -14,13 +14,32 @@ function getUrlVars() {
         	
 (function ($) {
         		$(document).ready(function() {
-
-    					$( "#tabs-2" ).tabs(//the tab that displays mroe info on the first page
+        			$('#moneyinput').addClass("hide");
+        			$("input:radio[name=moneyType]").click(function() {
+    					var value = $(this).val();
+    					if(value == "")
     					{
-     				 		collapsible: true,
-     				 		selected: -1  //collapse the "en savoir plus" tab by default
-    					});
-  					
+    						$('#moneyinput').removeClass("hide");
+    						$('#moneyinput').addClass("show");
+    					}
+    					else
+    					{
+    						$('#moneyinput').addClass("hide");
+    						$('#moneyinput').val("");
+    					}
+					});
+
+    				$( "#tabs-2" ).tabs(//the tab that displays mroe info on the first page
+    				{
+     				 	collapsible: true,
+     				 	selected: -1  //collapse the "en savoir plus" tab by default
+    				});
+
+    				$( "#tabs-3" ).tabs(//the tab that displays mroe info on the first page
+    				{
+     					collapsible: true,
+     					selected: -1  //collapse the "en savoir plus" tab by default
+    				});
 
         			$( ".ui-selected" ).selectable({ tolerance: "fit" });  //fixes the issue with the click event not firing from time to time
 
@@ -71,6 +90,11 @@ function getUrlVars() {
 						$('#inter'+id).show();
         			})
 
+        			$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
+							var id=$(this).attr('id');
+							$('#inter'+id).hide();
+					})
+
 					$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
 					$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
 					
@@ -115,6 +139,10 @@ function getUrlVars() {
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('moneytab');
         				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab14'); //10
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('parametertab');
+        				elem.parentNode.removeChild(elem);
 						$('#tabs').tabs(); // Generate Tabs With The Default Settings.
 					}
 					if ( userRole == "Unauthenticated" || userRole == "Participant" ){
@@ -122,6 +150,10 @@ function getUrlVars() {
 						elem.parentNode.removeChild(elem);
 						var elem = document.getElementById('admintools');
 						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('tab14'); //10
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('parametertab');
+        				elem.parentNode.removeChild(elem);
 					}
 					if ( userRole != "Unauthenticated" ){  //removes the following tab(s) 
 						var elem = document.getElementById('tab3');
@@ -136,9 +168,10 @@ function getUrlVars() {
 						$('#moneytab').hide();
 						$('#impacttab').hide();
 						$('#risktab').hide();
+						$('#parametertab').hide();
 
 						if ( userRole == "Administration" ){
-							var disableTabs = [4,5,6];
+							var disableTabs = [5,6,7];
 							var compensateTab = 1;
 						}
 						else {
@@ -235,7 +268,7 @@ function getUrlVars() {
 		function goToNextTab()  //this counter will allow us to navigate forward through the tabs, starting at tab 3(reports list)
 		{
 			tabCounter++;  //increment to the current tab
-			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab (3rd tab) and disable the 2rd one
+			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab and disable the 2rd one
 			tabCounter--;  //decrememnt to last tab
 			$( "#tabs" ).tabs( 'disable',tabCounter );
 			tabCounter++;  //incrememnt back to current tab
@@ -244,7 +277,7 @@ function getUrlVars() {
 		function goToPrevTab()  //this counter will allow us to navigate backward through the tabs, starting at tab 3(reports list)
 		{
 			tabCounter--;  //decrememnt to current tab
-			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab (3rd tab) and disable the 2rd one
+			$( "#tabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab and disable the 2rd one
 			tabCounter++;  //incrememnt to last tab
 			$( "#tabs" ).tabs( 'disable',tabCounter );
 			tabCounter--;  //decrement back to current tab
@@ -256,19 +289,20 @@ function getUrlVars() {
 
 								$("#the_report").val(report_id);
 
-
 								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
 									if (tabCounter > 2)
 									{
 										tabCounter=2;
-										$('#tabs').tabs('disable', 5);  //disable the examples part
+										$('#tabs').tabs('disable', 5);  //disable the examples tab
 									}
 								if(userRole == "Administration" || userRole== "Unauthenticated")
-									if(tabCounter > 3)
-										tabCounter=3;
-
+									if(tabCounter > 4)
+									{
+										tabCounter=4;
+										$('#tabs').tabs('disable', 7);  //disable the examples tab
+									}
 								goToNextTab();
-								$('#tabs').tabs('enable', tabCounter-1);  //leave this tab enabled
+								$('#tabs').tabs('enable', tabCounter-1);  //leave the current tab(reports) enabled
 
 							}
 							else{
@@ -281,7 +315,6 @@ function getUrlVars() {
 							var theValid;
 							var ridInput = document.getElementById("new_report"); // getting the textbox field on 1st tab
 							
-
 							if (ridInput && ridInput.value) { // ckeching if the textbox has value
 
 								valid_input = true;
@@ -315,11 +348,14 @@ function getUrlVars() {
 										if (tabCounter > 2)
 										{
 											tabCounter=2;
-											$('#tabs').tabs('disable', 5);  //disable the examples part
+											$('#tabs').tabs('disable', 5);  //disable the examples tab
 										}
 									if(userRole == "Administration" || userRole== "Unauthenticated")
-										if(tabCounter > 3)
-											tabCounter=3;
+										if(tabCounter > 4)
+										{
+											tabCounter=4;
+											$('#tabs').tabs('disable', 7);  //disable the examples tab
+										}
 
 								goToNextTab();
 								$('#tabs').tabs('enable', tabCounter-1);  //leave this tab enabled
@@ -405,14 +441,14 @@ $('#TAB9_BTN_NEXT').button().click(function()
 									if (tabCounter > 5)
 										tabCounter=5;
 								if(userRole == "Administration" || userRole== "Unauthenticated")
-									if(tabCounter > 6)
-										tabCounter=6;
+									if(tabCounter > 7)
+										tabCounter=7;
 									alert(tabCounter);
 
 							if(c_example)  //was one of the examples selected 
 							{
 								goToNextTab();
-								$("#chosenExample").val(c_example);  //get the example for the database
+								$("#chosenExample").val($("#"+c_example).text());  //get the example for the database
 							}
 							else if( $('#newExample').val() != '')  //was the testbox used?
 							{
@@ -425,8 +461,6 @@ $('#TAB9_BTN_NEXT').button().click(function()
 							}
 
 							$('#tabs').tabs('enable', tabCounter-1);  //enable this tab for the rest of the evaluation
-							
-
 						}
 
 });
@@ -442,8 +476,6 @@ $('#TAB10_BTN_NEXT').button().click(function() {
 		if(i_item)
 		{
 			$("#inter").val($("#"+i_item).text());
-			alert($("#"+i_item).text());
-			alert(i_item);
 			goToNextTab();
 		}
 		else  //tell the user to enter a choice
@@ -459,19 +491,17 @@ $('#TAB10_BTN_BACK').button().click(function()
 });
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-	if(n_item != "")  //did the user select a risk and/or oppurtunity?
+	if(n_item && (i_item == "Nature1" || i_item == "Nature3"))  //did the user select a risk and/or oppurtunity?
 	{
+	  //go to the dependence tab
 		$("#riskOrOpp").val($("#"+n_item).text());
-		alert($("#"+n_item).text());
-			if(i_item == "Nature1" || i_item == "Nature3")  //go to the dependence tab
-			{
-				goToNextTab();
-			}
-			if(i_item == "Nature2")  //go to impact tab
-			{
+		goToNextTab();
+	}
+	else if(n_item && i_item == "Nature2")  //go to impact tab
+	{
+				$("#riskOrOpp").val($("#"+n_item).text());
 				tabCounter++;
 				goToNextTab();
-			}
 	}
 	else  //the user did not select anything
 		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
@@ -489,8 +519,7 @@ $('#C_BTN_NEXT').button().click(function() {
 
 	if(c_item){
 	
-
-		$("#c_i").val(c_item);
+		$("#c_i").val($("#"+c_item).text());
 								var theDropdownDiv = $(document.createElement('div')) // a div which will contain a textbox
 								.attr("id", 'theDD');
 
@@ -580,8 +609,8 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	}
 	if(userRole == "Administration" || userRole== "Unauthenticated")
 	{
-		tabCounter=3; //reset the counter
-		$('#tabs').tabs('disable', 6);  //disable the examples tab
+		tabCounter=4; //reset the counter
+		$('#tabs').tabs('disable', 7);  //disable the examples tab
 	}
 	
 	goToNextTab();
@@ -589,14 +618,12 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	if(userRole	== "Participant") 
 		$('#tabs').tabs('enable', 2);  //keep this tab enabled
 	if(userRole == "Administration" || userRole== "Unauthenticated")
-		$('#tabs').tabs('enable', 3);  //keep this tab enabled
-	
-	
+		$('#tabs').tabs('enable', 4);  //keep this tab enabled
 });
 
 $('#submit').button().click(function() {  //submit to the databse
 	examplesCounter++;
-	$("#numOfExamples").val(examplesCounter);
+	$("#numOfExamples").val(examplesCounter.val());
 }); 
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
@@ -604,7 +631,7 @@ $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back
 		if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
 				tabCounter=5;
 		if(userRole == "Administration" || userRole== "Unauthenticated")
-				tabCounter=6;
+				tabCounter=7;
 
 	$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
 	c_example = 0;  //0 means that there are no examples selected
@@ -639,10 +666,35 @@ $('#after_impact_btn').button().click(function() {
 });
 
 $('#back_to_impact_btn').button().click(function() { 
+	if("#moneyinput" != "")
+	{
+		$("#typeOfMoney").val($("#moneyinput").val());
+		alert($("#moneyinput").val());
+	}
+	else
+	{
+		$("#typeOfMoney").val($('input[name=moneyType]:checked').val());
+		alert($("#typeOfMoney").val());
+	}
 	if(i_item == "Nature1")
 		tabCounter--;
 	goToPrevTab();
 });
+
+$('#TAB14_BTN_BACK').button().click(function() {
+	alert(tabCounter); 
+	goToPrevTab();
+	alert(tabCounter);
+});
+
+$('#TAB14_CREATE_BTN').button().click(function() { 
+	goToPrevTab();
+	var organisationName = $('#OrgaName').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
+	// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
+	AdID=$('#AdminID').val();
+	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgname: organisationName, adminid: AdID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
+});
+
 
 $(function() {  //slider for the interdependencies
     var select = $( "#slides" );
@@ -667,22 +719,6 @@ $(function() {  //slider for the interdependencies
     });
   });
 
-$(function() {  //slider for the monetary impact
-    var moneySelect = $( "#moneyRank" );
-    var moneySlider = $('#moneySlider').slider({
-      orientation: "vertical",
-      min: 1,
-      max: 5,
-      range: "min",
-      value: moneySelect[ 0 ].selectedIndex + 1,
-      slide: function( event, ui ) {
-        moneySelect[ 0 ].selectedIndex = ui.value - 1;
-      }
-    });
-    $( "#moneyRank" ).change(function() {
-      moneySlider.slider( "value", this.selectedIndex + 1 );
-    });
-  });
 
 $(function() {  //slider for impact ranking
     var impact = $( "#impact" );
@@ -986,10 +1022,14 @@ if ( userRole == "Administration" ) {
 						});
 
 						$('#create_report').button().click(function() { // Create The Report Creation Button.
-							var organisationName = $('#OrgaName').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
+							if(tabCounter > 2)
+								tabCounter=2;
+							goToNextTab();
+							$('#tabs').tabs('enable', tabCounter-1);
+							//var organisationName = $('#OrgaName').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
 							// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
-							AdID=$('#AdminID').val();
-							$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgname: organisationName, adminid: AdID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
+							//AdID=$('#AdminID').val();
+							//$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgname: organisationName, adminid: AdID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
 						});
 
 						$('#delete_report').button().click(function() { // Create The Report Deletion Button.

@@ -44,6 +44,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="question"><a href="#tab2">Questions à se poser</a></li>
 						<li id="login"><a href="#tab3">Enregistrement/Identification</a></li>
 						<li id="admintools"><a href="#tab4">Outils d'administration</a></li>
+						<li id="parametertab"><a href="#tab14">Objectif et périmètre</a></li>
 						<li id="userview"><a href="#tab5">Liste de rapports</a></li>
 						<li id="servicetab"><a href="#tab6">Services Écologiques</a></li>
 						<li id="classificationtab"><a href="#tab7">Classification</a></li>	
@@ -149,12 +150,15 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
     							<li><a href="#example">En savoir plus</a></li>
     							</ul>
 							<div id="example"><br>
-							 En effet, la biodiversité et ses interdépendances sont complexes à évaluer pour plusieurs raisons : elles sont difficiles à percevoir,<br>
-							 quantifier et mesurer. N’ayant pas encore mis au point de référentiel générique pour mesurer l’ensemble des interactions avec la <br>
-							 biodiversité, les indicateurs nécessaires pour leur évaluation peuvent parfois nécessiter des données délicates à obtenir. <br>
-							 Par ailleurs, les indicateurs de biodiversité sont souvent évalués à différentes échelles (gènes, espèces, écosystèmes), et donc,<br> 
-							 très nombreux. Enfin, les résultats qu’ils permettent d’obtenir sont souvent plus orientés vers la conservation de la biodiversité <br>
-							 que sur son intégration au sein même des organisations.<br></div>
+								Parler de biodiversité, c’est avant tout s’intéresser aux  relations qu’entretiennent les espèces (dont l’espèce humaine), entre<br>
+							    elles, et avec les milieux physiques et chimiques. Pour prendre en compte la biodiversité il faut donc s’intéresser aux <br>
+							    interactions entre le vivant et le non vivant. La biodiversité ne relève pas uniquement du descriptif, mais bien du fonctionnel <br>
+							    et c’est pourquoi elle est si difficile à évaluer.  Ces interdépendances sont difficiles à percevoir, quantifier et mesurer. Par<br>
+							    ailleurs, les indicateurs de biodiversité sont souvent évalués à différentes échelles (gènes, espèces, écosystèmes), et donc,<br>
+							    très nombreux. C’est pourquoi les scientifiques ont élaborés le concept des « services écologiques » (SE)[1, particulièrement<br>
+							    utile pour illustrer l’interdépendance du social et de l’économique avec le monde vivant. Les SE sont les bénéfices que nous<br>
+							    retirons du fonctionnement des écosystèmes. Ils sont issus de la biodiversité mais surtout des processus écologiques<br>
+							    issus des interactions entre les espèces et dont différents acteurs économiques peuvent retirer des services écologiques.<br>
 							</div>
 					</fieldset>
 
@@ -329,7 +333,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					</div>
 				</div>
 				<div id="tab6">	
-					<h3>Choisissez un de ces services écologiques</h3>
+					<h3>Choisissez un groupe de services écosystémiques :</h3>
 
 					<ol class="selectables" id="selectable">	
 						<?php
@@ -340,33 +344,33 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 							if($row['se_id'] <= 3 )
 							{
 								if ($row['se_id'] == 1)
-									echo '<h3 style="color:blue;">Services d’approvisionnement<br></h3>';
+									echo '<h3>Services d’approvisionnement<br></h3>';
 							?>
-								<li class="ui-state-default" style="color:blue;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] <= 7 && $row['se_id'] >= 4 ){
 								if ($row[se_id] == 4) {
-									echo '<h3 style="color:green;">Services de régulation<br></h3>';
+									echo '<h3>Services de régulation<br></h3>';
 								}
 							?>
-								<li class="ui-state-default" style="color:green;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] <= 13 && $row['se_id'] > 9 ){
 								if ($row[se_id] == 11) {
-									echo '<h3 style="color:red;">Services culturels<br></h3>';
+									echo '<h3>Services culturels<br></h3>';
 								}
 							?>	
-								<li class="ui-state-default" style="color:red;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] == 14 ){
 							?>
 								<br>
 								<br>
-								<h3 style="color:purple;">Ressources naturelles<br></h3>
-								<li class="ui-state-default" style="color:purple;" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<h3>Ressources naturelles<br></h3>
+								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 						}
@@ -556,7 +560,8 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<div id="tab9">
 					
-					<h3>Choisissez la nature de l'interdépendence</h3>
+					<h3>Quelle est la nature de l’interdépendance entre votre organisation et le cas choisit?</h3>
+					<h3>Est-ce :</h3>
 					<!--<?php 
 						//$_SESSION['nature_choice'][$counter] = $_GET['nature']
 						//$counter++;
@@ -710,31 +715,81 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<button type="button" id="after_impact_btn">Suivant</button>
 				</div>
 				<div id="tab13" >
-
-					<h3>Impact Monétaire</h3><br>
-					<b>Evaluez Votre Impact Monétaire</b>
-					<select name="moneyRank" id="moneyRank">
-
-				 <?php
-				 	$counting=1;
-				 	while($counting <= 5)
-				 	{
-				    	echo ' <option>'.$counting.'</option>';
-				    	$counting++;
-				 	}
-				 ?>
-				 
-				  </select>
-				  <br><br><br><br><br><br>
-					<div id="moneySlider" style="height:200px;"></div><br>
+					<h3>Bénéficier de ce BSE requiert-il un paiement de votre part?</h3>
+				 	<input type="radio" name="money" value="yes"><b>yes<br>
+				 	<input type="radio" name="money" value="no">no</b><br>
+				 	<br>
+				 	<h3>Lequel :</h3>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Taxe"><b>Taxe<br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Redevance,">Redevance<br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Paiement pour services environnementaux">Paiement pour services environnementaux</b><br>
+				 	<input type="radio" name="moneyType" id="moneyType" value=""><b>Autre</b><br>
+				 	<input type="text" name="moneyinput" id="moneyinput" style="width:300px;">
+				 	<br><br><br>
 					<button type="button" id="back_to_impact_btn">Précédent</button>
-					<!--<button type="button" id="after_risk_btn">Suivant</button>	-->
 					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
+					<input type="hidden" id="typeOfMoney" name="typeOfMoney" value="">
 					<input type="hidden" id="numOfExamples" name="numOfExamples" value="">
 					<input id="submit" type="submit" value="Enregistrer vos données">
 					<button type="button" id="BTN_QUIT">Quitter</button>
-					
 				</div>
+
+				<div id="tab14" >
+					<h3>Objectif et périmètre</h3>
+					<br>
+					<h4>Quel est/sont le(s) mandat(s) que votre organisation se donne pour cette évaluation?<br></h4>
+					<textarea rows="4" cols="50"></textarea>
+					<h4>Définir le périmètre et déterminer les limites de l’évaluation :<br></h4>
+					<textarea rows="4" cols="50"></textarea>
+
+					<br><br><br>
+
+					<div id="tabs-3">
+  						<ul>
+    						<li><a href="#example2">En savoir plus sur le périmètre et déterminer les limites </a></li>
+    					</ul>
+						<div id="example2"><br>
+							<b>L’organisation comme un système :</b> Pour étudier les interdépendances d’une organisation<br>
+							avec la biodiversité et les services écosystémiques, il est important de la considérer<br>
+							comme un système simplifié. Le système permet de représenter les différentes entités <br>
+							de l’organisation, et notamment, les flux économiques de la ou des chaines <br>
+							d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet <br>
+							également d’identifier les intrants (matière première issue des écosystèmes) et <br>
+							sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec<br>
+							les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).<br>
+							<br>
+							<b>Déterminer les limites de chaque évaluation :</b> l’organisation doit se fixer des objectifs<br>
+							réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de<br>
+							ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de<br>
+							l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque<br>
+							composante géographique du système comme une entité distinctes, Ceci permet de faire <br>
+							correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation <br>
+							pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de <br>
+							ses activités.<br>
+						</div>
+					</div>
+
+					<br><br>
+
+					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
+					<input type="radio" name="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
+																		 	  		coordonnée sera associée à cette entrée dans la base de données.<br>
+					<input type="radio" name="define" value=""><b>Utiliser des données vectorielles existantes qui sont déjà géo référencées :</b> cours d’eau,<br>
+																		 			polygones issus de la télédétection qui ont été classes selon les types d’usages.<br>
+					<input type="radio" name="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
+					 													 		mobiles comme les téléphones intelligents.</b> Les points sont collectes dans une base de données<br>
+					  													 		géo référencée par les participants.<br><br><br>
+
+					<h4>Commencer à réfléchir aux composantes du système (votre organisation)?</h4>
+					<input type="radio" name="components" value="">Objectif et fonctions<br>
+					<input type="radio" name="components" value="">Intrant / extrant<br>
+					<input type="radio" name="components" value="">Sous-systèmes : structurel, culturel et humain, technique et stratégique<br><br>
+
+					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="TAB14_CREATE_BTN">Créer le Rapport</button>
+
+				</div>
+
 				</form>
 
 		</div>	

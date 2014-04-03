@@ -20,9 +20,13 @@
 	$userid = $_GET['the_user'];
 	$cid = $_GET['c_i'];
 	$example = $_POST['chosenExample'];
-	$risksAndOpp = $_POST['riskOrOpp'];
+	$interdependance = $_POST['inter'];
+	$nature = $_POST['riskOrOpp'];
 	$hidenDependance = $_POST['interdependance'];
 	$hiddenImpact = $_POST['hiddenImpact'];
+	$money  = $_POST['money'];
+	$moneyType = $_POST['moneyType'];
+
 
 	$account = user_load($userid); // Load Themporary User with "Administration" Role.
 	$profile = profile2_load_by_user($account); // Load The Profile2 Data Associated to The User.
@@ -57,22 +61,8 @@
 				break;
 		}
 	}
-
-	if($newExamples){
-		
-		for($i = 1; $i<=$newExamples;$i++){
-
-			$example = $_GET['newTheExample'.$i];
-			$nature = $_GET['newTheNature'.$i];
-			$evalu = $_GET['newTheEvalu'.$i];
-			$money = $_GET['newTheMoney'.$i];
-
-			$query = mysql_query("INSERT INTO interdependances VALUES ('$reportid', $userid, $cid, $example ,'$nature', $evalu, $money )");
-			
-		}
-
-	}
-
+	$query = mysql_query("INSERT INTO interdependances VALUES ($reportid, $userid, $cid, $example, $interdependence,$nature, $hiddenDependance, $money )");	
+	
 	/*if($existingExamples){
 		
 		for($i = 1; $i<=$existingExamples;$i++){
