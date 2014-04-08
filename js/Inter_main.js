@@ -82,8 +82,6 @@ function getUrlVars() {
 							$(this).removeClass('ui-selecting');
 					})
 
-					$('.infoInterDivs').hide();
-
 					$(".ui-state-default").hover(function(){  //display the info for the highlighted nature of the interdependency
         				var id=$(this).attr('id');
         				$('[id^=inter]').hide();
@@ -184,6 +182,7 @@ function getUrlVars() {
 						var c_item; // keeing track of selected classification
 						var c_example;//gets the id of the selected example
 						var i_item; //gets the id of the selected interdependency
+						var i2_item;//gets the id of the selected impact
 						var n_item;  //gets the id of the selected nature of the risk
 						var examplesCounter;  //number of examples submitted by the user
 						var newCounter = 1; // counter for the new HTML element
@@ -242,16 +241,28 @@ function getUrlVars() {
 							});
 
 					
-						$(".selectable_i").selectable({  //make the interdependencies selectable
+						$(".selectable_i").selectable({  //make the dependent interdependencies selectable
 								selected: function(event, ui) { 
 									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 									var result = $( "#select-result" ).empty();
 									$( ".ui-selected", this ).each(function() {
-										i_item = $(this).attr("id"); // getting the id of selected interdependency
+										i_item = $(this).attr("id"); // getting the id of selected dependent interdependency
 									}); 
 								}
 								
 						});
+
+						$(".selectable_i2").selectable({  //make the impact interdependencies selectable
+								selected: function(event, ui) { 
+									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+									var result = $( "#select-result" ).empty();
+									$( ".ui-selected", this ).each(function() {
+										i2_item = $(this).attr("id"); // getting the id of selected impact interdependency
+									}); 
+								}
+								
+						});
+
 
 						$(".selectable_n").selectable({  //make the nature of the risk/opuurtunity selectable
 								selected: function(event, ui) { 
@@ -468,19 +479,24 @@ $('#TAB9_BTN_BACK').button().click(function()
 {
 	$('.selectable_i'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
 	i_item = 0; 
-		goToPrevTab();
+	$('.selectable_i2'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	i2_item = 0; 
+	goToPrevTab();
 });
 
 $('#TAB10_BTN_NEXT').button().click(function() {
 		
-		if(i_item)
-		{
-			$("#inter").val($("#"+i_item).text());
+	if(i_item || i2_item) //was one of the interdependencies selected?
+	{
 			goToNextTab();
-		}
-		else  //tell the user to enter a choice
-			alert("SVP choissisez une de ses choix!");
-	});
+			$("#inter2").val($("#"+i2_item).text());
+			$("#inter").val($("#"+i_item).text());
+	}
+	else  //tell the user to enter a choice
+	{
+		alert("SVP choissisez une de ses choix!");
+	}
+});
 
 $('#TAB10_BTN_BACK').button().click(function() 
 {		
@@ -491,19 +507,30 @@ $('#TAB10_BTN_BACK').button().click(function()
 });
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-	if(n_item && (i_item == "Nature1" || i_item == "Nature3"))  //did the user select a risk and/or oppurtunity?
+		$("#riskOrOpp").val($("#"+n_item).text());
+if (n_item)
+{
+	alert(i_item);
+	alert(i2_item);
+	if(i_item && i2_item)  //did the user select a risk and/or oppurtunity, an impact and a dependence?
 	{
 	  //go to the dependence tab
-		$("#riskOrOpp").val($("#"+n_item).text());
 		goToNextTab();
 	}
-	else if(n_item && i_item == "Nature2")  //go to impact tab
+	else if (i_item && !i2_item)  //did the user only select a dependency and not an impact?
 	{
-				$("#riskOrOpp").val($("#"+n_item).text());
+		//go directly to the financial tab
+		tabCounter+=3;
+		alert(tabCounter);
+		$('#tabs').tabs('enable', tabCounter).tabs('select', tabCounter);
+	}
+	else
+	{
 				tabCounter++;
 				goToNextTab();
 	}
-	else  //the user did not select anything
+}	
+else  //the user did not select anything
 		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
 });
 
@@ -647,7 +674,7 @@ $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back
 });
 
 $('#impact_btn_next').button().click(function() { 
-	if(i_item == "Nature1")
+	if(i2_item == "")  //do we go to the impact tab?
 		tabCounter++;
 	goToNextTab();
 
@@ -655,7 +682,7 @@ $('#impact_btn_next').button().click(function() {
 });
 
 $('#back_to_money').button().click(function() { 
-	if(i_item == "Nature2")
+	if(!i_item)  //do we skip the dependence tab when going back?
 		tabCounter--;
 	goToPrevTab();
 });
@@ -676,8 +703,8 @@ $('#back_to_impact_btn').button().click(function() {
 		$("#typeOfMoney").val($('input[name=moneyType]:checked').val());
 		alert($("#typeOfMoney").val());
 	}
-	if(i_item == "Nature1")
-		tabCounter--;
+	if(!i2_item)  //do we go back to the dependence tab, skipping the impact tab
+		tabCounter-=2;
 	goToPrevTab();
 });
 
