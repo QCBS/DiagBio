@@ -50,10 +50,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="classificationtab"><a href="#tab7">Classification</a></li>	
 						<li id="entreprisetab"><a href="#tab8">Analysez votre entreprise</a></li>
 						<li id="naturetab"><a href="#tab9">Nature dinterdependance</a></li>
-						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
+						<li id="qualifytab"><a href="#tab15">Qualifier l’interdépendance aux BSE</a></li>
 						<li id="dependencetab"><a href="#tab11"></a>Evaluez Votre Interdependance</li>
 						<li id="impacttab"><a href="#tab12">Niveau d'Impact</a></li>
 						<li id="moneytab"><a href="#tab13">Impact Monétaire</a></li>
+						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
 					</ul>
 					<div id="tab1"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
@@ -387,7 +388,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						}
 
 					?>	
-
+					<input type="hidden" id="se_i" name="se_i" value="">
 
 					<div class="centreBTN1">
 						<button type="button" id="SE_BTN_BACK">Précédent</button> <!--go back to tab 1-->
@@ -415,7 +416,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 							while ($row = mysql_fetch_assoc($results)) 
 							{ 
-								if($row['c_name'] == "Matières minérales")
+								if($row['c_name'] == "Substances nutritionnelles")
 								{
 									echo '<h4>Ressources naturelles non issues du vivant</h4>'; 
 									echo 'Les minéraux, substances nutritionnelles et énergie renouvelable nous sont<br>
@@ -553,19 +554,29 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
 					<input type="hidden" id="c_i" name="c_i" value="">
 					<input type="hidden" id="chosenExample" name="chosenExample" value="">
-					<input type="hidden" id="hiddenExistingExamples" name="hiddenExistingExamples" value="">
-					<input type="hidden" id="hiddenNewExamples" name="hiddenNewExamples" value="">
 			
 			</div>
 
 				<div id="tab9">
 					
+					<div class="infoList">
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+					</div>
+						<br><br><br>
+
 					<h3>Quelle est la nature de l’interdépendance entre votre organisation et le cas choisit?</h3>
 					<h3>Est-ce(Sélectionner 1 ou 2 cases):</h3>
 					<!--<?php 
 						//$_SESSION['nature_choice'][$counter] = $_GET['nature']
 						//$counter++;
 					?> -->
+					<br>
+					<fieldset><legend ><h4>Dépendance</h4></legend>Ce service vous est avantageux, car il sert d’intrant ou offre des<br> 
+						conditions propices au bon fonctionnement de votre organisation.</fieldset>
+
 					<?php
 						$nature=array("Une dépendance avérée","Une dépendance potentielle");
 						$count=1;
@@ -584,6 +595,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						echo  '</div>';
 					?>		
 					<br>
+					<fieldset><legend ><h4>Impact</h4></legend>Votre organisation peut avoir un impact positif ou négatif sur le<br>
+					service écosystémique et donc sur la biodiversité. Cet impact<br>
+					affecte	la qualité du service en question (et éventuellement sa disponibilité.)</fieldset>
+
 					<?php
 						$nature2=array("Un impact avéré", "Un impact potentiel");
 						$count=1;
@@ -601,14 +616,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						echo '</ol>';
 						echo  '</div>';
 					?>		
-
-					<br>		
-					<fieldset><legend ><h4>Dépendance</h4></legend>Ce service vous est avantageux, car il sert d’intrant ou offre des<br> 
-						conditions propices au bon fonctionnement de votre organisation.</fieldset>
-					<fieldset><legend ><h4>Impact</h4></legend>Votre organisation peut avoir un impact positif ou négatif sur le<br>
-					service écosystémique et donc sur la biodiversité. Cet impact<br>
-					affecte	la qualité du service en question (et éventuellement sa disponibilité.)</fieldset>
-
+					<br><br>
 					<input type="hidden" id="inter" name="inter" value="">
 					<input type="hidden" id="inter2" name="inter2" value="">
 					<button type="button" id="TAB9_BTN_BACK">Précédent</button>  <!-- go to tab 8 -->
@@ -616,13 +624,22 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 
 				<div id="tab10" class="ui-state-hidden">
-
-					<h4>Nature de la Risque/Opportunité</h4>
+					
+					<div class="infoList">
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+					</div>
+						<br><br><br>
 
 					<?php
 						$natures=array("Opérationnel","Règlementaire et juridique","Réputation et image", "Marché et produits", "Financement");
 						$count=1;
-						echo '<div id="selectNature'.$count.'">';
+						echo '<div id="selectNature">';
+						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
 						echo '<ol class="selectable_n selectables" id="selectableNature'.$count.'">';
 						while($count <= 5)	 //go through each choice to turn it into a selectable
 						{
@@ -637,14 +654,51 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						echo '</ol>';
 						echo  '</div>';
 						?>
+						
+						
+					<?php
+						$natures=array("Opérationnel","Règlementaire et juridique","Réputation et image", "Marché et produits", "Financement");
+						$count=1;
+						echo '<div id="selectNatureTwo">';
+						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
+						echo '<ol class="selectable_n2 selectables" id="selectableNatureTwo'.$count.'">';
+						while($count <= 5)	 //go through each choice to turn it into a selectable
+						{
+
+					?>
+								<li class="ui-state-default" title="choisissez une de ces natures" <?php echo 'id="NatureRiskTwo'.$count.'">'.$natures[$count-1]; ?> </li>
+					<?php
+
+							$count++;  //go to the next choice
+					
+						}
+						echo '</ol>';
+						echo  '</div>';
+						?>	
+						<br><br>
 					<input type="hidden" id="riskOrOpp" name="riskOrOpp" value="">
-					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
-					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
+					<input type="hidden" id="riskOrOpp2" name="riskOrOpp" value="">
+					<button type="button" id="LAST_BACK_BTN">Précédent</button>  <!-- go to tab 9 -->
+					<button type="button" id="LAST_NEXT_BTN">Suivant</button> <!--go to tab 11 -->
+					<br>
+					<input id="submit" type="submit" value="Enregistrer vos données">
+					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
+					<button type="button" id="BTN_QUIT">Quitter</button>
 				</div>
 
 				<div id="tab11" >
+					<div class="infoList">
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+					</div>
+						<br><br><br>
+
 					<h3>Evaluez Votre Interdependance</h3>
-					
+
 					<div><fieldset><legend><b>légende</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
 					Très forte : Le SE choisi est un facteur clef de vos activités, celles-ci<br>
 
@@ -694,7 +748,18 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 
 				<div id="tab12" >
+					<div class="infoList">
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+					</div>
+						<br><br><br>
+
 					<h4>Qualifier le niveau d’impact de -5 à +5 :</h4>
+
 					<div><fieldset><legend><b>légende</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
 					Un impact positif (0 à +5) a un effet avantageux sur le service écosystémique choisi.</b>
 				</fieldset></div>
@@ -741,17 +806,18 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				 	<br>
 				 	<h3>Lequel :</h3>
 				 	<input type="radio" name="moneyType" id="moneyType" value="Taxe"><b>Taxe<br>
-				 	<input type="radio" name="moneyType" id="moneyType" value="Redevance,">Redevance<br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Redevance">Redevance<br>
 				 	<input type="radio" name="moneyType" id="moneyType" value="Paiement pour services environnementaux">Paiement pour services environnementaux</b><br>
 				 	<input type="radio" name="moneyType" id="moneyType" value=""><b>Autre</b><br>
 				 	<input type="text" name="moneyinput" id="moneyinput" style="width:300px;">
 				 	<br><br><br>
-					<button type="button" id="back_to_impact_btn">Précédent</button>
-					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
-					<input type="hidden" id="typeOfMoney" name="typeOfMoney" value="">
+
+				 	<input type="hidden" id="gotMoney" name="gotMoney" value="">
+				 	<input type="hidden" id="typeOfMoney" name="typeOfMoney" value="">
 					<input type="hidden" id="numOfExamples" name="numOfExamples" value="">
-					<input id="submit" type="submit" value="Enregistrer vos données">
-					<button type="button" id="BTN_QUIT">Quitter</button>
+					
+					<button type="button" id="back_to_impact_btn">Précédent</button>
+					<button type="button" id="MONEY_NEXT_BTN">Suivant</button>
 				</div>
 
 				<div id="tab14" >
@@ -808,6 +874,17 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
 					<button type="button" id="TAB14_CREATE_BTN">Créer le Rapport</button>
 
+				</div>
+
+				<div id="tab15" >
+					<h3>Qualifier l’interdépendance aux BSE</h3>
+					<h4>Votre impact est-il positif ou négatif ? (Sélectionner une seule réponse)</h4>
+					<input type="radio" name="NegOrPos" value="Négatif"><b>Négatif:a un effet néfaste sur le BSE<br>
+					<input type="radio" name="NegOrPos" value="Positif"><b>Positif: a un effet avantageux sur le BSE</b><br>
+					<input type="hidden" id="qualifyImpact" name="qualifyImpact" value="">
+					<br>
+					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
+					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
 				</div>
 
 				</form>

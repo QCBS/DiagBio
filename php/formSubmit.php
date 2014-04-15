@@ -20,14 +20,15 @@
 	$userid = $_GET['the_user'];
 	$cid = $_GET['c_i'];
 	$example = $_POST['chosenExample'];
-	$dependence = $_POST['inter'];
+	$dependance = $_POST['inter'];
 	$impact = $_POST['inter2'];
-	$nature = $_POST['riskOrOpp'];
-	$hidenDependance = $_POST['interdependance'];
+	$process = $_POST['riskOrOpp'];
+	$secondProcess = $_POST['riskOrOpp2']
+	$hiddenDependance = $_POST['interdependance'];
 	$hiddenImpact = $_POST['hiddenImpact'];
-	$money  = $_POST['money'];
+	$money  = $_POST['gotMoney'];
 	$moneyType = $_POST['typeOfMoney'];
-
+	$qualifyImpact = $_POST['qualifyImpact'];
 
 	$account = user_load($userid); // Load Themporary User with "Administration" Role.
 	$profile = profile2_load_by_user($account); // Load The Profile2 Data Associated to The User.
@@ -62,7 +63,7 @@
 				break;
 		}
 	}
-	$query = mysql_query("INSERT INTO interdependances VALUES ($reportid, $userid, $cid, $example, $dependence. $impact,$nature, $hiddenDependance, $money )");	
+	$query = mysql_query("INSERT INTO interdependances VALUES ($reportid, $userid, $cid, $example, $dependance, $impact, $process, $secondProcess, $hiddenDependance, $hiddenImpact, $money, $typeOfMoney, $qualifyImpact");	
 	
 	/*if($existingExamples){
 		

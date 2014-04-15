@@ -14,7 +14,11 @@ function getUrlVars() {
         	
 (function ($) {
         		$(document).ready(function() {
+
         			$('#moneyinput').addClass("hide");
+        			$("#selectNature").addClass("hide");
+        			$("#selectNatureTwo").addClass("hide");
+
         			$("input:radio[name=moneyType]").click(function() {
     					var value = $(this).val();
     					if(value == "")
@@ -141,6 +145,10 @@ function getUrlVars() {
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('parametertab');
         				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab15'); //10
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('qualifytab');
+        				elem.parentNode.removeChild(elem);
 						$('#tabs').tabs(); // Generate Tabs With The Default Settings.
 					}
 					if ( userRole == "Unauthenticated" || userRole == "Participant" ){
@@ -167,6 +175,7 @@ function getUrlVars() {
 						$('#impacttab').hide();
 						$('#risktab').hide();
 						$('#parametertab').hide();
+						$('#qualifytab').hide();
 
 						if ( userRole == "Administration" ){
 							var disableTabs = [5,6,7];
@@ -237,10 +246,8 @@ function getUrlVars() {
 										c_example = $(this).attr("id"); // getting the id of selected example
 						}); 
 								}
-								
 							});
-
-					
+			
 						$(".selectable_i").selectable({  //make the dependent interdependencies selectable
 								selected: function(event, ui) { 
 									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
@@ -248,8 +255,7 @@ function getUrlVars() {
 									$( ".ui-selected", this ).each(function() {
 										i_item = $(this).attr("id"); // getting the id of selected dependent interdependency
 									}); 
-								}
-								
+								}	
 						});
 
 						$(".selectable_i2").selectable({  //make the impact interdependencies selectable
@@ -259,10 +265,8 @@ function getUrlVars() {
 									$( ".ui-selected", this ).each(function() {
 										i2_item = $(this).attr("id"); // getting the id of selected impact interdependency
 									}); 
-								}
-								
+								}	
 						});
-
 
 						$(".selectable_n").selectable({  //make the nature of the risk/opuurtunity selectable
 								selected: function(event, ui) { 
@@ -271,9 +275,63 @@ function getUrlVars() {
 									$( ".ui-selected", this ).each(function() {
 										n_item = $(this).attr("id"); // getting the id of selected slectable
 									}); 
-								}
-								
+								}	
 						});
+
+						$(".selectable_n2").selectable({  //make the nature of the risk/opuurtunity selectable
+								selected: function(event, ui) { 
+									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+									var result = $( "#select-result" ).empty();
+									$( ".ui-selected", this ).each(function() {
+										n2_item = $(this).attr("id"); // getting the id of selected slectable
+									}); 
+								}	
+						});
+
+
+		function resetEverything()
+		{
+			$('#newExample').val(""); //clear the text from the example textbox
+			
+			$('#selectable'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			se_item=0;  //resets the value
+
+			$('.selectable_c'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			c_item=0;  //resets the value
+
+			$('.select_example'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			c_example=0;  //resets the value
+
+			$('.selectable_i'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			i_item=0;  //resets the value
+
+			$('.selectable_i2'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			i2_item=0;  //resets the value
+			
+			$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			n_item=0;  //resets the value
+
+			$('.selectable_n2'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+			n2_item=0;  //resets the value
+			
+			$("#slider").slider('value', 1);  //set the value back to default for the slider
+			$( "#slides" ).val('1'); //set the value back to default for the dropdown 
+			$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
+			$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
+
+			$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
+			$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
+			$('.ImpactDivs').hide();
+			$('#displayImpact1').show();
+
+			$('input[name=moneyType]:checked').prop('checked', false);  //uncheck the selected radio buton
+			$('input[name=money]:checked').prop('checked', false);  //uncheck the selected radio buton
+			$("#moneyinput").val("");  //clear the text
+			$("#moneyinput").removeClass("show");
+			$("#moneyinput").addClass("hide");
+
+			$('input[name=NegOrPos]:checked').prop('checked', false);  //uncheck the selected radio buton
+		}
 
 
 		function goToNextTab()  //this counter will allow us to navigate forward through the tabs, starting at tab 3(reports list)
@@ -294,32 +352,32 @@ function getUrlVars() {
 			tabCounter--;  //decrement back to current tab
 		}
 
-						$('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
+$('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 
-							if(report_id){
+	if(report_id){
 
-								$("#the_report").val(report_id);
+		resetEverything();
 
-								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
-									if (tabCounter > 2)
-									{
-										tabCounter=2;
-										$('#tabs').tabs('disable', 5);  //disable the examples tab
-									}
-								if(userRole == "Administration" || userRole== "Unauthenticated")
-									if(tabCounter > 4)
-									{
-										tabCounter=4;
-										$('#tabs').tabs('disable', 7);  //disable the examples tab
-									}
-								goToNextTab();
-								$('#tabs').tabs('enable', tabCounter-1);  //leave the current tab(reports) enabled
+		$("#the_report").val(report_id);
 
-							}
-							else{
-								alert("Aucune valeur n'a été sélectionnée ou entrée"); // otherwise give an error
-							}
-						});
+		if(userRole == "Participant" && tabCounter > 2)  //Is the user visiting this tab again?If so, then reset the counter
+		{
+			tabCounter=2;
+			$('#tabs').tabs('disable', 5);  //disable the examples tab
+		}
+		if((userRole == "Administration" || userRole== "Unauthenticated") && tabCounter > 4)
+		{
+			tabCounter=4;
+			$('#tabs').tabs('disable', 7);  //disable the examples tab
+		}
+		goToNextTab();
+		$('#tabs').tabs('enable', tabCounter-1);  //leave the current tab(reports) enabled
+	}
+	else{
+		alert("Aucune valeur n'a été sélectionnée ou entrée"); // otherwise give an error
+	}
+
+});
 						
 						$('#NEW_RE_BTN').button().click(function() {
 							
@@ -426,8 +484,8 @@ function getUrlVars() {
 								else if (se_item == '10'){
 									$('#list10').show();
 								}*/
-								$("#se_i").val(se_item);
-
+								$("#se_i").val($("#"+se_item).text());
+								alert($("#se_i").val());
 								goToNextTab();						
 							}
 							else{
@@ -439,6 +497,7 @@ function getUrlVars() {
 $('#TAB9_BTN_NEXT').button().click(function() 
 {
 						alert(tabCounter);
+
 						if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
 						{
 							alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
@@ -474,6 +533,30 @@ $('#TAB9_BTN_NEXT').button().click(function()
 							$('#tabs').tabs('enable', tabCounter-1);  //enable this tab for the rest of the evaluation
 						}
 
+						$(".se_label").text($("#se_i").val());  //show which ecological service the user chose
+	
+						$(".c_label").text($("#c_i").val());  //show which classification the user chose
+	
+						$(".example_label").text($("#chosenExample").val());  //show which example the user chose
+	
+	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	n_item=0;  //resets the value
+
+	$('.selectable_n2'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
+	n2_item=0;  //resets the value
+	
+	$("#slider").slider('value', 1);  //set the value back to default for the slider
+	$( "#slides" ).val('1'); //set the value back to default for the dropdown 
+	$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
+	$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
+
+	$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
+	$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
+	$('.ImpactDivs').hide();
+	$('#displayImpact1').show();
+
+	$('input[name=NegOrPos]:checked').prop('checked', false);  //uncheck the selected radio buton
+
 });
 $('#TAB9_BTN_BACK').button().click(function() 
 {
@@ -485,56 +568,76 @@ $('#TAB9_BTN_BACK').button().click(function()
 });
 
 $('#TAB10_BTN_NEXT').button().click(function() {
-		
+
 	if(i_item || i2_item) //was one of the interdependencies selected?
 	{
-			goToNextTab();
-			$("#inter2").val($("#"+i2_item).text());
-			$("#inter").val($("#"+i_item).text());
+		if(i_item && !i2_item)  //was an impact the only option chosen?
+			tabCounter+=3;	
+		
+		if(i_item && i2_item)
+			tabCounter++;
+		
+		goToNextTab();
+		
+		$("#inter2").val($("#"+i2_item).text());
+		$("#inter").val($("#"+i_item).text());
 	}
 	else  //tell the user to enter a choice
 	{
 		alert("SVP choissisez une de ses choix!");
 	}
+
+	if($("#inter").val())
+	{
+		$(".dependance_label").text("La nature de l’interdépendance est " + $("#inter").val());  //show which interdependancy(dependance) the user chose
+	}
+
+	if($("#inter2").val())
+	{
+		$(".impact_label").text("La nature de l’interdépendance est " + $("#inter2").val());  //show which interdependancy(impact) the user chose
+	}
+	
 });
 
 $('#TAB10_BTN_BACK').button().click(function() 
 {		
-	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the selected selectable
-	n_item = 0; //reset the selected id to null
-
+	$('input[name=NegOrPos]:checked').prop('checked', false);  //uncheck the selected radio buton
 	goToPrevTab();
 });
 
 $('#TAB11_BTN_NEXT').button().click(function() {
-		$("#riskOrOpp").val($("#"+n_item).text());
-if (n_item)
-{
-	alert(i_item);
-	alert(i2_item);
-	if(i_item && i2_item)  //did the user select a risk and/or oppurtunity, an impact and a dependence?
+
+	if($('input[name=NegOrPos]:checked').val())  //was one of the values selected?
 	{
-	  //go to the dependence tab
-		goToNextTab();
-	}
-	else if (i_item && !i2_item)  //did the user only select a dependency and not an impact?
-	{
-		//go directly to the financial tab
-		tabCounter+=3;
-		alert(tabCounter);
-		$('#tabs').tabs('enable', tabCounter).tabs('select', tabCounter);
+		$("#qualifyImpact").val($('input[name=NegOrPos]:checked').val());  //store the selected value, to be used for database
+
+		if(i_item && i2_item)  //did the user select a risk and/or oppurtunity, an impact and a dependence?
+		{
+	 	 	//go to the dependence tab
+			goToNextTab();
+		}
+		else if (i_item && !i2_item)  //did the user only select a dependency and not an impact?
+		{
+			//go directly to the financial tab
+			tabCounter+=3;  //go to tab 12(financial tab)
+			$('#tabs').tabs('enable', tabCounter).tabs('select', tabCounter);
+		}
+		else
+		{
+					tabCounter++;
+					goToNextTab();
+		}
 	}
 	else
-	{
-				tabCounter++;
-				goToNextTab();
-	}
-}	
-else  //the user did not select anything
-		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
+	alert("RAWR");	
 });
 
 $('#TAB11_BTN_BACK').button().click(function() {
+	$("#slider").slider('value', 1);  //set the value back to default for the slider
+	$( "#slides" ).val('1'); //set the value back to default for the dropdown 
+	$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
+	$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
+	tabCounter--;  //skip the tab before the current tab, since it's only meant to be accessed when the user only chose an impact in the interdependancy tab 
 	goToPrevTab();
 });
 
@@ -605,27 +708,7 @@ $('#BTN_QUIT').button().click(function() { // close the window which is not curr
 
 $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 { 
-	$('#newExample').val(""); //clear the text from the example textbox
-	
-	$('.selectable_i'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
-	i_item=0;  //resets the value
-	
-	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
-	i_item=0;  //resets the value
-	
-	$('.select_example'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
-	c_example=0;  //resets the value
-	
-	$("#slider").slider('value', 1);  //set the value back to default for the slider
-	$( "#slides" ).val('1'); //set the value back to default for the dropdown 
-	$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
-	$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
-
-	$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
-	$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
-	$('.ImpactDivs').hide();
-	$('#displayImpact1').show();
-
+	resetEverything();
 	event.preventDefault();
 	removeHTMLElements();
 
@@ -682,6 +765,10 @@ $('#impact_btn_next').button().click(function() {
 });
 
 $('#back_to_money').button().click(function() { 
+	$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
+	$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
+	$('.ImpactDivs').hide();
+	$('#displayImpact1').show();
 	if(!i_item)  //do we skip the dependence tab when going back?
 		tabCounter--;
 	goToPrevTab();
@@ -692,20 +779,50 @@ $('#after_impact_btn').button().click(function() {
 	$("#hiddenImpact").val($( "#impact option:selected" ).text());
 });
 
-$('#back_to_impact_btn').button().click(function() { 
-	if("#moneyinput" != "")
+$('#back_to_impact_btn').button().click(function() { //financial back button
+	if(!i2_item)  //do we go back to the interdependancy tab, skipping the impact tab
+		tabCounter-=3;
+	goToPrevTab();
+});
+
+$('#MONEY_NEXT_BTN').button().click(function() { //financial next button
+
+	if(($('input[name=moneyType]:checked').val() || $("#moneyinput").val() != "") && $('input[name=money]:checked').val()) //were all the questions answered?
 	{
-		$("#typeOfMoney").val($("#moneyinput").val());
-		alert($("#moneyinput").val());
+		$("#gotMoney").val($('input[name=money]:checked').val());  //insert 
+		$("#typeOfMoney").val($('input[name=moneyType]:checked').val());
+		if($("#moneyinput").val())  //does the textbox have text?
+		{
+			$("#typeOfMoney").val($("#moneyinput").val());
+		}
+
+		if($("#inter").val())  //did the user select dependant in the interdependance tab, if so, show the selection menu 
+		{
+			$("#selectNature").removeClass("hide");
+			$("#selectNature").addClass("show");
+		}
+		else  //hide the dependant related selection menu
+		{
+			$("#selectNature").removeClass("show");
+			$("#selectNature").addClass("hide");
+		}
+
+		if($("#inter2").val())  //did the user select impact in the interdependance tab , if so, show the selection menu
+		{
+			$("#selectNatureTwo").removeClass("hide");
+			$("#selectNatureTwo").addClass("show");
+		}
+		else  //hide the impact related selection menu
+		{
+			$("#selectNatureTwo").removeClass("show");
+			$("#selectNatureTwo").addClass("hide");
+		}
+
+		goToNextTab();
+
 	}
 	else
-	{
-		$("#typeOfMoney").val($('input[name=moneyType]:checked').val());
-		alert($("#typeOfMoney").val());
-	}
-	if(!i2_item)  //do we go back to the dependence tab, skipping the impact tab
-		tabCounter-=2;
-	goToPrevTab();
+		alert("RAWR!");
 });
 
 $('#TAB14_BTN_BACK').button().click(function() {
@@ -722,6 +839,26 @@ $('#TAB14_CREATE_BTN').button().click(function() {
 	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgname: organisationName, adminid: AdID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
 });
 
+$('#LAST_BACK_BTN').button().click(function() { //next button for risk/oppurtunity tab
+	$('.selectable_n'+' .ui-selected').removeClass('ui-selected'); //unselects the selected selectable
+	n_item = 0; //reset the selected id to null
+
+	$('.selectable_n2'+' .ui-selected').removeClass('ui-selected'); //unselects the selected selectable
+	n2_item = 0; //reset the selected id to null
+
+	goToPrevTab();
+});
+
+$('#LAST_NEXT_BTN').button().click(function() { //back button of risk/oppurtunity tab
+	$("#riskOrOpp").val($("#"+n_item).text());
+	if (n_item)  //did the user select anything?
+	{
+		goToNextTab();
+	}	
+	else  //the user did not select anything
+		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
+
+});
 
 $(function() {  //slider for the interdependencies
     var select = $( "#slides" );
