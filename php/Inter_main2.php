@@ -55,6 +55,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="impacttab"><a href="#tab12">Niveau d'Impact</a></li>
 						<li id="moneytab"><a href="#tab13">Impact Monétaire</a></li>
 						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
+						<li id="sendData"><a href="#tab16">Enregistrer vos données</a></li>
 					</ul>
 					<div id="tab1"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
@@ -482,7 +483,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab8">
 					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="get" >
 
-					<h3><b>Choisissez une de ses choix:</b></h3>
+					<h3><b>Choisissez une de ses Examples:</b></h3>
 
 					 <?php
 					
@@ -553,6 +554,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<input type="hidden" id="the_report" name="the_report" value=""/>
 					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
 					<input type="hidden" id="c_i" name="c_i" value="">
+					<input type="hidden" id="c_i_val" name="c_i_val" value="">
 					<input type="hidden" id="chosenExample" name="chosenExample" value="">
 			
 			</div>
@@ -640,6 +642,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						$count=1;
 						echo '<div id="selectNature">';
 						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
+						echo '<label class="dependance_label" for=""></label>';
 						echo '<ol class="selectable_n selectables" id="selectableNature'.$count.'">';
 						while($count <= 5)	 //go through each choice to turn it into a selectable
 						{
@@ -661,6 +664,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						$count=1;
 						echo '<div id="selectNatureTwo">';
 						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
+						echo '<label class="impact_label" for=""></label>';
 						echo '<ol class="selectable_n2 selectables" id="selectableNatureTwo'.$count.'">';
 						while($count <= 5)	 //go through each choice to turn it into a selectable
 						{
@@ -677,13 +681,9 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						?>	
 						<br><br>
 					<input type="hidden" id="riskOrOpp" name="riskOrOpp" value="">
-					<input type="hidden" id="riskOrOpp2" name="riskOrOpp" value="">
+					<input type="hidden" id="riskOrOpp2" name="riskOrOpp2" value="">
 					<button type="button" id="LAST_BACK_BTN">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="LAST_NEXT_BTN">Suivant</button> <!--go to tab 11 -->
-					<br>
-					<input id="submit" type="submit" value="Enregistrer vos données">
-					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
-					<button type="button" id="BTN_QUIT">Quitter</button>
 				</div>
 
 				<div id="tab11" >
@@ -811,12 +811,12 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				 	<input type="radio" name="moneyType" id="moneyType" value=""><b>Autre</b><br>
 				 	<input type="text" name="moneyinput" id="moneyinput" style="width:300px;">
 				 	<br><br><br>
-
 				 	<input type="hidden" id="gotMoney" name="gotMoney" value="">
 				 	<input type="hidden" id="typeOfMoney" name="typeOfMoney" value="">
 					<input type="hidden" id="numOfExamples" name="numOfExamples" value="">
 					
 					<button type="button" id="back_to_impact_btn">Précédent</button>
+				
 					<button type="button" id="MONEY_NEXT_BTN">Suivant</button>
 				</div>
 
@@ -881,10 +881,27 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<h4>Votre impact est-il positif ou négatif ? (Sélectionner une seule réponse)</h4>
 					<input type="radio" name="NegOrPos" value="Négatif"><b>Négatif:a un effet néfaste sur le BSE<br>
 					<input type="radio" name="NegOrPos" value="Positif"><b>Positif: a un effet avantageux sur le BSE</b><br>
-					<input type="hidden" id="qualifyImpact" name="qualifyImpact" value="">
 					<br>
+					<input type="hidden" id="qualifyImpact" name="qualifyImpact" value="">
 					<button type="button" id="TAB10_BTN_BACK">Précédent</button>  <!-- go to tab 9 -->
 					<button type="button" id="TAB11_BTN_NEXT">Suivant</button> <!--go to tab 11 -->
+				</div>
+
+				<div id="tab16">
+					<div>
+						<h3>Enregistrer vos données</h3>
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+					</div>
+					<br><br><br>
+					<button type="button" id="data_back_btn">Précédent</button>  <!-- go to tab 9 -->
+					<input id="submit" type="submit" value="Enregistrer vos données">
+					<button type="button" id="BTN_RE_SE">Retourner aux services écologiques</button>
+					<button type="button" id="BTN_QUIT">Quitter</button>
 				</div>
 
 				</form>
