@@ -94,7 +94,6 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					</fieldset>
 
-					
 					<div id="imageOne">
 						
 						<img src="/testing/Jason/images/picWtihPpl.JPG"/>
@@ -163,6 +162,8 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 							    issus des interactions entre les espèces et dont différents acteurs économiques peuvent retirer des services écologiques.<br>
 							</div>
 					</fieldset>
+
+					<iframe src="http://prezi.com/embed/fvykjv9nuhnf/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
 
 					<fieldset class="infoList"><legend class="font_legend"><b>Rapports:</b></legend>
 						<ul>
@@ -417,7 +418,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 							while ($row = mysql_fetch_assoc($results)) 
 							{ 
-								if($row['c_name'] == "Substances nutritionnelles")
+								if($row['c_name'] == "Matières minérales et métalliques")
 								{
 									echo '<h4>Ressources naturelles non issues du vivant</h4>'; 
 									echo 'Les minéraux, substances nutritionnelles et énergie renouvelable nous sont<br>
@@ -427,7 +428,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 									 	  l’évaluation.<br><br>';
 								}
 
-								if($row['c_name'] == "Énergie non renouvelable abiotique")
+								if($row['c_name'] == "Énergie renouvelable issue du vivant")
 								{
 									echo '<br><br><h4>Ressources naturelles issues du vivant</h4>';
 									echo 'Les ressources naturelles issues du vivant sont le résultat des interactions<br>';
@@ -736,11 +737,6 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					<div id="slider" style="height:200px;"></div><br>
 
-					<div><fieldset class="exampleForInter"><legend><b>Exemple</b></legend>Si vous construisez un barrage dans une zone naturelle vous avez un impact<br>
-					négatif sur le service : « protection des habitats naturels », mais vous <br>
-					avez aussi un impact positif sur « la régulation de la qualité de l’air »<br>
-					(l’énergie hydraulique étant une alternative aux émissions de GES du pétrole)<br>
-					</fieldset></div>
 					<br>
 					<input type="hidden" id="interdependance" name="interdependance" value="">
 					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
@@ -789,17 +785,22 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				    <br><br><br><br><br><br>
 					<div id="impactSlider" style="height:200px;"></div><br>
 
-					<div ><fieldset class="exampleForInter"><legend><b>Exemple</b></legend>Si la qualité du service ecosystémique choisi venait à être altérée par vous,<br>
-					 ou un autre utilisateur et que cela affecte une, ou plusieurs activités<br>
-					 de votre organisation au point de ne plus pouvoir l’exercer, alors, la<br>
-					 dépendance est très forte. Si cela n’a pas, ou peu, d’effet(s) sur vos<br>
-					 activité, alors votre dépendance est faible, voire très faible.</fieldset></div>
 					<br>
 					<input type="hidden" id="hiddenImpact" name="hiddenImpact" value="">
 					<button type="button" id="back_to_money">Précédent</button>
 					<button type="button" id="after_impact_btn">Suivant</button>
 				</div>
 				<div id="tab13" >
+						<div class="infoList">
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+					</div>
+						<br><br><br>
+
 					<h3>Bénéficier de ce BSE requiert-il un paiement de votre part?</h3>
 				 	<input type="radio" name="money" value="yes"><b>yes<br>
 				 	<input type="radio" name="money" value="no">no</b><br>
@@ -877,6 +878,17 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 
 				<div id="tab15" >
+				<div class="infoList">
+						<h3>Enregistrer vos données</h3>
+						<h4>Vous Avez Choisi:</h4> 
+						<label class="se_label" for=""></label>
+						<label class="c_label" for=""></label>
+						<label class="example_label" for=""></label>
+						<label class="dependance_label" for=""></label>
+						<label class="impact_label" for=""></label>
+				</div>
+				<br><br><br>
+
 					<h3>Qualifier l’interdépendance aux BSE</h3>
 					<h4>Votre impact est-il positif ou négatif ? (Sélectionner une seule réponse)</h4>
 					<input type="radio" name="NegOrPos" value="Négatif"><b>Négatif:a un effet néfaste sur le BSE<br>
@@ -888,7 +900,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</div>
 
 				<div id="tab16">
-					<div>
+					<div class="infoList">
 						<h3>Enregistrer vos données</h3>
 						<h4>Vous Avez Choisi:</h4> 
 						<label class="se_label" for=""></label>

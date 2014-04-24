@@ -104,7 +104,7 @@
 	$insertStmnt->execute();
 	$insertStmnt->close();*/
 
-	//$goto = "Location: http://quebio.ca/entreprisebio?reportid=" . $reportid;
+	$goto = "Location: http://quebio.ca/entreprisebio?reportid=" . $reportid;
 
-	//Header( $goto );
+	Header( $goto );
 ?>

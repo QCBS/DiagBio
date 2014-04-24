@@ -170,7 +170,6 @@ function getUrlVars() {
 						elem.parentNode.removeChild(elem);
 						var elem = document.getElementById('login');
 						elem.parentNode.removeChild(elem);
-
 						$('#servicetab').hide();
 						$('#classificationtab').hide();
 						$('#naturetab').hide();
