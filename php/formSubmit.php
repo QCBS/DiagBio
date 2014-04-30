@@ -42,12 +42,12 @@
 
 	$niveau = $niveauf[0]['value'];*/
 
-	//$query = "SELECT COUNT(*) FROM interdependances WHERE r_id = '$reportid' AND u_id = '$userid'"; // Get Count Of Anwsers for Report
-	//$result = mysql_query($query) or die('Error Fetching List From Database.');
+	$query = "SELECT COUNT(*) FROM interdependances WHERE r_id = '$reportid' AND u_id = '$userid'"; // Get Count Of Anwsers for Report
+	$result = mysql_query($query) or die('Error Fetching List From Database.');
 
-	//$count = mysql_fetch_row($result);
+	$count = mysql_fetch_row($result);
 
-	/*if ( $count[0] == 0 ){
+	if ( $count[0] == 0 ){
 		switch($niveau){
 			case "Direction":
 				$query = "UPDATE report SET Direction = Direction + 1 WHERE reportid = '$reportid'";
@@ -62,7 +62,7 @@
 				$updareReport = mysql_query($query) or die('Unable to update report table.');
 				break;
 		}
-	}*/
+	}
 
 	if (empty($dependance)) {
 		$dependance = 'null';

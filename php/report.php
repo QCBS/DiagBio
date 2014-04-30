@@ -1,8 +1,10 @@
 <?php
 require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
+include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 $info = $_POST['reportInfo'];
+$userid = mysql_real_escape_string($_POST['the_user']);
 
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -57,6 +59,32 @@ $pdf->AddPage();
 // set text shadow effect
 $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
 
+//getting data from the database
+$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+
+mysql_select_db($mys_base, $con);
+mysql_query("SET NAMES 'utf8");
+mysql_query("SET CHARACTER SET 'utf8'");
+$query = "SELECT * FROM interdependances WHERE uid = '$userid'";
+$results = mysql_query($query) or die('Error Fetching List From Database.');
+$numOfrows=1;  //number of total rows
+while ($row = mysql_fetch_assoc($results)) { 
+    $numOfrows++;
+    $rowdata = array();
+    $rowdata["c_id"] = $row['c_id'];
+    $rowdata["Example"] = $row['example'];
+    $rowdata["dependance"] = $row['dependance'];
+    $rowdata["impact"] = $row['impact'];
+    $rowdata["process"] = $row['process'];
+    $rowdata["secondProcess"] = $row['secondProcess'];
+    $rowdata["dependanceLevel"] = $row['dependanceLevel'];
+    $rowdata["impactLevel"] = $row['impactLevel'];
+    $rowdata["gotMoney"] = $row['gotMoney'];
+    $rowdata["moneyType"] = $row['moneyType'];
+    $rowdata["qualifyImpact"] = $row['qualifyImpact'];
+    $alldata[] = $rowdata;
+}
+
 // Set some content to print
 $html = <<<EOD
 <h3>Rapport: Contexte du diagnostic</h3>
@@ -83,7 +111,48 @@ $html = <<<EOD
     <tr><td>Direction</td><td>{$info['direction']} personne(s)</td></tr>
     <tr><td>Interne</td><td>{$info['interne']} personne(s)</td></tr>
     <tr><td>Externe</td><td>{$info['externe']} personne(s)</td></tr>
-</table> <tcpdf method="AddPage" />
+</table>
+<table>
+    <tr>
+        <th>Ecological Classification</th>
+        <th>Example</th>
+        <th>Dependance</th>
+        <th>Niveau de dependance</th>
+        <th>processus affecter par dependance</th>
+        <th>Impact</th>
+        <th>Type d'impact</th>
+        <th>Niveau d'Impact</th>
+        <th>processus affecter par impact</th>
+        <th>Paiement</th>
+        <th>Type de paiement</th>
+    </tr>
+EOD;
+
+$query = "SELECT * FROM interdependances WHERE uid = '$userid'";
+$results = mysql_query($query) or die('Error Fetching List From Database.');
+$numOfrows=1;  //number of total rows
+while ($row = mysql_fetch_assoc($results)) { 
+    $html .= <<<EOD    
+        <tr>
+            <td>$row['c_id']</td>
+            <td>$row['example']</td>
+            <td>$row['dependance']</td>
+            <td>$row['impact']</td>
+            <td>$row['process']</td>
+            <td>$row['secondProcess']</td>
+            <td>$row['dependanceLevel']</td>
+            <td>$row['impactLevel']</td>
+            <td>$row['gotMoney']</td>
+            <td>$row['moneyType']</td>
+            <td>$row['qualifyImpact']</td>
+        </tr>
+EOD;
+}
+mysql_close($con);
+$html .= <<<EOD 
+</table>
+
+<tcpdf method="AddPage" />
 <h3>Rapport: Identifier les interdépendances à la biodiversité et aux services écologiques</h3>
 <h4>Liste des interdépendances à la biodiversité et aux services écologiques</h4>
 <table>

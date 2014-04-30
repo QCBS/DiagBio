@@ -202,9 +202,9 @@ function getUrlVars() {
 						var exiCounter = 1; // counter for the existing HTML elements
 						var report_id;
 						var valid_input;
-						if(userRole	== "Participant")  //there should be one less tab for participant
+						if(userRole	== "Participant" || userRole== "Unauthenticated")  //there should be one less tab for participant
 							var tabCounter = 2; //keeps track of which tab we're at
-						if(userRole == "Administration" || userRole== "Unauthenticated")
+						if(userRole == "Administration")
 							var tabCounter = 3; //keeps track of which tab we're at
 
 						$('.lists').hide(); // hiding all the divs corresponding to different classification selectable lists
@@ -364,12 +364,12 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 
 		$("#the_report").val(report_id);
 
-		if(userRole == "Participant" && tabCounter > 2)  //Is the user visiting this tab again?If so, then reset the counter
+		if((userRole == "Participant" || userRole== "Unauthenticated") && tabCounter > 2)  //Is the user visiting this tab again?If so, then reset the counter
 		{
 			tabCounter=2;
 			$('#tabs').tabs('disable', 5);  //disable the examples tab
 		}
-		if((userRole == "Administration" || userRole== "Unauthenticated") && tabCounter > 4)
+		if(userRole == "Administration" && tabCounter > 4)
 		{
 			tabCounter=4;
 			$('#tabs').tabs('disable', 7);  //disable the examples tab
@@ -417,13 +417,13 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 									report_id = ridInput.value;// assigning the textbox value to the global variable REPORT
 									$("#the_report").val(report_id);
 									
-									if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+									if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
 										if (tabCounter > 2)
 										{
 											tabCounter=2;
 											$('#tabs').tabs('disable', 5);  //disable the examples tab
 										}
-									if(userRole == "Administration" || userRole== "Unauthenticated")
+									if(userRole == "Administration")
 										if(tabCounter > 4)
 										{
 											tabCounter=4;
@@ -453,55 +453,18 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 						$('#SE_BTN_NEXT').button().click(function() { // NEXT button on the ecological services tab
 							
 							$('.lists').hide();// hiding all of the seletables
-								
-		
 							if(se_item){ // than only showing the one which conrresponds to the selected sevive ecologic
 							 	$('#list'+se_item).show();
-							 	
-								/*if (se_item == '1'){
-									$('#list1').show();	
-								}
-								else if (se_item == '2'){
-									$('#list2').show();
-								}
-								else if (se_item == '3'){
-									$('#list3').show();
-								}
-								else if (se_item == '4'){
-									$('#list4').show();
-								}
-								else if (se_item == '5'){
-									$('#list5').show();
-								}
-								else if (se_item == '6'){
-									$('#list6').show();
-								}
-								else if (se_item == '7'){
-									$('#list7').show();
-								}
-								else if (se_item == '8'){
-									$('#list8').show();
-								}
-								else if (se_item == '9'){
-									$('#list9').show();
-								}
-								else if (se_item == '10'){
-									$('#list10').show();
-								}*/
 								$("#se_i").val($("#"+se_item).text());
-								alert($("#se_i").val());
 								goToNextTab();						
 							}
 							else{
 								alert("Aucune valeur n'a été sélectionnée"); //else give an error
 							}
-							
 						});
 
 $('#TAB9_BTN_NEXT').button().click(function() 
 {
-						alert(tabCounter);
-
 						if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
 						{
 							alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
@@ -511,13 +474,12 @@ $('#TAB9_BTN_NEXT').button().click(function()
 						}
 						else
 						{
-								if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+								if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
 									if (tabCounter > 5)
 										tabCounter=5;
-								if(userRole == "Administration" || userRole== "Unauthenticated")
+								if(userRole == "Administration")
 									if(tabCounter > 7)
 										tabCounter=7;
-									alert(tabCounter);
 
 							if(c_example)  //was one of the examples selected 
 							{
@@ -633,7 +595,7 @@ $('#TAB11_BTN_NEXT').button().click(function() {
 		}
 	}
 	else
-	alert("RAWR");	
+	alert("S'il vous plaît sélectionnez une des options disponibles");	
 });
 
 $('#TAB11_BTN_BACK').button().click(function() {
@@ -716,12 +678,12 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	event.preventDefault();
 	removeHTMLElements();
 
-	if(userRole	== "Participant") 
+	if(userRole	== "Participant" || userRole== "Unauthenticated") 
 	{	
 		tabCounter=2; //reset the counter
 		$('#tabs').tabs('disable', 5);  //disable the examples tab
 	}
-	if(userRole == "Administration" || userRole== "Unauthenticated")
+	if(userRole == "Administration")
 	{
 		tabCounter=4; //reset the counter
 		$('#tabs').tabs('disable', 7);  //disable the examples tab
@@ -729,9 +691,9 @@ $('#BTN_RE_SE').button().click(function() // retour to services ecologique
 	
 	goToNextTab();
 
-	if(userRole	== "Participant") 
+	if(userRole	== "Participant"  || userRole== "Unauthenticated") 
 		$('#tabs').tabs('enable', 2);  //keep this tab enabled
-	if(userRole == "Administration" || userRole== "Unauthenticated")
+	if(userRole == "Administration")
 		$('#tabs').tabs('enable', 4);  //keep this tab enabled
 });
 
@@ -742,9 +704,9 @@ $('#submit').button().click(function() {  //submit to the databse
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
 	
-		if(userRole == "Participant")  //Is the user visiting this tab again?If so, then reset the counter
+		if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
 				tabCounter=5;
-		if(userRole == "Administration" || userRole== "Unauthenticated")
+		if(userRole == "Administration")
 				tabCounter=7;
 
 	$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
@@ -766,7 +728,6 @@ $('#impact_btn_next').button().click(function() {
 	goToNextTab();
 
 	$("#interdependance").val($( "#slides option:selected" ).text());  //inserts the chosen value into a hidden field
-	alert($("#interdependance").val());
 });	
 
 $('#back_to_money').button().click(function() { 
@@ -827,13 +788,11 @@ $('#MONEY_NEXT_BTN').button().click(function() { //financial next button
 
 	}
 	else
-		alert("RAWR!");
+		alert("S'il vous plaît sélectionnez une des options disponibles!");
 });
 
 $('#TAB14_BTN_BACK').button().click(function() {
-	alert(tabCounter); 
 	goToPrevTab();
-	alert(tabCounter);
 });
 
 $('#TAB14_CREATE_BTN').button().click(function() { 
@@ -865,7 +824,6 @@ $('#LAST_NEXT_BTN').button().click(function() { //back button of risk/oppurtunit
 	}
 
 	$("#riskOrOpp").val($("#"+n_item).text());
-	alert($("#riskOrOpp").val());
 	$("#riskOrOpp2").val($("#"+n2_item).text());
 	if (n_item && i_item)  //did the user select anything?
 	{
