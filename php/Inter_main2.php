@@ -51,7 +51,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="entreprisetab"><a href="#tab8">Analysez votre entreprise</a></li>
 						<li id="naturetab"><a href="#tab9">Nature dinterdependance</a></li>
 						<li id="qualifytab"><a href="#tab15">Qualifier l’interdépendance aux BSE</a></li>
-						<li id="dependencetab"><a href="#tab11"></a>Evaluez Votre Interdependance</li>
+						<li id="dependencetab"><a href="#tab11">Evaluez Votre Interdependance</a></li>
 						<li id="impacttab"><a href="#tab12">Niveau d'Impact</a></li>
 						<li id="moneytab"><a href="#tab13">Impact Monétaire</a></li>
 						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
@@ -126,7 +126,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<fieldset class="infoList"><legend class="font_legend"><b>Description de l’outil</b></legend>
 
 							<ul>
-								<li><b>Outil de communication</b> avant tout, l’objectif est de l’outil est de comprendre et évaluer les liens de votre organisation</li>
+								<li><b>Outil de communication</b> avant tout, l’objectif de l’outil est de comprendre et évaluer les liens de votre organisation</li>
 								<li>vis-à-vis de la biodiversité et de communiquer à ce propos avec les parties prenantes internes à l’organisation. Cette</li>
 								<li>approche utilise le référentiel des Services Écosystémiques (SE) qui aborde les questions de biodiversité d’un point de</li>
 								<li>vue anthropique, ce qui rend l’exercice accessible à tous. **</li>
@@ -148,7 +148,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 							<div id="tabs-2">
   								<ul>
-    							<li><a href="#example">En savoir plus</a></li>
+    							<li><a href="#example">Ce qu’il faut savoir</a></li>
     							</ul>
 							<div id="example"><br>
 								Parler de biodiversité, c’est avant tout s’intéresser aux  relations qu’entretiennent les espèces (dont l’espèce humaine), entre<br>
@@ -166,17 +166,24 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<iframe src="http://prezi.com/embed/fvykjv9nuhnf/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
 
 					<fieldset class="infoList"><legend class="font_legend"><b>Rapports:</b></legend>
+						<fieldset><legend class="font_legend"><b>Le rapport a pour objectif de reconstituer :</b></legend>
 						<ul>
-							<li>Objectif et portée du diagnostic</li>
-							<li>Portrait du système</li>
-							<li>Interdépendance BSE</li>
-							<li>Responsabilités et dépendances BSE principales</li>
-							<li>Strategies interne et externe</li>
-							<li>Plan de gestion des dépendances BSE principales</li>
+							<li>L’objectif et la portée de l'évaluation</li>
+							<li>Le portrait du système</li>
+							<li>Les interdépendances de l’organisation avec les SE</li>
+							<li>Les responsabilités et dépendances BSE principales</li>
 						</ul>
 						</fieldset>
+						<fieldset><legend class="font_legend"><b>Dans le but de mener à :</b></legend>
+						<ul>
+							<li>Des stratégies internes et externes à l’organisation</li>
+							<li>Des plans de gestion des dépendances principales avec les SE</li>
+						</ul>
+						</fieldset>
+					</fieldset>
 					</p>
 				</div>
+
 				<div id="tab2"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
 				<fieldset class="infoList"><legend class="font_legend"><b>Ce qu’il faut savoir</b></legend>
@@ -222,13 +229,6 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				</ul>
 				</fieldset>
 
-				<fieldset class="infoList"><legend class="font_legend"><b>Diagnostic :</b></legend>
-				<ul>
-					<li>Une fois l’auto-évaluation réalisée par les différents membres de l’organisation, celle-ci obtiendra un diagnostic</li>
-					 <li>mettant en perspective la perception de ses parties prenantes internes sur la biodiversité, et représentant le portrait</li>
-					  <li>du système. Cela permettra d’identifier les risques et opportunités potentiels liés à ses interdépendances avec la biodiversité.</li>
-				</ul>
-				</fieldset>
 				</div>
 
 				<div id="tab3">
@@ -336,7 +336,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					</div>
 				</div>
 				<div id="tab6">	
-					<h3>Choisissez un groupe de services écosystémiques :</h3>
+					<h3>Choisissez un Groupe de services écosystémiques :</h3>
 
 					<ol class="selectables" id="selectable">	
 						<?php
@@ -349,7 +349,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								if ($row['se_id'] == 1)
 									echo '<h3>Services d’approvisionnement<br></h3>';
 							?>
-								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] <= 7 && $row['se_id'] >= 4 ){
@@ -357,7 +357,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 									echo '<h3>Services de régulation<br></h3>';
 								}
 							?>
-								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] <= 13 && $row['se_id'] > 9 ){
@@ -365,7 +365,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 									echo '<h3>Services culturels<br></h3>';
 								}
 							?>	
-								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 							if($row['se_id'] == 14 ){
@@ -373,7 +373,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								<br>
 								<br>
 								<h3>Ressources naturelles<br></h3>
-								<li class="ui-state-default" title="choisissez une de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
+								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
 						}
@@ -390,7 +390,6 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						}
 
 					?>	
-					<input type="hidden" id="se_i" name="se_i" value="">
 
 					<div class="centreBTN1">
 						<button type="button" id="SE_BTN_BACK">Précédent</button> <!--go back to tab 1-->
@@ -482,7 +481,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				
 
 				<div id="tab8">
-					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="get" >
+					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="POST" >
 
 					<h3><b>Choisissez une de ses Examples:</b></h3>
 
@@ -554,6 +553,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<!--Hidden fields which will be passed along with the HTML elements to next PHP script-->
 					<input type="hidden" id="the_report" name="the_report" value=""/>
 					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
+					<input type="hidden" id="se_i" name="se_i" value="">
 					<input type="hidden" id="c_i" name="c_i" value="">
 					<input type="hidden" id="c_i_val" name="c_i_val" value="">
 					<input type="hidden" id="chosenExample" name="chosenExample" value="">
@@ -738,7 +738,8 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<div id="slider" style="height:200px;"></div><br>
 
 					<br>
-					<input type="hidden" id="interdependance" name="interdependance" value="">
+					<input type="hidden" id="interdependancePotential" name="interdependancePotential" value="">
+					<input type="hidden" id="interdependanceAverage" name="interdependanceAverage" value="">
 					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
 					<button type="button" id="impact_btn_next">Suivant</button>
 				</div>
@@ -786,7 +787,8 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<div id="impactSlider" style="height:200px;"></div><br>
 
 					<br>
-					<input type="hidden" id="hiddenImpact" name="hiddenImpact" value="">
+					<input type="hidden" id="hiddenImpactPotential" name="hiddenImpactPotential" value="">
+					<input type="hidden" id="hiddenImpactAverage" name="hiddenImpactAverage" value="">
 					<button type="button" id="back_to_money">Précédent</button>
 					<button type="button" id="after_impact_btn">Suivant</button>
 				</div>
@@ -802,15 +804,15 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<br><br><br>
 
 					<h3>Bénéficier de ce BSE requiert-il un paiement de votre part?</h3>
-				 	<input type="radio" name="money" value="yes"><b>yes<br>
-				 	<input type="radio" name="money" value="no">no</b><br>
+				 	<input type="radio" name="money" value="Oui"><b>Oui<br>
+				 	<input type="radio" name="money" value="Non">Non</b><br>
 				 	<br>
-				 	<h3>Lequel :</h3>
-				 	<input type="radio" name="moneyType" id="moneyType" value="Taxe"><b>Taxe<br>
-				 	<input type="radio" name="moneyType" id="moneyType" value="Redevance">Redevance<br>
-				 	<input type="radio" name="moneyType" id="moneyType" value="Paiement pour services environnementaux">Paiement pour services environnementaux</b><br>
-				 	<input type="radio" name="moneyType" id="moneyType" value=""><b>Autre</b><br>
-				 	<input type="text" name="moneyinput" id="moneyinput" style="width:300px;">
+				 	<h3>Si Oui,Lequel :</h3>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Taxe" disabled><b>Taxe<br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Redevance" disabled>Redevance<br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="Paiement pour services environnementaux" disabled>Paiement pour services environnementaux</b><br>
+				 	<input type="radio" name="moneyType" id="moneyType" value="" disabled><b>Autre</b><br>
+				 	<input type="text" name="moneyinput" id="moneyinput" style="width:300px;" disabled>
 				 	<br><br><br>
 				 	<input type="hidden" id="gotMoney" name="gotMoney" value="">
 				 	<input type="hidden" id="typeOfMoney" name="typeOfMoney" value="">
@@ -824,16 +826,17 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab14" >
 					<h3>Objectif et périmètre</h3>
 					<br>
-					<h4>Quel est/sont le(s) mandat(s) que votre organisation se donne pour cette évaluation?<br></h4>
-					<textarea rows="4" cols="50"></textarea>
-					<h4>Définir le périmètre et déterminer les limites de l’évaluation :<br></h4>
-					<textarea rows="4" cols="50"></textarea>
-
+					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)<br></h4>
+					<textarea rows="4" cols="50" id="objectiveText"></textarea>
+					<h4>Quelles sont, selon vous les limites de cette évaluation ?(limites de l’évaluation)<br></h4>
+					<textarea rows="4" cols="50" id="limitText"></textarea>
+					<h4>Définir le périmètre et déterminer les limites de l’évaluation (Définition du périmètre d’évaluation) :<br></h4>
+					<textarea rows="4" cols="50" id="defineText"></textarea>
 					<br><br><br>
 
 					<div id="tabs-3">
   						<ul>
-    						<li><a href="#example2">En savoir plus sur le périmètre et déterminer les limites </a></li>
+    						<li><a href="#example2">Ce qu’il faut savoir</a></li>
     					</ul>
 						<div id="example2"><br>
 							<b>L’organisation comme un système :</b> Pour étudier les interdépendances d’une organisation<br>
@@ -858,19 +861,51 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					<br><br>
 
+					<h4>Circonscription du périmètre d’analyse ?</h4>
+					<input type="radio" name="cir" id="cir" value="Opérationnel"><b>Opérationnel : site/ensemble site/groupe</b><br>
+					<input type="radio" name="cir" id="cir" value="Spatial"><b>Spatial: Province/région/commune/site</b><br>
+					<input type="radio" name="cir" id="cir" value="Intrant"><b>Intrant/extrant : Approvisionnements/exportations</b><br><br><br>
+
+					<h4>Souhaitez-vous faire apparaitre spatialement le système défini ?</h4>
+					<input type="radio" name="spatial" id="spatial" value="Oui"><b>Oui</b><br>
+					<input type="radio" name="spatial" id="spatial" value="Non"><b>Non</b>
+					<br><br>
+
+					<h4>Si oui, comment? (Représentation du système)</h4>
+					<textarea rows="4" cols="50" id="sysRep"></textarea><br>
+
 					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
-					<input type="radio" name="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
+					<input type="radio" name="define" id="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
 																		 	  		coordonnée sera associée à cette entrée dans la base de données.<br>
-					<input type="radio" name="define" value=""><b>Utiliser des données vectorielles existantes qui sont déjà géo référencées :</b> cours d’eau,<br>
+					<input type="radio" name="define" id="define" value=""><b>Utiliser des données vectorielles existantes qui sont déjà géo référencées :</b> cours d’eau,<br>
 																		 			polygones issus de la télédétection qui ont été classes selon les types d’usages.<br>
-					<input type="radio" name="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
+					<input type="radio" name="define" id="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
 					 													 		mobiles comme les téléphones intelligents.</b> Les points sont collectes dans une base de données<br>
 					  													 		géo référencée par les participants.<br><br><br>
 
-					<h4>Commencer à réfléchir aux composantes du système (votre organisation)?</h4>
-					<input type="radio" name="components" value="">Objectif et fonctions<br>
-					<input type="radio" name="components" value="">Intrant / extrant<br>
-					<input type="radio" name="components" value="">Sous-systèmes : structurel, culturel et humain, technique et stratégique<br><br>
+					<h4>Fonction du système</h4>
+					<input type="radio" name="sysFunc" id="sysFunc" value="principales"><b>Principales<br>
+					<input type="radio" name="sysFunc" id="sysFunc" value="secondaires">Secondaires<br></b><br><br>
+
+					<h4>La portée de l’évaluation :</h4>
+					Le nombre des participants et le niveau d’évaluation vont conditionner la portée du diagnostic<br>
+					et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
+
+					<fieldset><legend><b>Niveau d’évaluation :</b></legend>
+					<input type="radio" name="niveau" id="niveau" value="Direction"><b>Direction<br>
+					<input type="radio" name="niveau" id="niveau" value="Interne">Interne<br>
+					<input type="radio" name="niveau" id="niveau" value="Externe">Externe<br>
+					</fieldset>
+
+					<fieldset><legend><b>Si C'est Externe : Parties prenantes identifiées(?)</b></legend>
+					<input type="radio" name="externe" id="externe" value="Direction" disabled>Habitants<br>
+					<input type="radio" name="externe" id="externe"value="Interne" disabled>Autre organisation<br>
+					<input type="radio" name="externe" id="externe" value="Externe" disabled>Gouvernement/ Etat<br>
+					<input type="radio" name="externe" id="externe" value="Direction" disabled>Agence de notation<br>
+					<input type="radio" name="externe" id="externe" value="Interne" disabled>ONG<br>
+					<input type="radio" name="externe" id="externe" value="" disabled>Autre<br><br>
+					<input type="text" name="externeInput" id="externeInput" style="width:300px;" disabled>
+					</fieldset>
 
 					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
 					<button type="button" id="TAB14_CREATE_BTN">Créer le Rapport</button>

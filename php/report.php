@@ -65,25 +65,6 @@ $con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Conn
 mysql_select_db($mys_base, $con);
 mysql_query("SET NAMES 'utf8");
 mysql_query("SET CHARACTER SET 'utf8'");
-$query = "SELECT * FROM interdependances WHERE uid = '$userid'";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
-$numOfrows=1;  //number of total rows
-while ($row = mysql_fetch_assoc($results)) { 
-    $numOfrows++;
-    $rowdata = array();
-    $rowdata["c_id"] = $row['c_id'];
-    $rowdata["Example"] = $row['example'];
-    $rowdata["dependance"] = $row['dependance'];
-    $rowdata["impact"] = $row['impact'];
-    $rowdata["process"] = $row['process'];
-    $rowdata["secondProcess"] = $row['secondProcess'];
-    $rowdata["dependanceLevel"] = $row['dependanceLevel'];
-    $rowdata["impactLevel"] = $row['impactLevel'];
-    $rowdata["gotMoney"] = $row['gotMoney'];
-    $rowdata["moneyType"] = $row['moneyType'];
-    $rowdata["qualifyImpact"] = $row['qualifyImpact'];
-    $alldata[] = $rowdata;
-}
 
 // Set some content to print
 $html = <<<EOD
@@ -114,38 +95,32 @@ $html = <<<EOD
 </table>
 <table>
     <tr>
-        <th>Ecological Classification</th>
-        <th>Example</th>
-        <th>Dependance</th>
-        <th>Niveau de dependance</th>
-        <th>processus affecter par dependance</th>
-        <th>Impact</th>
-        <th>Type d'impact</th>
-        <th>Niveau d'Impact</th>
-        <th>processus affecter par impact</th>
-        <th>Paiement</th>
-        <th>Type de paiement</th>
+        <th>Catégories</th>
+        <th>Services écosystémiques</th>
+        <th>IMPACTS</th>
+        <th>DEPENDANCES</th>
+        <th>(moyennes)</th>
     </tr>
 EOD;
 
-$query = "SELECT * FROM interdependances WHERE uid = '$userid'";
+$query = "SELECT * FROM interdependances WHERE u_id = '$userid' GROUP BY se_id";
 $results = mysql_query($query) or die('Error Fetching List From Database.');
-$numOfrows=1;  //number of total rows
 while ($row = mysql_fetch_assoc($results)) { 
-    $html .= <<<EOD    
-        <tr>
-            <td>$row['c_id']</td>
-            <td>$row['example']</td>
-            <td>$row['dependance']</td>
-            <td>$row['impact']</td>
-            <td>$row['process']</td>
-            <td>$row['secondProcess']</td>
-            <td>$row['dependanceLevel']</td>
-            <td>$row['impactLevel']</td>
-            <td>$row['gotMoney']</td>
-            <td>$row['moneyType']</td>
-            <td>$row['qualifyImpact']</td>
-        </tr>
+$html .= <<<EOD    
+    <tr>
+        <td>$row['se_name']</td>
+        <td>$row['c_id']</td>
+        <td>$row['example']</td>
+        <td>$row['dependance']</td>
+        <td>$row['impact']</td>
+        <td>$row['process']</td>
+        <td>$row['secondProcess']</td>
+        <td>$row['dependanceLevel']</td>
+        <td>$row['impactLevel']</td>
+        <td>$row['gotMoney']</td>
+        <td>$row['moneyType']</td>
+        <td>$row['qualifyImpact']</td>
+    </tr>
 EOD;
 }
 mysql_close($con);

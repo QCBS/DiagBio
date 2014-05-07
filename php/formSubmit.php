@@ -16,19 +16,20 @@
 	mysql_query("SET NAMES 'utf8");
 	mysql_query("SET CHARACTER SET 'utf8'");
 	// Get Data from Post.
-	$reportid = mysql_real_escape_string($_GET['the_report']);
-	$userid = mysql_real_escape_string($_GET['the_user']);
-	$cid = mysql_real_escape_string($_GET['c_i']);
-	$example = mysql_real_escape_string($_GET['chosenExample']);
-	$dependance = mysql_real_escape_string($_GET['inter']);
-	$impact = mysql_real_escape_string($_GET['inter2']);
-	$process = mysql_real_escape_string($_GET['riskOrOpp']);
-	$secondProcess = mysql_real_escape_string($_GET['riskOrOpp2']);
-	$hiddenDependance = mysql_real_escape_string($_GET['interdependance']);
-	$hiddenImpact = mysql_real_escape_string($_GET['hiddenImpact']);
-	$money  = mysql_real_escape_string($_GET['gotMoney']);
-	$moneyType = mysql_real_escape_string($_GET['typeOfMoney']);
-	$qualifyImpact = mysql_real_escape_string($_GET['qualifyImpact']);
+	$reportid = mysql_real_escape_string($_POST['the_report']);
+	$userid = mysql_real_escape_string($_POST['the_user']);
+	$se_i = mysql_real_escape_string($_POST['se_i']);
+	$cid = mysql_real_escape_string($_POST['c_i']);
+	$example = mysql_real_escape_string($_POST['chosenExample']);
+	$dependance = mysql_real_escape_string($_POST['inter']);
+	$impact = mysql_real_escape_string($_POST['inter2']);
+	$process = mysql_real_escape_string($_POST['riskOrOpp']);
+	$secondProcess = mysql_real_escape_string($_POST['riskOrOpp2']);
+	$hiddenDependance = mysql_real_escape_string($_POST['interdependance']);
+	$hiddenImpact = mysql_real_escape_string($_POST['hiddenImpact']);
+	$money  = mysql_real_escape_string($_POST['gotMoney']);
+	$moneyType = mysql_real_escape_string($_POST['typeOfMoney']);
+	$qualifyImpact = mysql_real_escape_string($_POST['qualifyImpact']);
 	
 	$account = user_load($userid); // Load Themporary User with "Administration" Role.
 	$profile = profile2_load_by_user($account); // Load The Profile2 Data Associated to The User.
@@ -92,17 +93,16 @@
 		$hiddenImpact = 'null';
 	}
 
-	$query = "INSERT INTO interdependances (r_id, u_id, c_id, example, dependance, impact, process, secondProcess, dependanceLevel, impactLevel, gotMoney, moneyType, qualifyImpact) VALUES ('$reportid', $userid, $cid, '$example', '$dependance', '$impact', '$process', '$secondProcess', $hiddenDependance, $hiddenImpact, '$money', '$moneyType','$qualifyImpact')";	
+	if (empty($moneyType)) {
+		$moneyType = 'null';
+	}
+
+	$query = "INSERT INTO interdependances (r_id, u_id, se_name, c_id, example, dependance, impact, process, secondProcess, dependanceLevel, impactLevel, gotMoney, moneyType, qualifyImpact) VALUES ('$reportid', $userid, '$se_i', '$cid', '$example', '$dependance', '$impact', '$process', '$secondProcess', $hiddenDependance, $hiddenImpact, '$money', '$moneyType','$qualifyImpact')";	
 	echo $query;
 	$result = mysql_query($query) or die('Error updating database: '.mysql_error());
 	
 	mysql_close($con);
 	echo "the end";
-	/*$insertSQL = "INSERT INTO interdependances(r_id, u_id, c_id, example, dependance, impact, process, secondProcess, dependanceLevel, impactLevel, gotMoney, moneyType, qualifyImpact) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";	
-	$insertStmnt=$db->prepare($insertSQL);
-	$insertStmnt->bind_param("sssssssssssss", $reportid, $userid, $cid, $example, $dependance, $impact, $process, $secondProcess, $hiddenDependance, $hiddenImpact, $money, $typeOfMoney, $qualifyImpact);  //makes these values into parameters for the insertion into the placeholder, since we used ? for values  
-	$insertStmnt->execute();
-	$insertStmnt->close();*/
 
 	$goto = "Location: http://quebio.ca/entreprisebio?reportid=" . $reportid;
 
