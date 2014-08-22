@@ -34,7 +34,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 			<body>
 				<div id="accinfo">
-				<input type="hidden" id="userRole" value=<?php echo json_encode($role); ?>>
+				<input type="hidden" id="userRole" name="userRole" value=<?php echo json_encode($role); ?>>
 				<input type="hidden" id="OrgaName" value=<?php echo json_encode($field[0]['value']); ?>>
 				<input type="hidden" id="AdminID" value="<?php echo "\"" + $account->uid + "\"";?>">
 			</div>
@@ -45,7 +45,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="login"><a href="#tab3">Enregistrement/Identification</a></li>
 						<li id="admintools"><a href="#tab4">Outils d'administration</a></li>
 						<li id="parametertab"><a href="#tab14">Objectif et périmètre</a></li>
-						<li id="userview"><a href="#tab5">Liste de rapports</a></li>
+						<li id="userview"><a href="#tab5">Liste d'évaluations</a></li>
 						<li id="servicetab"><a href="#tab6">Services Écologiques</a></li>
 						<li id="classificationtab"><a href="#tab7">Classification</a></li>	
 						<li id="entreprisetab"><a href="#tab8">Analysez votre entreprise</a></li>
@@ -56,41 +56,40 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="moneytab"><a href="#tab13">Impact Monétaire</a></li>
 						<li id="risktab"><a href="#tab10">Risques et Opportunités</a></li>
 						<li id="sendData"><a href="#tab16">Enregistrer vos données</a></li>
+						<li id="viewOpinions"><a href="#tab17">Gestion des données</a></li>
+						<li id="adminOpinion"><a href="#tab18">Planification</a></li>
 					</ul>
 					<div id="tab1"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
 					<fieldset class="infoList">
 					<ul>
-						<li>	Au cours des 50 dernières années, accélération et une extension du déclin des écosystèmes ces 50 dernières</li>
-						<li>années, à un rythme inédit dans l’histoire de l’humanité. Si elle n’est pas maîtrisée, cette dégradation mettra en péril</li>
-						<li>non seulement la biodiversité mondiale, mais également les activités économiques de la planète.</li>
+						<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Au cours des 50 dernières années, on a constaté une accélération du déclin des écosystèmes,</li>
+						<li>à un rythme inédit dans l’histoire de l’humanité. Si elle n’est pas maîtrisée, cette dégradation</li> 
+						<li>mettra en péril non seulement la biodiversité mondiale, mais également les activités économiques de la planète.</li>					
 					</ul>
 					</fieldset>
 
 					<fieldset class="infoList"><legend class="font_legend"><b>Objectif de l’outil : Evaluation des interdépendances</b></legend>
 							<ul>
-								<li>
-									Destiné aux <b>organisations</b> qui se préoccupent de leurs <b>interdépendances</b> avec la <b>biodiversité</b>, l’outil vous aidera à les
+								<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									Destiné aux <b>organisations</b> qui se préoccupent de leurs <b>interdépendances</b> avec la <b>biodiversité</b>, l’outil vous aidera à
 								</li>
-								<li>
-								<b>évaluer</b>. Adapté aux organisations québécoises, il doit permettre aux organisations (entreprises, municipalités, etc.) :
-								</li>
-								<br>
+	
+								</ul>
 								<ol>
 								<li>
-									De mieux comprendre vos relations à la Biodiversité et aux SE.
+									Mieux comprendre vos relations à la Biodiversité et aux SE.
 								</li>
 								<li>
-									De trouver des pistes de réflexion pour la prise de décisions stratégiques interne.
+									 Trouver des pistes de réflexion pour la prise de décisions stratégiques interne.
 								</li>
 								<li>
-									D’identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.
+									Identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.
 								</li>
 								<li>
-									De gérer les communications avec les parties prenantes à l’externe.
+									 Gérer les communications avec parties prenantes.
 								</li>
 								</ol>
-							</ul>
 
 					</fieldset>
 
@@ -98,26 +97,26 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						
 						<img src="/testing/Jason/images/picWtihPpl.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>4. De gérer les communications avec les parties prenantes à l’interne (et externe).</b>
+							<b>4. Gérer les communications avec les parties prenantes à l’interne (et externe).</b>
 						</div>
 					</div>
 					<div id="imageTwo">
 
 						<img src="/testing/Jason/images/lightBulb.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>3. D’identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.</b>
+							<b>3. Identifier les risques et opportunités qui découlent de votre dépendance à la biodiversité et aux SE.</b>
 						</div>
 					</div>
 					<div id="imageThree">
 						<img src="/testing/Jason/images/lightbulbWithFlowers.JPG"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>2. De trouver des pistes de réflexion pour la prise de décisions stratégiques interne.</b>
+							<b>2. Trouver des pistes de réflexion pour la prise de décisions stratégiques interne.</b>
 						</div>
 					</div>
 					<div id="imageFour">
 						<img src="/testing/Jason/images/bubbles.png"/>
 						<div style="height:25pxpx; width:150px; background-color:white;">
-							<b>1. De mieux comprendre vos relations à la Biodiversité et aux SE.</b>
+							<b>1. Mieux comprendre vos relations à la Biodiversité et aux SE.</b>
 						</div>
 					</div>
 
@@ -126,22 +125,20 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<fieldset class="infoList"><legend class="font_legend"><b>Description de l’outil</b></legend>
 
 							<ul>
-								<li><b>Outil de communication</b> avant tout, l’objectif de l’outil est de comprendre et évaluer les liens de votre organisation</li>
-								<li>vis-à-vis de la biodiversité et de communiquer à ce propos avec les parties prenantes internes à l’organisation. Cette</li>
-								<li>approche utilise le référentiel des Services Écosystémiques (SE) qui aborde les questions de biodiversité d’un point de</li>
-								<li>vue anthropique, ce qui rend l’exercice accessible à tous. **</li>
+								<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Ce outil est avant tout un outil de communication</b>, l’objectif est de comprendre et évaluer les liens de votre organisation</li>
+								<li>vis-à-vis de la biodiversité et de communiquer à ce propos avec les parties prenantes de l’organisation. Cette</li>
+								<li>approche utilise le référentiel des Services Écosystémiques (SE) qui aborde les questions de biodiversité d’un point</li>
+								<li>de vue anthropique, ce qui rend l’exercice accessible à tous. **</li>
 								<br>
 								<li>Les étapes de l’évaluation sont les suivantes :</li>
 								<br>
 								<ol>
-								<li>Definir l'objectif et la portee du diagnostic.</li>
-								<li>Eatblir le portrait du systeme.</li>
+								<li>Définir l'objectif et la portée du diagnostic.</li>
+								<li>Établir le portrait du systeme.</li>
 								<li>Identifier les interdendances aux BSE.</li>
-								<li>Determiner les interdependances principales de l'organisation aux BSE.</li>
-								<li>Definir une strategie interne et externe de l'organisation au regard de son interdependance aux BSE.</li>
-								<li>Elaborer un plan de gestion des BSE.</li>
-								<li>Suivi des indicateurs.</li>
-								<li>Revision du processus.</li>
+								<li>Déterminer les interdependances principales de l'organisation aux BSE.</li>
+								<li>Élaborer un plan de gestion des BSE.</li>
+								<li>Définir une strategie interne et externe de l'organisation au regard de son interdependance aux BSE.</li>
 								<br>
 								</ol>
 							</ul>
@@ -151,33 +148,29 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
     							<li><a href="#example">Ce qu’il faut savoir</a></li>
     							</ul>
 							<div id="example"><br>
-								Parler de biodiversité, c’est avant tout s’intéresser aux  relations qu’entretiennent les espèces (dont l’espèce humaine), entre<br>
-							    elles, et avec les milieux physiques et chimiques. Pour prendre en compte la biodiversité il faut donc s’intéresser aux <br>
-							    interactions entre le vivant et le non vivant. La biodiversité ne relève pas uniquement du descriptif, mais bien du fonctionnel <br>
-							    et c’est pourquoi elle est si difficile à évaluer.  Ces interdépendances sont difficiles à percevoir, quantifier et mesurer. Par<br>
-							    ailleurs, les indicateurs de biodiversité sont souvent évalués à différentes échelles (gènes, espèces, écosystèmes), et donc,<br>
-							    très nombreux. C’est pourquoi les scientifiques ont élaborés le concept des « services écologiques » (SE)[1, particulièrement<br>
-							    utile pour illustrer l’interdépendance du social et de l’économique avec le monde vivant. Les SE sont les bénéfices que nous<br>
-							    retirons du fonctionnement des écosystèmes. Ils sont issus de la biodiversité mais surtout des processus écologiques<br>
-							    issus des interactions entre les espèces et dont différents acteurs économiques peuvent retirer des services écologiques.<br>
+								Parler de biodiversité, c’est avant tout s’intéresser aux  relations qu’entretiennent les espèces (dont l’espèce humaine), entre
+							    elles, et avec les milieux physiques et chimiques. Pour prendre en compte la biodiversité il faut donc s’intéresser aux 
+							    interactions entre le vivant et le non vivant. La biodiversité ne relève pas uniquement du descriptif, mais bien du fonctionnel 
+							    et c’est pourquoi elle est si difficile à évaluer.  Ces interdépendances sont difficiles à percevoir, quantifier et mesurer. Par
+							    ailleurs, les indicateurs de biodiversité sont souvent évalués à différentes échelles (gènes, espèces, écosystèmes), et donc,
+							    très nombreux. C’est pourquoi les scientifiques ont élaborés le concept des « services écologiques » (SE)[1, particulièrement
+							    utile pour illustrer l’interdépendance du social et de l’économique avec le monde vivant. Les SE sont les bénéfices que nous
+							    retirons du fonctionnement des écosystèmes. Ils sont issus de la biodiversité mais surtout des processus écologiques
+							    issus des interactions entre les espèces et dont différents acteurs économiques peuvent retirer des services écologiques.
 							</div>
 					</fieldset>
-
-					<iframe src="http://prezi.com/embed/fvykjv9nuhnf/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>
-
-					<fieldset class="infoList"><legend class="font_legend"><b>Rapports:</b></legend>
-						<fieldset><legend class="font_legend"><b>Le rapport a pour objectif de reconstituer :</b></legend>
+					<!--<iframe src="http://prezi.com/embed/bu9w-01qhpes/?bgcolor=ffffff&amp;lock_to_path=0&amp;autoplay=0&amp;autohide_ctrls=0&amp;features=undefined&amp;disabled_features=undefined" width="550" height="400" frameBorder="0" webkitAllowFullScreen mozAllowFullscreen allowfullscreen></iframe>-->
+					<fieldset class="infoList"><legend class="font_legend"><b>évaluations:</b></legend>
+						<fieldset><legend class="font_legend"><b>I. L'évaluation va permettre de determiner</b></legend>
 						<ul>
-							<li>L’objectif et la portée de l'évaluation</li>
-							<li>Le portrait du système</li>
 							<li>Les interdépendances de l’organisation avec les SE</li>
-							<li>Les responsabilités et dépendances BSE principales</li>
 						</ul>
 						</fieldset>
-						<fieldset><legend class="font_legend"><b>Dans le but de mener à :</b></legend>
+						<fieldset><legend class="font_legend"><b>II. Les interdépendances principales avec les SE vous permettera d'élaborer:</b></legend>
 						<ul>
 							<li>Des stratégies internes et externes à l’organisation</li>
-							<li>Des plans de gestion des dépendances principales avec les SE</li>
+							<li>Des plans de gestion des dépendances principales et de surveillance des </li>
+							<li>interdependances potentielles avec les SE</li>
 						</ul>
 						</fieldset>
 					</fieldset>
@@ -188,45 +181,69 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<fieldset class="infoList"><legend class="font_legend"><b>Ce qu’il faut savoir</b></legend>
 				<ul>				
-					<li>Les organisations sont largement dépendantes de l’exploitation des services écosystémiques. Or, les biens</li>
-					<li>et services que génèrent les écosystèmes ne sont pas pris en compte parce que beaucoup sont considérés comme des</li>
-					<li>cadeaux de la nature. Le travail des abeilles par exemple, est très peu valorisé alors que toute l’industrie agroalimentaire</li>
-					<li>repose sur la pollinisation. Cela peut représenter une menace importante comme depuis quelques années en Californie, où la</li>
-					<li>productivité des producteurs d’amandes, d’avocats et de melons est mise en péril en raison d’un brusque déclin de la population</li>
-					<li>d’abeilles pollinisatricesi.</li>
+					<li>Les organisations sont largement dépendantes de l’exploitation des services écosystémiques.</li>
+					<li>Or, les biens et services que génèrent les écosystèmes ne sont pas pris en compte parce</li> 
+					<li>que beaucoup sont considérés comme des cadeaux de la nature. Le travail des abeilles par</li>
+					<li>exemple, est très peu valorisé alors que toute l’industrie agroalimentaire repose sur la</li>
+					<li>pollinisation. Cela peut représenter une menace importante comme depuis quelques années en</li>
+					<li>Californie, où la productivité des producteurs d’amandes, d’avocats et de melons est mise</li> 
+					<li>en péril en raison d’un brusque déclin de la population d’abeilles pollinisatrices.</li>
 					<br>
 					<li>Certes, il existe des marchés pour le bois, le blé et les autres produits cultivés, mais il n’y a pas de marché pour la régulation</li>
 					<li>de l’eau par exemple. Effectivement, les bénéfices de ce service sont multiples : les systèmes fluviaux apportent de l’eau douce, de</li>
-					<li>l’énergie et dessites propices aux loisirs. Les zones humides littorales, elles, filtrent les pollutions, atténuent les effets des</li>
+					<li>l’énergie et des sites propices aux loisirs. Les zones humides littorales, elles, filtrent les pollutions, atténuent les effets des</li>
 					<li>inondations et sont des sites de reproduction indispensables aux pêcheries.</li>
 					<br>
 					<li>La quantité et la qualité des SE se dégradent à grande vitesse sous l’effet des activités humaines (15 des 24</li>
-					<li>services écosystémiques évalués dans l’étude se sont détériorés au cours du dernier demi-siècle)(ii) et si</li>
+					<li>services écosystémiques évalués dans l’étude se sont détériorés au cours du dernier demi-siècle) et si</li>
 					<li>  l’on ne s’en préoccupe pas, les conséquences seront catastrophiques.</li>
 				 	<br>
 				 	<li>Grâce à l’outil de diagnostic, nous vous proposons d’évaluer :</li>
 					<br>
 					<ul>
-					<li>L’influence des SE sur les activités de l'entreprise (intrant, force externe affectant la productivité)</li>
+					<li>L’importance des SE sur les activités de l’organisation (interdépendances)</li>
+					<li>Le type d’interdépendance entre l’organisation et la biodiversité (dépendances et impacts)</li>
 					<li>Si les SE donnent lieu à des transactions monétaires.</li>
-					<li>L’impact de l'organisation sur la disponibilité du SE (quantité, qualité)</li>
-					<li>L’impact de l'organisation sur la capacité d'autres agents à bénéficier du SE (quantité, qualité)</li>
-					<li>L’impact global sur la biodiversité lié aux interactions de l'organisation avec <br>
-						le SE (continuités écologiques, habitats, espèces — dont la diversité génétique)</li>
-					<li>La Biodiversité et les SE imposent des transactions monétaires associées aux impacts (externalités négatives)</li>
+					<li>Les risques et opportunités de l’organisation liés à la biodiversité. »</li>
 					</ul>
 				</ul>
 				</fieldset>
-
 
 				<fieldset class="infoList"><legend class="font_legend"><b>Choix du périmètre :</b></legend>
 				<ul>				
 				<li>La première étape est de définir un périmètre sur lequel portera l’étude. Celui-ci dépend totalement de l’objectif</li>
 				<li>de l’étude. Que cherchez-vous à étudier ? Un portait de l’organisation, que ce soit en termes de système ou d’espace </li>
 				<li>(site), vous permettra de définir cette question essentielle. Il peut s’agir d’une filiale, d’un segment de l’organisation,</li>
-				<li>mais également d’un projet, destiné à un site précis.** Par la suite, les autres participants seront amenés à se questionner</li>
+				<li>mais également d’un projet, destiné à un site précis. Par la suite, les autres participants seront amenés à se questionner</li>
 				<li>par rapport au même périmètre, amenant une réflexion entre les parties prenantes internes à l’organisation.</li>
 				</ul>
+
+				<div class="infoList" id="tabs-4">
+  								<ul>
+    							<li><a href="#exampleFour">Ce qu’il faut savoir</a></li>
+    							</ul>
+							<div class="infoList" id="exampleFour"><br>
+							
+							Considérer le tout comme un système permet de représenter les différentes entités de l’organisation, ainsi que leurs<br>
+							échanges avec les parties prenantes externes (clients, fournisseurs, communautés locales, etc.). Lors de l’évaluation,<br>
+							il est nécessaire de procéder par étapes, car dépendamment de la taille de l’organisation (notamment si ses activités<br>
+							sont diversifiées), l’évaluation pourrait être trop fastidieuse. Il serait très ambitieux de vouloir faire une<br>
+							évaluation sur tous ses aspects en une seule fois. Les données, comme les résultats, seraient difficiles et à obtenir<br>
+							et très complexes à analyser. Fragmenter le système en différentes entités permettra d’y voir plus clair, en faisant<br>
+							correspondre un rapport (une évaluation), à chaque entité de l’entreprise.<br><br>
+
+							L’organisation devra donc choisir un périmètre d’évaluation correspondant à un aspect particulier de ses activités et<br>
+							c’est pourquoi il est important de se questionner en premier lieu sur l’objectif de l’évaluation. Il peut s’agir des<br>
+							éléments de la chaine de valeur comme les fournisseurs, une catégorie de fournisseurs ou de clients, mais également<br>
+							d’une installation, d’un site, etc. Bien entendu, il est plus judicieux de choisir un périmètre représentant une<br>
+							grande importance stratégique pour l’entreprise, ou bien un secteur où les interactions avec les écosystèmes sont<br>
+							les plus susceptibles d’être sources de risques ou opportunités.<br><br>
+
+							À titre d’exemple, BC Hydro a choisi son barrage hydroélectrique de l’île de Vancouver sur le fleuve Campbell comme<br>
+							périmètre de son audit ESR (Ecosystem Services Review) et Rio Tinto a testé l’évaluation ESR sur une mine de cuivre<br>
+							en prospection au Pérou, en amont du projet, au stade d’étude de préfaisabilité. (World Ressources Institure 2008).<br>
+							</div>
+
 				</fieldset>
 
 				</div>
@@ -269,10 +286,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 							// Display List of Services as S
 							while ($row = mysql_fetch_assoc($results)) { // Display The Proper View Setting.
 								if ( $row['Available'] == 0 ){
-									$viewability = "Rapport visible par l'administrateur uniquement";
+									$viewability = "évaluation visible par l'administrateur uniquement";
 								}
 								else{
-									$viewability = "Rapport visible par tous les participants";	
+									$viewability = "évaluation visible par tous les participants";	
 								}
 
 								?> 	<!-- Each Report List Item Has its ID as the Report ID Fetched From The Database. -->
@@ -286,10 +303,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<span></span>
 					<div style="width: 300px; height: 200px; float: left; margin-left: 10px;">
 						<h2>Actions possibles:</h2> <!-- All The Buttons That Are Used By The Admin -->
-						<button id="create_report" name="create_report" style="margin-bottom: 5px">Création d'un nouveau rapport</button>
-						<button id="delete_report" name="delete_report" style="margin-bottom: 5px">Supprimer un rapport</button>
-						<button id="view_report" name="view_report" style="margin-bottom: 5px">Voir le rapport</button>
-						<button id="viewable_report" name="viewable_report" style="margin-bottom: 5px">Changer la visibilité du rapport</button>
+						<button id="create_report" name="create_report" style="margin-bottom: 5px">Création d'un nouveau évaluation</button>
+						<button id="delete_report" name="delete_report" style="margin-bottom: 5px">Supprimer un évaluation</button>
+						<button id="view_report" name="view_report" style="margin-bottom: 5px">créer rapport</button>
+						<button id="viewable_report" name="viewable_report" style="margin-bottom: 5px">Changer la visibilité du évaluation</button>
 						<br />
 						<img id='ajax' src="http://quebio.ca/testing/Jason/ajax-loader.gif" style="visibility:hidden; margin-left: 100px">
 					</div>
@@ -306,15 +323,15 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<div style="width: 800px;">
 						<div id="selectable0" style="width: 500px; height: 200px; float: left; overflow-y: scroll;">	
 							<?php
-							$query = "SELECT * FROM report WHERE reportid IN (SELECT r_id FROM interdependances WHERE u_id=".$user->uid.")";//query statement--->gets the all the reports id
+							$query = "SELECT * FROM report WHERE reportid IN (SELECT r_id FROM user_ids WHERE u_id=".$user->uid.")";//query statement--->gets the all the reports id
 							$results = mysql_query($query) or die('Error Fetching List From Database.');
 							
 							while ($row = mysql_fetch_assoc($results)) { // Display The Proper View Setting.
 								if ( $row['Available'] == 0 ){
-									$viewability = "Rapport visible par l'administrateur seulement";
+									$viewability = "évaluation visible par l'administrateur seulement";
 								}
 								else{
-									$viewability = "Rapport visible par tous les participants";	
+									$viewability = "évaluation visible par tous les participants";	
 								}
 								?>
 								<!--populating the selectable list with values fetched from database -->
@@ -325,10 +342,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 							?>
 						</div>
 						<div style="float: left; width: 200px; margin-left: 10px;">
-							<h3>Un nouveau rapport</h3>
-							<input type="text" id="new_report" name="new_report" style="width: 204px" title="Entre un nouveau numéro de rapport" value=""/>
+							<h3>Un nouveau évaluation</h3>
+							<input type="text" id="new_report" name="new_report" style="width: 204px" title="Entre un nouveau numéro de évaluation" value=""/>
 						</div>
-						<button type="button" id="NEW_RE_BTN">Répondez à ce rapport</button>
+						<button type="button" id="NEW_RE_BTN">Répondez à ce évaluation</button>
 						<br style="clear: left;" />
 					</div>
 					<div class="centreBTN3">
@@ -336,7 +353,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					</div>
 				</div>
 				<div id="tab6">	
-					<h3>Choisissez un Groupe de services écosystémiques :</h3>
+					<h3>Choisissez un groupe de services écosystémiques :</h3>
 
 					<ol class="selectables" id="selectable">	
 						<?php
@@ -360,15 +377,15 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
-							if($row['se_id'] <= 13 && $row['se_id'] > 9 ){
-								if ($row[se_id] == 11) {
+							if($row['se_id'] <= 10 && $row['se_id'] > 7 ){
+								if ($row[se_id] == 8) {
 									echo '<h3>Services culturels<br></h3>';
 								}
 							?>	
 								<li class="ui-state-default" title="choisissez un de ces services écologiques" id=<?php echo "\"" . $row['se_id'] . "\"" .$row['se_name'];?>> <?php echo $row['se_name']?></li>
 							<?php
 							}
-							if($row['se_id'] == 14 ){
+							if($row['se_id'] == 11 ){
 							?>
 								<br>
 								<br>
@@ -482,8 +499,9 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				<div id="tab8">
 					<form id="the_form" action="http://www.quebio.ca/testing/Jason/php/formSubmit.php" method="POST" >
-
-					<h3><b>Choisissez une de ses Examples:</b></h3>
+					<input type="hidden" id="userRole2" name="userRole2" value=<?php echo json_encode($role); ?>>
+				
+					<h3><b>Examples</b></h3>
 
 					 <?php
 					
@@ -523,7 +541,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						?>
 
 						<br><br>
-						<h3><b>Ajoutez votre propre exemple:</b></h3>
+						<h3><b>Nommez l'interdépendance</b></h3>
 						 <input type="text" name="newExample" id="newExample" style="width: 300px;"><br>
 						 <br><br>
 						
@@ -537,7 +555,6 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						</div>
 
 						<?php	
-					mysql_close($con); // close the database connection 
 					?>	
 					<div id="theSecondGroup"> <!-- div which contains all the HTML element created-->
 
@@ -553,7 +570,9 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<!--Hidden fields which will be passed along with the HTML elements to next PHP script-->
 					<input type="hidden" id="the_report" name="the_report" value=""/>
 					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
+					<input type="hidden" id="the_user" name="the_user" value="<?php echo $user->uid;?>"/>
 					<input type="hidden" id="se_i" name="se_i" value="">
+					<input type="hidden" id="se_name" name="se_name" value="">
 					<input type="hidden" id="c_i" name="c_i" value="">
 					<input type="hidden" id="c_i_val" name="c_i_val" value="">
 					<input type="hidden" id="chosenExample" name="chosenExample" value="">
@@ -639,7 +658,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<br><br><br>
 
 					<?php
-						$natures=array("Opérationnel","Règlementaire et juridique","Réputation et image", "Marché et produits", "Financement");
+						$natures=array("Les finances","La gestion des opérations","Les opérations quotidiennes", "Les ressources humaines", "Le marketing");
 						$count=1;
 						echo '<div id="selectNature">';
 						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
@@ -661,7 +680,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						
 						
 					<?php
-						$natures=array("Opérationnel","Règlementaire et juridique","Réputation et image", "Marché et produits", "Financement");
+						$natures=array("Les finances","La gestion des opérations","Les opérations quotidiennes", "Les ressources humaines", "Le marketing");
 						$count=1;
 						echo '<div id="selectNatureTwo">';
 						echo '<h4>Quel est le processus de votre organisation le plus affecté par cette dépendance ?</h4>';
@@ -700,7 +719,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					<h3>Evaluez Votre Interdependance</h3>
 
-					<div><fieldset><legend><b>légende</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
+					<div><fieldset class="infoList"><legend class="font_legend"><b>légende</legend>Très faible : votre activité dépend peu du service écosystémique choisi.<br>
 					Très forte : Le SE choisi est un facteur clef de vos activités, celles-ci<br>
 
 					<?php 
@@ -736,10 +755,15 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				   <div id="displayOption5" class="OptionDivs">Très forte</b></div>
 
 					<div id="slider" style="height:200px;"></div><br>
-
+					<div id="dep_textarea" style="height:200px">
+					<h5>Votre Avis:</h5>
+					<textarea rows="4" cols="50" id="dep_txt" name="dep_txt">
+					</textarea>
+					</div>					
 					<br>
 					<input type="hidden" id="interdependancePotential" name="interdependancePotential" value="">
 					<input type="hidden" id="interdependanceAverage" name="interdependanceAverage" value="">
+					<input type="hidden" id="niveauDependance" name="niveauDependance" value="">
 					<button type="button" id="TAB11_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
 					<button type="button" id="impact_btn_next">Suivant</button>
 				</div>
@@ -757,7 +781,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					<h4>Qualifier le niveau d’impact de -5 à +5 :</h4>
 
-					<div><fieldset><legend><b>légende</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
+					<div><fieldset class="infoList"><legend class="font_legend"><b>légende</legend>Un impact négatif (-5 à 0) a un effet néfaste sur le service écosystémique choisi.<br>
 					Un impact positif (0 à +5) a un effet avantageux sur le service écosystémique choisi.</b>
 				</fieldset></div>
 					<select name="impact" id="impact">
@@ -782,13 +806,18 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				    		$counting++;
 				    	}
 				    ?>
-
+				    <div id="impact_textarea">
+				    <h5>Votre Avis:</h5>
+				    <textarea rows="4" cols="50" id="impact_txt" name="impact_txt">
+					</textarea>
+				    </div>
 				    <br><br><br><br><br><br>
 					<div id="impactSlider" style="height:200px;"></div><br>
 
 					<br>
 					<input type="hidden" id="hiddenImpactPotential" name="hiddenImpactPotential" value="">
 					<input type="hidden" id="hiddenImpactAverage" name="hiddenImpactAverage" value="">
+					<input type="hidden" id="niveauImpact" name="niveauImpact" value="">
 					<button type="button" id="back_to_money">Précédent</button>
 					<button type="button" id="after_impact_btn">Suivant</button>
 				</div>
@@ -822,96 +851,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				
 					<button type="button" id="MONEY_NEXT_BTN">Suivant</button>
 				</div>
-
-				<div id="tab14" >
-					<h3>Objectif et périmètre</h3>
-					<br>
-					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)<br></h4>
-					<textarea rows="4" cols="50" id="objectiveText"></textarea>
-					<h4>Quelles sont, selon vous les limites de cette évaluation ?(limites de l’évaluation)<br></h4>
-					<textarea rows="4" cols="50" id="limitText"></textarea>
-					<h4>Définir le périmètre et déterminer les limites de l’évaluation (Définition du périmètre d’évaluation) :<br></h4>
-					<textarea rows="4" cols="50" id="defineText"></textarea>
-					<br><br><br>
-
-					<div id="tabs-3">
-  						<ul>
-    						<li><a href="#example2">Ce qu’il faut savoir</a></li>
-    					</ul>
-						<div id="example2"><br>
-							<b>L’organisation comme un système :</b> Pour étudier les interdépendances d’une organisation<br>
-							avec la biodiversité et les services écosystémiques, il est important de la considérer<br>
-							comme un système simplifié. Le système permet de représenter les différentes entités <br>
-							de l’organisation, et notamment, les flux économiques de la ou des chaines <br>
-							d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet <br>
-							également d’identifier les intrants (matière première issue des écosystèmes) et <br>
-							sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec<br>
-							les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).<br>
-							<br>
-							<b>Déterminer les limites de chaque évaluation :</b> l’organisation doit se fixer des objectifs<br>
-							réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de<br>
-							ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de<br>
-							l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque<br>
-							composante géographique du système comme une entité distinctes, Ceci permet de faire <br>
-							correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation <br>
-							pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de <br>
-							ses activités.<br>
-						</div>
-					</div>
-
-					<br><br>
-
-					<h4>Circonscription du périmètre d’analyse ?</h4>
-					<input type="radio" name="cir" id="cir" value="Opérationnel"><b>Opérationnel : site/ensemble site/groupe</b><br>
-					<input type="radio" name="cir" id="cir" value="Spatial"><b>Spatial: Province/région/commune/site</b><br>
-					<input type="radio" name="cir" id="cir" value="Intrant"><b>Intrant/extrant : Approvisionnements/exportations</b><br><br><br>
-
-					<h4>Souhaitez-vous faire apparaitre spatialement le système défini ?</h4>
-					<input type="radio" name="spatial" id="spatial" value="Oui"><b>Oui</b><br>
-					<input type="radio" name="spatial" id="spatial" value="Non"><b>Non</b>
-					<br><br>
-
-					<h4>Si oui, comment? (Représentation du système)</h4>
-					<textarea rows="4" cols="50" id="sysRep"></textarea><br>
-
-					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
-					<input type="radio" name="define" id="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
-																		 	  		coordonnée sera associée à cette entrée dans la base de données.<br>
-					<input type="radio" name="define" id="define" value=""><b>Utiliser des données vectorielles existantes qui sont déjà géo référencées :</b> cours d’eau,<br>
-																		 			polygones issus de la télédétection qui ont été classes selon les types d’usages.<br>
-					<input type="radio" name="define" id="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
-					 													 		mobiles comme les téléphones intelligents.</b> Les points sont collectes dans une base de données<br>
-					  													 		géo référencée par les participants.<br><br><br>
-
-					<h4>Fonction du système</h4>
-					<input type="radio" name="sysFunc" id="sysFunc" value="principales"><b>Principales<br>
-					<input type="radio" name="sysFunc" id="sysFunc" value="secondaires">Secondaires<br></b><br><br>
-
-					<h4>La portée de l’évaluation :</h4>
-					Le nombre des participants et le niveau d’évaluation vont conditionner la portée du diagnostic<br>
-					et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
-
-					<fieldset><legend><b>Niveau d’évaluation :</b></legend>
-					<input type="radio" name="niveau" id="niveau" value="Direction"><b>Direction<br>
-					<input type="radio" name="niveau" id="niveau" value="Interne">Interne<br>
-					<input type="radio" name="niveau" id="niveau" value="Externe">Externe<br>
-					</fieldset>
-
-					<fieldset><legend><b>Si C'est Externe : Parties prenantes identifiées(?)</b></legend>
-					<input type="radio" name="externe" id="externe" value="Direction" disabled>Habitants<br>
-					<input type="radio" name="externe" id="externe"value="Interne" disabled>Autre organisation<br>
-					<input type="radio" name="externe" id="externe" value="Externe" disabled>Gouvernement/ Etat<br>
-					<input type="radio" name="externe" id="externe" value="Direction" disabled>Agence de notation<br>
-					<input type="radio" name="externe" id="externe" value="Interne" disabled>ONG<br>
-					<input type="radio" name="externe" id="externe" value="" disabled>Autre<br><br>
-					<input type="text" name="externeInput" id="externeInput" style="width:300px;" disabled>
-					</fieldset>
-
-					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
-					<button type="button" id="TAB14_CREATE_BTN">Créer le Rapport</button>
-
-				</div>
-
+				
 				<div id="tab15" >
 				<div class="infoList">
 						<h3>Enregistrer vos données</h3>
@@ -953,11 +893,311 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 				</form>
 
-		</div>	
+				<div id="tab14" >
+					<h3>Objectif et périmètre</h3>
+					<br>
+					<h4>Nom D'évaluation:<input type="text" name="nameEval" id="nameEval"></h4><br>
+					<h4>Nom D'organisation qui va être évalué:<input type="text" name="orgEval" id="orgEval"></h4><br>
+					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)<br></h4>
+					<textarea rows="4" cols="50" id="objectiveText"></textarea>
+					<h4>Quelles sont, selon vous les limites de cette évaluation ?(limites de l’évaluation)<br></h4>
+					<textarea rows="4" cols="50" id="limitText"></textarea>
+					<h4>Définir le périmètre et déterminer les limites de l’évaluation (Définition du périmètre d’évaluation) :<br></h4>
+					<textarea rows="4" cols="50" id="defineText"></textarea>
+					<br><br><br>
+					
+					<div id="tabs-3">
+  						<ul>
+    						<li><a href="#example2">Ce qu’il faut savoir</a></li>
+    					</ul>
+						<div id="example2"><br>
+							<b>L’organisation comme un système :</b> Pour étudier les interdépendances d’une organisation<br>
+							avec la biodiversité et les services écosystémiques, il est important de la considérer<br>
+							comme un système simplifié. Le système permet de représenter les différentes entités <br>
+							de l’organisation, et notamment, les flux économiques de la ou des chaines <br>
+							d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet <br>
+							également d’identifier les intrants (matière première issue des écosystèmes) et <br>
+							sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec<br>
+							les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).<br>
+							<br>
+							<b>Déterminer les limites de chaque évaluation :</b> l’organisation doit se fixer des objectifs<br>
+							réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de<br>
+							ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de<br>
+							l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque<br>
+							composante géographique du système comme une entité distinctes, Ceci permet de faire <br>
+							correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation <br>
+							pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de <br>
+							ses activités.<br>
+						</div>
+					</div>
+
+					<br><br>
+
+					<h4>Circonscription du périmètre d’analyse ?</h4>
+					<input type="radio" name="cir1" id="cir1" value="Opérationnel"><b>Opérationnel</b>
+					<select hidden id="sites1">
+					  <option value="site">Site</option>
+					  <option value="ensemble site">Ensemble Site</option>
+					  <option value="groupe">Groupe</option>
+					</select><br>
+					<input type="radio" name="cir2" id="cir2" value="Spatial"><b>Spatial:</b>
+					<select hidden id="sites2">
+					  <option value="province">Province</option>
+					  <option value="region">Région</option>
+					  <option value="commune">Commune</option>
+					  <option value="site">Site</option>
+					</select><br>
+					<input type="radio" name="cir3" id="cir3" value="Intrant"><b>Intrant/extrant :</b>
+					<select hidden id="sites3">
+					  <option value="approvisionnements">Approvisionnements</option>
+					  <option value="exportations">Exportations</option>
+				    </select><br><br>
+				    <h4>Description:</h4>
+					<textarea rows="4" cols="50" id="sysRep"></textarea><br><br><br>
+
+					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
+					<input type="radio" name="define" id="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
+																		 	  		coordonnée sera associée à cette entrée dans la base de données.<br>
+					<input type="radio" name="define" id="define" value=""><b>Utiliser des données vectorielles existantes qui sont déjà géo référencées :</b> cours d’eau,<br>
+																		 			polygones issus de la télédétection qui ont été classes selon les types d’usages.<br>
+					<input type="radio" name="define" id="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
+					 													 		mobiles comme les téléphones intelligents.</b> Les points sont collectes dans une base de données<br>
+					  													 		géo référencée par les participants.<br><br><br>
+					<h4>Fonction du système</h4>
+					<input type="radio" name="sysFunc" id="sysFunc" value="principales"><b>Principales <br>
+					<input type="radio" name="sysFunc" id="sysFunc" value="secondaires">Secondaires</b> <br><div hidden id="hidden_text"><br><br>
+					<h4>Description:</h4>
+					<textarea rows="4" cols="50" id="funcTxt"></textarea><br><br><br>
+					</div>
+					<h4>La portée de l’évaluation :</h4>
+					Le nombre des participants et le niveau d’évaluation vont conditionner la portée du diagnostic<br>
+					et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
+
+					<fieldset><legend><b>Niveau d’évaluation :</b></legend>
+					<input type="checkbox" name="niveau" id="niveau1" value="Direction"><b>Direction<br>
+					<input type="checkbox" name="niveau" id="niveau2" value="Interne">Interne<br>
+					<input type="checkbox" name="niveau" id="niveau3" value="Externe">Externe<br>
+					</fieldset>
+					<div id="hideList" hidden>
+					<fieldset><legend><b>Si C'est Externe : Parties prenantes identifiées(?)</b></legend>
+					<input type="radio" name="externe" id="externe" value="Direction" >Habitants<br>
+					<input type="radio" name="externe" id="externe"value="Interne" >Autre organisation<br>
+					<input type="radio" name="externe" id="externe" value="Externe" >Gouvernement/ Etat<br>
+					<input type="radio" name="externe" id="externe" value="Direction" >Agence de notation<br>
+					<input type="radio" name="externe" id="externe" value="Interne" >ONG<br>
+					<input type="radio" name="externe" id="externe" value="" >Autre<br><br>
+					<input type="text" name="externeInput" id="externeInput" style="width:300px;" disabled>
+					</fieldset>
+					</div>
+					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="TAB14_CREATE_BTN">Créer l'évaluation</button>
+
+				</div>
+		
+		<div id="tab17" >
+			<?php
+			$loop = 0; //number of reports
+			$reportids = [];
+			$orgs = [];
+			$query = "SELECT reportid, evalName FROM report WHERE adminid = $user->uid";
+			$results = mysql_query($query) or die('Error Fetching List From Database.');
+			while ($row = mysql_fetch_assoc($results)) { 
+				$reportids[] = $row['reportid']; 
+				$orgs[] = $row['evalName'];
+				$loop++;
+			}
+				
+			$counter=0;
+			while ($counter < $loop) { //used to make the buttons that will show/hide the tables
+				echo '<button type="button" id="show'.$counter.'" value="'.$reportids[$counter].'">Évaluation: '.$orgs[$counter].'</button>';
+				$counter++;
+			}
+
+			$count = 0;  //number of rows or check boxes in total
+			$looper = 0;
+			while ($looper < $loop) {  //making all of the tables containing different reports
+
+				echo '<div id="opinions'.$looper.'" hidden>';  //the div that has a certian report, used to hide and show
+				echo "<h4>Plan D'action</h4>";
+				$query = "SELECT row_id, u_id, example, opinion FROM interdependances WHERE r_id
+				= '$reportids[$looper]' AND (average_dependance_level = 4 OR average_dependance_level
+				= 5 OR average_impact_level = 4 OR average_impact_level = 5) GROUP BY example ORDER BY u_id ";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');
+				while ($row = mysql_fetch_assoc($results)) { 
+					echo '<table border="1">';
+					echo "<tr><th>Effacer</th><th>Ids des Commentaires</th><th>IDBSE</th><th>Commentaires</th></tr>";
+					echo '<tr><td><input type="checkbox" name="chk_box_delete_'.$count.'" value="'.$row['row_id'].'"></td>';
+					echo '<td>'.$row['u_id'].'</td><td>'.$row['example'].'</td><td>'.$row['opinion'].'</td>';
+					echo '</tr></table>';
+					$count++;
+				}
+
+				echo '<h4>Plans de surveillance</h4>';		
+				$query = "SELECT row_id, u_id, example, opinion FROM interdependances WHERE r_id
+				= '$reportids[$looper]' AND (potential_dependance_level = 4 OR potential_dependance_level
+				= 5 OR potential_impact_level = 4 OR potential_impact_level = 5) GROUP BY example ORDER BY u_id";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');
+				while ($row = mysql_fetch_assoc($results)) { 
+					echo '<table border="1">';
+					echo "<tr><th>Effacer</th><th>Ids des Commentaires</th><th>IDBSE</th><th>Commentaires</th></tr>";
+					echo '<tr><td><input type="checkbox" name="chk_box_delete_'.$count.'" value="'.$row['row_id'].'"></td>';
+					echo '<td>'.$row['u_id'].'</td><td>'.$row['example'].'</td><td>'.$row['opinion'].'</td>';
+					echo '</tr></table>';
+					$count++;
+				}
+				echo '</div>';
+				
+				$looper++;
+			}
+				
+			?>
+			<input type="hidden" value="" id="report_selected">
+			<input type="hidden" id="numOfOpinions" name="numOfOpinions" value="<?php echo $count;?>">		
+			<button type="button" id="delete_opinions">Delete</button>
+		</div>
+
+		<div id="tab18">
+			<?php
+			$counter=0;
+			while ($counter < $loop) { //used to make the buttons that will show/hide the tables
+				echo '<button type="button" id="showReport'.$counter.'" value="'.$reportids[$counter].'">Évaluation: '.$orgs[$counter].'</button>';
+				$counter++;
+			}
+
+			$unique_examples = [];
+			$count = 0;
+			$potentialAvg = [];  //find out whether the example(IDBSE) is average or potential
+			$report_ids = [];
+			$looper=0;
+			while ($looper < $loop) {
+				echo '<div id="adminOps'.$looper.'" hidden>';
+				echo "<h4>Plan d'Action</h4>";
+
+				$row_ids = [];
+				$unique_list = [];
+				$unique_size = 0;
+				$query = "SELECT r_id, row_id, example FROM interdependances WHERE 
+				r_id = '$reportids[$looper]' AND (average_dependance_level = 4 OR average_dependance_level = 5
+				OR average_impact_level = 4 OR average_impact_level = 5) GROUP BY example ORDER BY example";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');				
+				while ($row = mysql_fetch_assoc($results)) {
+					$row_ids[] = $row['row_id'];
+					$unique_list[] = $row['example'];
+					$unique_examples[] = $row['example'];
+					$report_ids[] = $row['r_id'];
+					$potentialAvg[] = 'avéré';
+					$unique_size++;
+				}
+
+				$opinion_ids = [];
+				$idbses = [];
+				$user_opinions = [];
+				$size = 0;
+				$query = "SELECT u_id, example, opinion FROM interdependances WHERE 
+				r_id = '$reportids[$looper]' AND (average_dependance_level = 4 OR average_dependance_level = 5
+				OR average_impact_level = 4 OR average_impact_level = 5) ORDER BY example";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');
+				while ($row = mysql_fetch_assoc($results)) {
+					$opinion_ids[] = $row['u_id'];
+					$idbses[] = $row['example'];
+					$user_opinions[] = $row['opinion'];
+					$size++;
+				}
+
+				for ($i=0; $i < $unique_size; $i++) {
+					echo '<table border="1">'; 
+					echo '<tr><th>IDBSE</th><th>Ids des commentaires</th></th><th>Commentaires</th><th>Action</th><th>Alternative envisagées(Paiement)</th></tr>';
+							
+					for ($j=0; $j < $size ; $j++) { 
+						if ($idbses[$j] == $unique_list[$i]) {
+							echo '<tr><td>'.$idbses[$j].'</td><td>'.$opinion_ids[$j].'</td><td>'.$user_opinions[$j].'</td>';
+						}
+					}
+					echo '<td><textarea rows="5" cols="30" id="adminFinalOpinion'.$count.'"></textarea></td>';
+					echo '<td><textarea rows="5" cols="30" id="adminAltPay'.$count.'"></textarea></td></tr>';
+					$count++;
+					echo '</table>';
+				}
+
+				echo "<h4>Plan de Surveillance</h4>";
+
+				$row_ids = [];
+				$unique_list = [];
+				$unique_size = 0;
+				$query = "SELECT r_id, example, row_id FROM interdependances WHERE 
+				r_id = '$reportids[$looper]' AND (potential_dependance_level = 4 OR potential_dependance_level = 5
+				OR potential_impact_level = 4 OR potential_impact_level = 5) GROUP BY example ORDER BY example";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');				
+				while ($row = mysql_fetch_assoc($results)) {
+					$unique_list[] = $row['example'];
+					$unique_size++;
+					$row_ids[] = $row['row_id'];
+					$unique_examples[] = $row['example'];
+					$report_ids[] = $row['r_id'];
+					$potentialAvg[] = 'potentiel';
+				}
+
+				$opinion_ids = [];
+				$idbses2 = [];
+				$user_opinions = [];
+				$size = 0;
+				$yesNoMoney = [];
+				$query = "SELECT u_id, example, opinion, gotMoney FROM interdependances WHERE 
+				r_id = '$reportids[$looper]' AND (potential_impact_level = 4 OR potential_impact_level = 5
+				OR potential_dependance_level = 4 OR potential_dependance_level = 5) ORDER BY example";
+				$results = mysql_query($query) or die('Error Fetching List From Database.');
+				while ($row = mysql_fetch_assoc($results)) {
+					$opinion_ids[] = $row['u_id'];
+					$idbses2[] = $row['example'];
+					$user_opinions[] = $row['opinion'];
+					$yesNoMoney[] = $row['gotMoney'];
+					$size++;
+				}
+
+				for ($i=0; $i < $unique_size; $i++) {
+					echo '<table border="1">'; 
+					echo '<tr><th>IDBSE</th><th>Ids commentaires</th></th><th>Commentaires</th><th>Surveillance</th><th>Recherche d’alternative pour prévenir les paiements pour SE</th></tr>';		
+					for ($j=0; $j < $size ; $j++) { 
+						if ($idbses2[$j] == $unique_list[$i]) {
+							echo '<tr><td>'.$idbses2[$j].'</td><td>'.$opinion_ids[$j].'</td><td>'.$user_opinions[$j].'</td>';
+						}
+					}
+					echo '<td><textarea rows="5" cols="30" id="adminFinalOpinion'.$count.'"></textarea></td>';
+					if ($yesNoMoney[$i] == 'Non')
+						echo '<td><textarea rows="5" cols="30" id="adminAltPay'.$count.'" disabled></textarea></td></tr>';
+					else
+						echo '<td><textarea rows="5" cols="30" id="adminAltPay'.$count.'"></textarea></td></tr>';
+					$count++;
+					echo '</table>';
+				}
+				echo "</div>";
+				$looper++;
+				}
+
+				$counter = 0;
+				while ($counter < $count) {
+					//store these values to send over with ajax(report ids, examples, potential/avg, the distinct ids of users, niveau avg)
+					echo '<input type="hidden" value="'.$unique_examples[$counter].'" id="unique_example'.$counter.'">';
+					echo '<input type="hidden" value="'.$report_ids[$counter].'" id="report_id'.$counter.'">';
+					echo '<input type="hidden" value="'.$potentialAvg[$counter].'" id="potentialAvg'.$counter.'">';
+					$counter++;
+				}
+
+				mysql_close($con);
+			?>
+			<button type="button" id="insert_adminOp">Insert</button>
+			<input type="hidden" value="" id="modify_report">
+			<input type="hidden" id="numOfOps" name="numOfOps" value="<?php echo $count;?>">		
+		</div>
+	</div>	
+		
 		<!-- Hidden Container To Generate The Highchart Before Exporting it to The Server. -->
-		<div id="barchartFull" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
-		<div id="barchartSmall" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
-		<div id="spiderchartFull" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
-		<div id="spiderchartSmall" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
-
-
+		<div id="money_ranking" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="average_ranking_se" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="impacts_avg" style="position:absolute; display:none;width: 800px; height: 800px; margin: 0 auto;"></div>
+		<div id="impacts_pot" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="dependance_avg" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="dependance_pot" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="money_detail" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="Operations" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>
+		<div id="Operations_par_se" style="display:none;width: 800px; height: 800px; margin: 0 auto"></div>

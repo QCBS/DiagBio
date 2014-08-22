@@ -19,33 +19,6 @@ function getUrlVars() {
         			$("#selectNature").addClass("hide");
         			$("#selectNatureTwo").addClass("hide");
 
-        			$("input:radio[name=sysFunc]").click(function(){
-        				$('#hidden_text').show();
-        				$('#funcTxt').val('');
-        				$('#funcTxt').focus();
-        			})
-
-        			$("input:radio[name=cir1]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
-        				$('[id^=sites]').hide();
-						$('#sites1').show();
-						$( "#cir2" ).prop( "checked", false );
-						$( "#cir3" ).prop( "checked", false );
-        			})
-
-        			$("input:radio[name=cir2]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
-        				$('[id^=sites]').hide();
-						$('#sites2').show();
-						$( "#cir1" ).prop( "checked", false );
-						$( "#cir3" ).prop( "checked", false );
-        			})
-
-        			$("input:radio[name=cir3]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
-        				$('[id^=sites]').hide();
-						$('#sites3').show();
-						$( "#cir1" ).prop( "checked", false );
-						$( "#cir2" ).prop( "checked", false );
-        			})
-
         			$("input:radio[name=moneyType]").click(function() {  //check if autre option was selected
     					var value = $(this).val();
     					if(value == "")  //if so, show the text box (note the autre option does not have any value) 
@@ -91,7 +64,7 @@ function getUrlVars() {
     					}
 					});
 
-					/*$("input:radio[name=niveau]").click(function() {  //check if the user selected externe in the parameter tab
+					$("input:radio[name=niveau]").click(function() {  //check if the user selected externe in the parameter tab
 						var value = $(this).val();
 						if (value == "Externe")
 						{
@@ -105,23 +78,7 @@ function getUrlVars() {
 							$("#externeInput").val("");
 							$('#externeInput').addClass("hide");
 						}
-					});*/  
-
-					$('#[id^=niveau]').click(function () { //checks if the user selected/unselected externe, and fires some events accordingly
-   					 		var value = $(this).val();
-   					 	
-							if (value == "Externe")
-							{
-								$("input:radio[name=externe]").removeAttr( "disabled" );
-								$("#externeInput").removeAttr( "disabled" );
-								$("#hideList").show();
-							}
-						if ($('#niveau3').prop('checked') == false) {$("#hideList").hide(); 
-							$('input[name=externe]:checked').prop('checked', false); 
-							$("#externeInput").val("");
-							$('#externeInput').addClass("hide"); 
-						};
-					})
+					});
 
     				$( "#tabs-2" ).tabs(//the tab that displays mroe info on the first page
     				{
@@ -192,12 +149,6 @@ function getUrlVars() {
 							var id=$(this).attr('id');
 							$('#inter'+id).hide();
 					})
-        			/*
-					$('#newExample').focus(function(){
-						if (se_item) {
-							$("#"+se_item).hide();
-						}
-					})*/
 
 					$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
 					$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
@@ -436,7 +387,7 @@ function getUrlVars() {
 			$('.selectable_n2'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
 			n2_item=0;  //resets the value
 			
-			$("#slider").slider('value', 1); //set the value back to default for the slider
+			$("#slider").slider('value', 1);  //set the value back to default for the slider
 			$( "#slides" ).val('1'); //set the value back to default for the dropdown 
 			$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
 			$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
@@ -520,7 +471,6 @@ $("#insert_adminOp").button().click(function(){  //check if this works and use t
 	totalChangedOps = $('#numOfOps').val();
 	filledTxts = [];
 	adminOpinions = [];
-	payments = [];  //admin's answers of payments
 	report_ids = [];
 	potAvgs = [];
 	var loop = 0;
@@ -528,7 +478,6 @@ $("#insert_adminOp").button().click(function(){  //check if this works and use t
 	for (var i = 0; i < totalChangedOps; i++) {  //prepare to send over the examples and opinions, report ids and whether its potential or average
 		if ($("#adminFinalOpinion"+i).val()){
 			adminOpinions[loop] = $("#adminFinalOpinion"+i).val();
-			payments[loop] = $("#adminAltPay"+i).val();
 			filledTxts[loop] = $("#unique_example"+i).val();		
 			report_ids[loop] = $("#report_id"+i).val();
 			potAvgs[loop] = $("#potentialAvg"+i).val();
@@ -537,7 +486,7 @@ $("#insert_adminOp").button().click(function(){  //check if this works and use t
 	};
 	adminID = $('#AdminID').val();
 	reportID = $('#report_selected').val();
-	$.post("http://quebio.ca/testing/Jason/php/admin_opinions.php", {adminid: adminID, reportid: reportID, examples: filledTxts, adminFinalOpinions: adminOpinions, reportIds: report_ids, potavgs: potAvgs, altPay: payments}, function(data) {alert(data);})
+	$.post("http://quebio.ca/testing/Jason/php/admin_opinions.php", {adminid: adminID, reportid: reportID, examples: filledTxts, adminFinalOpinions: adminOpinions, reportIds: report_ids, potavgs: potAvgs}, function(data) {alert(data);})
 })
 
 $("[id^=showReport]").button().click(function(){
@@ -647,8 +596,7 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 							$('.lists').hide();// hiding all of the seletables
 							if(se_item){ // than only showing the one which conrresponds to the selected sevive ecologic
 							 	$('#list'+se_item).show();
-								$("#se_i").val(se_item); //ecological service id
-								
+								$("#se_i").val(se_item);
 								$("#se_name").val($("#"+se_item).text());
 								goToNextTab();
 							}
@@ -818,7 +766,6 @@ $('#C_BTN_BACK').button().click(function() {
 $('#C_BTN_NEXT').button().click(function() { 
 	if(c_item){
 		$("#c_i").val(c_item);
-		alert($("#c_i").val());
 		$("#c_i_val").val(($("#"+c_item).text()));
 		
 								var theDropdownDiv = $(document.createElement('div')) // a div which will contain a textbox
@@ -1044,18 +991,14 @@ $('#TAB14_BTN_BACK').button().click(function() {
 });
 
 $('#TAB14_CREATE_BTN').button().click(function() { 
-	var errorMessage = "";
-	if ($('#nameEval').val() == "") 
-		errorMessage += "Indiquez Le nom d'évaluation!"; 
-	if ($('#orgEval').val() == "") 
-		errorMessage += "Indiquez Le nom d'organisation!"; 
+	var errorMessage = ""; 
 	if($('#objectiveText').val() == "")
 		errorMessage+="Indiquez l'objectif!"
 	if($('#defineText').val() == "")
 		errorMessage+="Indiquez le Définition!"
 	if($('#limitText').val() == "")
 		errorMessage+="Indiquez les limites!"
-	if(!$('input[name=cir1]:checked').val() && !$('input[name=cir2]:checked').val() && !$('input[name=cir3]:checked').val())
+	if(!$('input[name=cir]:checked').val())
 		errorMessage+="Indiquez le circonscription du périmètre d’analyse!"
 	if(!$('input[name=sysFunc]:checked').val())
 		errorMessage+="Indiquez le Fonction du système!"
@@ -1063,31 +1006,16 @@ $('#TAB14_CREATE_BTN').button().click(function() {
 		errorMessage+="Indiquez le Niveau d’évaluation!"
 	if (errorMessage == "")
 	{
-		var circonscription = "";
-		if ($('input[name=cir1]:checked').val()) 
-		{ 
-			circonscription = $('#sites1').val();
-		};
-
-		if ($('input[name=cir2]:checked').val()) 
-		{ 
-			circonscription = $('#sites2').val();
-		};
-
-		if ($('input[name=cir3]:checked').val()) 
-		{ 
-			circonscription = $('#sites3').val();
-		};
-
 	goToPrevTab();
 	AdID=$('#AdminID').val();  //gets the administrator's ID
-	var organisationName = $('#orgEval').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
+	var organisationName = $('#OrgaName').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
+	
 	//gets the file through the url, the next paramteer is the data being sent in for the file to se and then finally the last paramter
 	//is doing soemthing in a function as a response, in this case it would be calling another ajax post  
-	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val()}, function(data) {alert(data);
+	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgname: organisationName, adminid: AdID, userid: $('#the_user').val()}, function(data) {alert(data);
 			$.post("http://quebio.ca/testing/Jason/php/insertParameter.php", { objectiveText: $('#objectiveText').val(), limitText: $('#limitText').val(), 
-			defineText: $('#defineText').val(), cir: circonscription, represent: $('#sysRep').val(), fonction: $('#sysFunc').val(),
-			niveau: $('#niveau').val(),reportid: data, userid: AdID}, function(data){
+			defineText: $('#defineText').val(), circonscription: $('#cir').val(), represent: $('#sysRep').val(), fonction: $('#sysFunc').val(),
+			niveau: $('#niveau').val(), reportid: data, userid: AdID}, function(data){
 			// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
 			window.location.reload();
 			window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
@@ -2368,8 +2296,6 @@ else{
 							var reportID = document.getElementById('select-resultadmin').value; // Get Report ID to Link to.
 							var organisationName = $('#OrgaName').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
 							var missingFields = "";
-							var adminId = $('#AdminID').val();
-
 
 							if ( emailRecipient=="" || emailRecipient==null){ // Make Sure a E-mail Was Entered (Let Drupal_mail() see if it's valid of not).
 								missingFields += "E-mail field is empty.\n";
@@ -2379,7 +2305,7 @@ else{
 							}
 							if ( missingFields=="" ){
 								// Call The Email.php to Send Out The E-mail Invitations Including all The Information We Appended.
-								$.post("http://quebio.ca/testing/Jason/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
+								$.post("http://quebio.ca/testing/Jason/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient}, function(data) { alert(data); });
 							}
 							else{
 								alert(missingFields);// Alert User Regarding The Missing Report ID or E-mail Addresses.

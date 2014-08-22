@@ -61,6 +61,18 @@
 	width:5%;
 }
 
+#dep_textarea{
+	position: absolute;
+	bottom: 1px;
+	left: 250px;
+}
+
+#impact_textarea{
+	position: absolute;
+	bottom: 75px;
+	left: 250px;
+}
+
 .infoList{
 	background-color: #dfeffc;
 	border-style: solid;
