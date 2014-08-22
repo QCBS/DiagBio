@@ -10,6 +10,7 @@ $circonscription = $_POST['circonscription'];
 $represent = $_POST['represent'];
 $fonction = $_POST['fonction'];
 $niveau = $_POST['niveau'];
+$perimeter = $_POST['perimeter'];
 
 $con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
 
@@ -17,7 +18,7 @@ mysql_select_db($mys_base, $con);
 mysql_query("SET NAMES 'utf8");
 mysql_query("SET CHARACTER SET 'utf8'");
 
-$query = "INSERT INTO outil_parameter (objective, limits, define, circonscription, represent, fonction, niveau, r_id, u_id) VALUES ('$objectiveText', '$limitText', '$defineText', '$circonscription', '$represent', '$fonction', '$niveau', '$reportid', $userid)";	
+$query = "INSERT INTO outil_parameter (objective, limits, define, circonscription, represent, perimeter, fonction, niveau, r_id, u_id) VALUES ('$objectiveText', '$limitText', '$defineText', '$circonscription', '$represent', '$perimeter', '$fonction', '$niveau', '$reportid', $userid)";	
 	echo $query;
 	$result = mysql_query($query) or die('Error updating database: '.mysql_error());
 	

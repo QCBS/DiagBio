@@ -1046,21 +1046,21 @@ $('#TAB14_BTN_BACK').button().click(function() {
 $('#TAB14_CREATE_BTN').button().click(function() { 
 	var errorMessage = "";
 	if ($('#nameEval').val() == "") 
-		errorMessage += "Indiquez Le nom d'évaluation!"; 
+		errorMessage += "Indiquez le nom d'évaluation!"; 
 	if ($('#orgEval').val() == "") 
-		errorMessage += "Indiquez Le nom d'organisation!"; 
+		errorMessage += "Indiquez Le nom de l'organisation!"; 
 	if($('#objectiveText').val() == "")
 		errorMessage+="Indiquez l'objectif!"
 	if($('#defineText').val() == "")
-		errorMessage+="Indiquez le Définition!"
+		errorMessage+="Indiquez la définition!"
 	if($('#limitText').val() == "")
 		errorMessage+="Indiquez les limites!"
 	if(!$('input[name=cir1]:checked').val() && !$('input[name=cir2]:checked').val() && !$('input[name=cir3]:checked').val())
 		errorMessage+="Indiquez le circonscription du périmètre d’analyse!"
 	if(!$('input[name=sysFunc]:checked').val())
-		errorMessage+="Indiquez le Fonction du système!"
+		errorMessage+="Indiquez le fonction du système!"
 	if(!$('input[name=niveau]:checked').val())
-		errorMessage+="Indiquez le Niveau d’évaluation!"
+		errorMessage+="Indiquez le niveau d’évaluation!"
 	if (errorMessage == "")
 	{
 		var circonscription = "";
@@ -1086,7 +1086,7 @@ $('#TAB14_CREATE_BTN').button().click(function() {
 	//is doing soemthing in a function as a response, in this case it would be calling another ajax post  
 	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val()}, function(data) {alert(data);
 			$.post("http://quebio.ca/testing/Jason/php/insertParameter.php", { objectiveText: $('#objectiveText').val(), limitText: $('#limitText').val(), 
-			defineText: $('#defineText').val(), cir: circonscription, represent: $('#sysRep').val(), fonction: $('#sysFunc').val(),
+			defineText: $('#defineText').val(), cir: circonscription, represent: $('#sysRep').val(), fonction: $('#sysFunc').val(), perimeter: $('#geography').val(),
 			niveau: $('#niveau').val(),reportid: data, userid: AdID}, function(data){
 			// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
 			window.location.reload();

@@ -23,7 +23,8 @@ module_load_include('inc', 'profile2_page', 'profile2_page');
 drupal_add_js("http://code.highcharts.com/highcharts.js");
 drupal_add_js("http://code.highcharts.com/highcharts-more.js");
 drupal_add_js("testing/Jason/js/Inter_main.js");
-
+drupal_add_js("testing/Jason/js/diagbio.map.js");
+drupal_add_js('http://maps.google.com/maps/api/js?sensor=false');
 drupal_add_css('testing/Jason/css/CSS.css');
 drupal_add_js("http://code.highcharts.com/modules/exporting.js");
 
@@ -896,13 +897,13 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab14" >
 					<h3>Objectif et périmètre</h3>
 					<br>
-					<h4>Nom D'évaluation:<input type="text" name="nameEval" id="nameEval"></h4><br>
-					<h4>Nom D'organisation qui va être évalué:<input type="text" name="orgEval" id="orgEval"></h4><br>
-					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)<br></h4>
+					<h4>Nom de l'évaluation</h4><input type="text" name="nameEval" id="nameEval"><br>
+					<h4>Nom de l'organisation qui va être évaluée</h4><input type="text" name="orgEval" id="orgEval"><br>
+					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)</h4><br>
 					<textarea rows="4" cols="50" id="objectiveText"></textarea>
-					<h4>Quelles sont, selon vous les limites de cette évaluation ?(limites de l’évaluation)<br></h4>
+					<h4>Quelles sont, selon vous les limites de cette évaluation ?</h4><br>
 					<textarea rows="4" cols="50" id="limitText"></textarea>
-					<h4>Définir le périmètre et déterminer les limites de l’évaluation (Définition du périmètre d’évaluation) :<br></h4>
+					<h4>Définir le périmètre et déterminer les limites de l’évaluation<br></h4>
 					<textarea rows="4" cols="50" id="defineText"></textarea>
 					<br><br><br>
 					
@@ -933,28 +934,35 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 					<br><br>
 
-					<h4>Circonscription du périmètre d’analyse ?</h4>
+					<h4>Circonscription du périmètre d’analyse</h4>
 					<input type="radio" name="cir1" id="cir1" value="Opérationnel"><b>Opérationnel</b>
 					<select hidden id="sites1">
 					  <option value="site">Site</option>
 					  <option value="ensemble site">Ensemble Site</option>
 					  <option value="groupe">Groupe</option>
 					</select><br>
-					<input type="radio" name="cir2" id="cir2" value="Spatial"><b>Spatial:</b>
+					<input type="radio" name="cir2" id="cir2" value="Spatial"><b>Spatial</b>
 					<select hidden id="sites2">
 					  <option value="province">Province</option>
 					  <option value="region">Région</option>
 					  <option value="commune">Commune</option>
 					  <option value="site">Site</option>
 					</select><br>
-					<input type="radio" name="cir3" id="cir3" value="Intrant"><b>Intrant/extrant :</b>
+					<input type="radio" name="cir3" id="cir3" value="Intrant"><b>Intrant/extrant</b>
 					<select hidden id="sites3">
 					  <option value="approvisionnements">Approvisionnements</option>
 					  <option value="exportations">Exportations</option>
 				    </select><br><br>
-				    <h4>Description:</h4>
+				    <h4>Description</h4>
 					<textarea rows="4" cols="50" id="sysRep"></textarea><br><br><br>
-
+					<h4>Définition des limites spatiales</h4>
+					<div id="noloc" style="display:none;">Localisation non reconnue!</div>
+					<p>Double-cliquez sur un node pour pour l'effacer, cliquez-glisser le node pour le déplacer</p>
+			        <button type="button" id="polybut">Ajouter un polygone</button>
+			        <button type="button" id="metabio-clear">Tout effacer</button>
+			        <input type="hidden" name="geography" id="geography">
+			        <div id="map" style="width:800px !important;height:500px !important;margin:10px 0 15px 0;"></div>
+					<!--
 					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
 					<input type="radio" name="define" id="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
 																		 	  		coordonnée sera associée à cette entrée dans la base de données.<br>
@@ -963,23 +971,24 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<input type="radio" name="define" id="define" value=""><b>Utiliser des relevés de points à partir de GPS ou des relevés effectués a partir d’appareils<br>
 					 													 		mobiles comme les téléphones intelligents.</b> Les points sont collectes dans une base de données<br>
 					  													 		géo référencée par les participants.<br><br><br>
+					-->
 					<h4>Fonction du système</h4>
 					<input type="radio" name="sysFunc" id="sysFunc" value="principales"><b>Principales <br>
 					<input type="radio" name="sysFunc" id="sysFunc" value="secondaires">Secondaires</b> <br><div hidden id="hidden_text"><br><br>
-					<h4>Description:</h4>
+					<h4>Description</h4>
 					<textarea rows="4" cols="50" id="funcTxt"></textarea><br><br><br>
-					</div>
-					<h4>La portée de l’évaluation :</h4>
+					</div><br><br>
+					<h4>La portée de l’évaluation</h4>
 					Le nombre des participants et le niveau d’évaluation vont conditionner la portée du diagnostic<br>
 					et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
 
-					<fieldset><legend><b>Niveau d’évaluation :</b></legend>
+					<fieldset><legend><b>Niveau d’évaluation</b></legend>
 					<input type="checkbox" name="niveau" id="niveau1" value="Direction"><b>Direction<br>
 					<input type="checkbox" name="niveau" id="niveau2" value="Interne">Interne<br>
 					<input type="checkbox" name="niveau" id="niveau3" value="Externe">Externe<br>
 					</fieldset>
 					<div id="hideList" hidden>
-					<fieldset><legend><b>Si C'est Externe : Parties prenantes identifiées(?)</b></legend>
+					<fieldset><legend><b>Si c'est Externe : parties prenantes identifiées ?</b></legend>
 					<input type="radio" name="externe" id="externe" value="Direction" >Habitants<br>
 					<input type="radio" name="externe" id="externe"value="Interne" >Autre organisation<br>
 					<input type="radio" name="externe" id="externe" value="Externe" >Gouvernement/ Etat<br>
