@@ -1,4 +1,5 @@
 <?php
+	header("Access-Control-Allow-Origin: *");
 	include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 	$path = $_SERVER['DOCUMENT_ROOT'];
@@ -47,7 +48,7 @@
 	// E-mail Body With Information Appended.
 	$message .= '<b>'.$gender[0]['value'].' '.$prenom[0]['value'].' '.$nom[0]['value'].', <br><br></b>'; 
 	$message .= 'Évalue actuellement les interdépendances aux BSE de l’organisation<br> suivante : '.$orgsname.',<br><br>';
-	$message .= 'Nous pensons que vous pouvez contribuer valablement a cette évaluation<br> qui va concerner <a href=\'http://quebio.ca/entreprisebio/#tab3\'>quebio.ca/entreprisebio</a> <br><br>';
+	//$message .= 'Nous pensons que vous pouvez contribuer valablement a cette évaluation<br> qui va concerner <a href=\'http://quebio.ca/entreprisebio/#tab3\'>quebio.ca/entreprisebio</a> <br><br>';
 	$message .= 'Votre opinion comme celle des autres parties prenantes va être importante <br>';
 	$message .= 'pour identifier des plans d’actions et de surveillance qui devront etre mis en <br>';
 	$message .= 'œuvre par l’organisation. <br><br>';

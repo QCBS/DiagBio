@@ -1,6 +1,6 @@
 <?php
 include('/var/www/quebio.ca/misc/dbaminfo.php');
-
+header("Access-Control-Allow-Origin: *");
 $con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
 mysql_select_db($mys_base, $con);
 mysql_query("SET NAMES 'utf8'");

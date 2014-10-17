@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 	ini_set('display_errors');
 	include('/var/www/quebio.ca/misc/dbaminfo.php');
 

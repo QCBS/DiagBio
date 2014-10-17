@@ -1,5 +1,6 @@
 <?php
 include('/var/www/quebio.ca/misc/dbaminfo.php');
+header("access-control-allow-origin: *");
 /*	NEED TO FIGURE OUT A WAY TO ADD THE PHONE NUMBER, EMAIL AND NAMES TO THE DATABASE
 	//get the account stuff(telephone number, name, last name and email)
 	$account = user_load($userid); // Load Themporary User with "Administration" Role.
@@ -12,6 +13,8 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 */	// Connect to the Database
 	$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
 	mysql_select_db($mys_base, $con);
+
+	$deleteReport = $_POST['deleteRep'];
 
 	// Are You Switching Viewability?
 	if ( $_POST['viewable'] ){
@@ -30,10 +33,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 		$query = mysql_query("UPDATE report SET Available = '$switch' WHERE reportid = '$reportid'");
 		
-		if($query){ echo "La permission de lisibilité a été changé avec succès."; }
+		if($query){ echo "La permission de lisibilité a été changée avec succès."; }
 		else{ echo "Une erreur s'est produite!"; }
 	}
-	else if ( $_POST['reportid'] ){ // Are You Deleting a Report?
+	else if ( $deleteReport === 'yes' ){ // Are You Deleting a Report?
 		$reportid = $_POST['reportid'];
 
 		$query = mysql_query("DELETE FROM report WHERE reportid = '$reportid'");
@@ -44,17 +47,31 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 		if($query && $query2 && $query3 && $query4 && $query5){ echo "Le rapport a été supprimer avec succès."; }
 		else{ echo "Une erreur s'est produite!"; }
 	}
-	else{ // Creating New Report.
+	else{ // Creating/Editing Report.
 		$orgname = $_POST['orgsname'];
-		$reportid = uniqid('QCBS'); // Generate Report ID.
 		$adminid =  $_POST['adminid'];
 		$userid = $_POST['userid'];
 		$evalName = $_POST['nameEval']; 
+		$firstTime = $_POST['createOrEdit'];
 
-		$query = mysql_query("INSERT INTO report VALUES ( '$orgname', '$reportid', CURDATE(), '$adminid', 1, 0, 0, 0, '$evalName')");
-		$query2 = mysql_query("INSERT INTO user_ids VALUES ( '$userid', '$reportid')");
-		if($query && $query2){ echo $reportid; }  //the report was successfully created
-		else{ echo "Une erreur s'est produite!"; }
+		if($firstTime === 'no')  //update the report
+		{	
+			$reportId = $_POST['reportid'];
+			$query="UPDATE report SET orgname = '$orgname', evalName = '$evalName' WHERE adminid = '$adminid' AND reportid = '$reportId'";
+			$result = mysql_query($query) or die('Error updating database for update: '.mysql_error());
+			echo $query;
+
+		}
+		else  //create the report
+		{	
+			$reportid = uniqid('QCBS'); // Generate Report ID.
+			
+			$query = mysql_query("INSERT INTO report VALUES ( '$orgname', '$reportid', CURDATE(), '$adminid', 1, 0, 0, 0, '$evalName')");
+			$query2 = mysql_query("INSERT INTO user_ids VALUES ( '$userid', '$reportid')");
+		
+			if($query && $query2){ echo $reportid; }  //the report was successfully created
+			else{ echo "Une erreur s'est produite!"; }
+		}
 	}
 
 	mysql_close($con);

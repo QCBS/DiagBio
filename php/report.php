@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
 include('/var/www/quebio.ca/misc/dbaminfo.php');
@@ -8,6 +9,41 @@ $info = $_POST['reportInfo'];
 if($info['represent'] == '')
 {
     $info['represent'] = 'aucune';
+}
+
+
+$niveaus = '';  //make the data into presentable data and take out the nulls
+$commaCounter = 0;  //lets me know if I have to put commas
+if ($info['niveau1'] == '' || $info['niveau1'] == 'null') {
+    $niveaus = '';   
+}
+else
+{
+     $niveaus = $info['niveau1'];
+     $commaCounter++;
+}
+
+if ($info['niveau2'] == '' || $info['niveau2'] == 'null') {
+   $niveaus .= '';
+}
+else
+{
+    if ($commaCounter > 0) {  //is there a word in $niveaus already?
+        $niveaus .= ', ';
+    }
+     $niveaus .= $info['niveau2'];
+     $commaCounter++;
+}
+
+if ($info['niveau3'] == '' || $info['niveau3'] == 'null') {
+   $niveaus .= '';
+}
+else
+{
+    if ($commaCounter > 0) {  //is there a word in $niveaus already?
+        $niveaus .= ', ';
+    }
+     $niveaus .= $info['niveau3'];
 }
 
 // create new PDF document
@@ -93,7 +129,7 @@ $html = <<<EOD
 
     <div style="width:200px;height:100px;border:1px;">
         Motivation principale de l’organisation pour l’évaluation: {$info['motivation']}<br><br>
-        Niveau du diagnostic: {$info['niveau']}
+        Niveau du diagnostic: {$niveaus}
     </div><br>
     
 <h4>2. Portrait du système</h4><br>
@@ -101,10 +137,11 @@ $html = <<<EOD
     Secteur d'activité: {$info['secteur']}<br><br>
     Objectifs de l’organisation: {$info['objective']}<br><br>
     Limites de l’évaluation: {$info['limit']}<br><br>
-    Définition du périmètre d’évaluation: {$info['define']}<br><br>
     Circonscription du périmètre d’analyse: {$info['circonscription']}<br><br>
     Représentation du système: {$info['represent']}<br><br>
-    Fonction du système: {$info['fonction']}
+    Fonction du système: {$info['fonction']}<br><br>
+    Description du Fonction du système: {$info['function_text']}
+   
 </div><br>
 <br><br><br><br><br>
 <h4>3. Évaluation des interdépendances</h4>

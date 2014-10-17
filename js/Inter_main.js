@@ -12,14 +12,27 @@ function getUrlVars() {
 
         	// These Are All The jQuery UI Element Function Call.
         	
-(function ($) {
+        	(function ($) {
         		$(document).ready(function() {
         			$('#externeInput').addClass("hide");
         			$('#moneyinput').addClass("hide");
         			$("#selectNature").addClass("hide");
         			$("#selectNatureTwo").addClass("hide");
 
-        			$("input:radio[name=sysFunc]").click(function(){
+        			$('#newExample').click(function() {
+        				$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
+						c_example = 0;  //0 means that there are no examples selected
+					});
+
+        			$("input:radio[name=sysFunc1]").click(function(){
+        				$( "#sysFunc2" ).prop( "checked", false );
+        				$('#hidden_text').show();
+        				$('#funcTxt').val('');
+        				$('#funcTxt').focus();
+        			})
+
+        			$("input:radio[name=sysFunc2]").click(function(){
+        				$( "#sysFunc1" ).prop( "checked", false );
         				$('#hidden_text').show();
         				$('#funcTxt').val('');
         				$('#funcTxt').focus();
@@ -27,27 +40,27 @@ function getUrlVars() {
 
         			$("input:radio[name=cir1]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
         				$('[id^=sites]').hide();
-						$('#sites1').show();
-						$( "#cir2" ).prop( "checked", false );
-						$( "#cir3" ).prop( "checked", false );
+        				$('#sites1').show();
+        				$( "#cir2" ).prop( "checked", false );
+        				$( "#cir3" ).prop( "checked", false );
         			})
 
         			$("input:radio[name=cir2]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
         				$('[id^=sites]').hide();
-						$('#sites2').show();
-						$( "#cir1" ).prop( "checked", false );
-						$( "#cir3" ).prop( "checked", false );
+        				$('#sites2').show();
+        				$( "#cir1" ).prop( "checked", false );
+        				$( "#cir3" ).prop( "checked", false );
         			})
 
         			$("input:radio[name=cir3]").click(function() {  //the select list for the circonscriptions in the evalauation creation tab
         				$('[id^=sites]').hide();
-						$('#sites3').show();
-						$( "#cir1" ).prop( "checked", false );
-						$( "#cir2" ).prop( "checked", false );
+        				$('#sites3').show();
+        				$( "#cir1" ).prop( "checked", false );
+        				$( "#cir2" ).prop( "checked", false );
         			})
 
         			$("input:radio[name=moneyType]").click(function() {  //check if autre option was selected
-    					var value = $(this).val();
+        				var value = $(this).val();
     					if(value == "")  //if so, show the text box (note the autre option does not have any value) 
     					{
     						$('#moneyinput').removeClass("hide");
@@ -58,7 +71,7 @@ function getUrlVars() {
     						$('#moneyinput').addClass("hide");
     						$('#moneyinput').val("");
     					}
-					});
+    				});
 
 					$("input:radio[name=money]").click(function() {  //check if the user selected yes
 						var value = $(this).val();
@@ -78,8 +91,8 @@ function getUrlVars() {
 					});
 
 					$("input:radio[name=externe]").click(function() {  //check if autre option was selected
-    					var value = $(this).val();
-    					if(value == "")  //if so, show the text box(note the autre option does not have any value) 
+						var value = $(this).val();
+    					if(value == "autre")  //if so, show the text box(note the autre option does not have any value) 
     					{
     						$('#externeInput').removeClass("hide");
     						$('#externeInput').addClass("show");
@@ -89,7 +102,7 @@ function getUrlVars() {
     						$('#externeInput').addClass("hide");
     						$('#externeInput').val("");
     					}
-					});
+    				});
 
 					/*$("input:radio[name=niveau]").click(function() {  //check if the user selected externe in the parameter tab
 						var value = $(this).val();
@@ -108,38 +121,39 @@ function getUrlVars() {
 					});*/  
 
 					$('#[id^=niveau]').click(function () { //checks if the user selected/unselected externe, and fires some events accordingly
-   					 		var value = $(this).val();
-   					 	
-							if (value == "Externe")
-							{
-								$("input:radio[name=externe]").removeAttr( "disabled" );
-								$("#externeInput").removeAttr( "disabled" );
-								$("#hideList").show();
-							}
+						var value = $(this).val();
+
+						if (value == "Externe")
+						{
+							$("input:radio[name=externe]").removeAttr( "disabled" );
+							$("#externeInput").removeAttr( "disabled" );
+							$("#hideList").show();
+						}
 						if ($('#niveau3').prop('checked') == false) {$("#hideList").hide(); 
-							$('input[name=externe]:checked').prop('checked', false); 
-							$("#externeInput").val("");
-							$('#externeInput').addClass("hide"); 
-						};
-					})
+						$('input[name=externe]:checked').prop('checked', false); 
+						$("#externeInput").val("");
+						$('#externeInput').removeClass("show"); 
+						$('#externeInput').addClass("hide"); 
+					};
+				})
 
     				$( "#tabs-2" ).tabs(//the tab that displays mroe info on the first page
     				{
-     				 	collapsible: true,
+    					collapsible: true,
      				 	selected: -1  //collapse the "en savoir plus" tab by default
-    				});
+     				 });
 
     				$( "#tabs-3" ).tabs(//the tab that displays mroe info
     				{
-     					collapsible: true,
+    					collapsible: true,
      					selected: -1  //collapse the "en savoir plus" tab by default
-    				});
+     				});
 
     				$( "#tabs-4" ).tabs(//the tab that displays mroe info on the questions page
     				{
-     					collapsible: true,
+    					collapsible: true,
      					selected: -1  //collapse the "en savoir plus" tab by default
-    				}); 
+     				}); 
 
         			$( ".ui-selected" ).selectable({ tolerance: "fit" });  //fixes the issue with the click event not firing from time to time
 
@@ -149,7 +163,7 @@ function getUrlVars() {
 							var id=$(this).attr('id'); //get the id of the highlighted selectable
 							$('[id^=infoDiv]').hide();
 							$('#infoDiv'+id).show();
-					})
+						})
 
         			$('.infoClassDivs').hide();  //hide all the information blocks on the classifications
 
@@ -157,47 +171,41 @@ function getUrlVars() {
         			$('.classExampleDivs').hide();  //hide all the examples of the classifications
 
         			$(".ui-state-default").hover(function(){  //display the info of the currently selected classification and hide all other info divs
-							$(this).addClass('ui-selecting');
-							var id=$(this).attr('id');
-							
-							$('[id^=infoClassDiv]').hide();
-							$('#infoClassDiv'+id).show();
+        				$(this).addClass('ui-selecting');
+        				var id=$(this).attr('id');
 
-							$('[id^=classExampleDiv]').hide();
-							$('#classExampleDiv'+id).show();
+        				$('[id^=infoClassDiv]').hide();
+        				$('#infoClassDiv'+id).show();
 
-						})
+        				$('[id^=classExampleDiv]').hide();
+        				$('#classExampleDiv'+id).show();
+
+        			})
 
 					$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
-							var id=$(this).attr('id');
-							$('#infoClassDiv'+id).hide();
-							$('#classExampleDiv'+id).hide();
-							
+						var id=$(this).attr('id');
+						$('#infoClassDiv'+id).hide();
+						$('#classExampleDiv'+id).hide();
+
 					})
 					
 
 					$('.ui-state-default').mouseleave(function(){  //hide the current ecological service descriptions
-							var id=$(this).attr('id');
-							$('#infoDiv'+id).hide();
-							$(this).removeClass('ui-selecting');
+						var id=$(this).attr('id');
+						$('#infoDiv'+id).hide();
+						$(this).removeClass('ui-selecting');
 					})
 
 					$(".ui-state-default").hover(function(){  //display the info for the highlighted nature of the interdependency
-        				var id=$(this).attr('id');
-        				$('[id^=inter]').hide();
+						var id=$(this).attr('id');
+						$('[id^=inter]').hide();
 						$('#inter'+id).show();
-        			})
+					})
 
         			$('.ui-state-default').mouseleave(function(){  //hide the current classification divs(descriptions and examples)
-							var id=$(this).attr('id');
-							$('#inter'+id).hide();
-					})
-        			/*
-					$('#newExample').focus(function(){
-						if (se_item) {
-							$("#"+se_item).hide();
-						}
-					})*/
+        				var id=$(this).attr('id');
+        				$('#inter'+id).hide();
+        			})
 
 					$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
 					$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
@@ -206,7 +214,7 @@ function getUrlVars() {
 					$('#displayImpact1').show();
 
 					var userRole = jQuery('#userRole').val();
-        			if ( userRole == "Unauthenticated" ){
+					if ( userRole == "Unauthenticated" ){
         				var elem = document.getElementById('tab5');  //2
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('userview');
@@ -263,6 +271,10 @@ function getUrlVars() {
         				elem.parentNode.removeChild(elem);
         				var elem = document.getElementById('adminOpinion');
         				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('tab19'); 
+        				elem.parentNode.removeChild(elem);
+        				var elem = document.getElementById('infoForUser');
+        				elem.parentNode.removeChild(elem);
 						$('#tabs').tabs(); // Generate Tabs With The Default Settings.
 					}
 					if ( userRole == "Unauthenticated" || userRole == "Participant" ){
@@ -271,17 +283,24 @@ function getUrlVars() {
 						var elem = document.getElementById('admintools');
 						elem.parentNode.removeChild(elem);
 						var elem = document.getElementById('tab14');
-        				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('parametertab');
-        				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab17'); 
-        				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('viewOpinions');
-        				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('tab18'); 
-        				elem.parentNode.removeChild(elem);
-        				var elem = document.getElementById('adminOpinion');
-        				elem.parentNode.removeChild(elem);
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('parametertab');
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('tab17'); 
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('viewOpinions');
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('tab18'); 
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('adminOpinion');
+						elem.parentNode.removeChild(elem);
+					}
+					if (userRole == "Administration")
+					{
+						var elem = document.getElementById('tab19'); 
+						elem.parentNode.removeChild(elem);
+						var elem = document.getElementById('infoForUser');
+						elem.parentNode.removeChild(elem);
 					}
 					if ( userRole != "Unauthenticated" ){  //removes the following tab(s) 
 						var elem = document.getElementById('tab3');
@@ -308,7 +327,7 @@ function getUrlVars() {
 							var compensateTab = 0;
 						}
 						$('#tabs').tabs({disabled: disableTabs}); // Generate Tabs With The Default Settings.
-					
+
 						var se_item; // keeping track of selected service ecologic
 						var c_item; // keeing track of selected classification
 						var c_example;//gets the id of the selected example
@@ -326,7 +345,7 @@ function getUrlVars() {
 							var tabCounter = 3; //keeps track of which tab we're at
 
 						$('.lists').hide(); // hiding all the divs corresponding to different classification selectable lists
-							
+
 						// Selectable list of tab 1
 						$("#selectable0").selectable({ //creating a selectable list which contains all the reports anwsered by certain user 
 							selected: function(event, ui) { 
@@ -345,7 +364,7 @@ function getUrlVars() {
 								var result = $( "#select-result" ).empty();
 								$( ".ui-selected", this ).each(function() {
 									se_item = $(this).attr("id"); // getting the id of selected service ecologic
-						}); 
+								}); 
 							}
 						});
 
@@ -366,53 +385,53 @@ function getUrlVars() {
 									var result = $( "#select-result" ).empty();
 									$( ".ui-selected", this ).each(function() {
 										c_example = $(this).attr("id"); // getting the id of selected example
-						}); 
+									}); 
 								}
 							});
-			
+
 						$(".selectable_i").selectable({  //make the dependent interdependencies selectable
-								selected: function(event, ui) { 
-									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
-									var result = $( "#select-result" ).empty();
-									$( ".ui-selected", this ).each(function() {
+							selected: function(event, ui) { 
+								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+								var result = $( "#select-result" ).empty();
+								$( ".ui-selected", this ).each(function() {
 										i_item = $(this).attr("id"); // getting the id of selected dependent interdependency
 									}); 
-								}	
+							}	
 						});
 
 						$(".selectable_i2").selectable({  //make the impact interdependencies selectable
-								selected: function(event, ui) { 
-									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
-									var result = $( "#select-result" ).empty();
-									$( ".ui-selected", this ).each(function() {
+							selected: function(event, ui) { 
+								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+								var result = $( "#select-result" ).empty();
+								$( ".ui-selected", this ).each(function() {
 										i2_item = $(this).attr("id"); // getting the id of selected impact interdependency
 									}); 
-								}	
+							}	
 						});
 
 						$(".selectable_n").selectable({  //make the nature of the risk/opuurtunity selectable
-								selected: function(event, ui) { 
-									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
-									var result = $( "#select-result" ).empty();
-									$( ".ui-selected", this ).each(function() {
+							selected: function(event, ui) { 
+								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+								var result = $( "#select-result" ).empty();
+								$( ".ui-selected", this ).each(function() {
 										n_item = $(this).attr("id"); // getting the id of selected slectable
 									}); 
-								}	
+							}	
 						});
 
 						$(".selectable_n2").selectable({  //make the nature of the risk/opuurtunity selectable
-								selected: function(event, ui) { 
-									$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
-									var result = $( "#select-result" ).empty();
-									$( ".ui-selected", this ).each(function() {
+							selected: function(event, ui) { 
+								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
+								var result = $( "#select-result" ).empty();
+								$( ".ui-selected", this ).each(function() {
 										n2_item = $(this).attr("id"); // getting the id of selected slectable
 									}); 
-								}	
+							}	
 						});
 
 
-		function resetEverything()
-		{
+						function resetEverything()
+						{
 			$('#newExample').val(""); //clear the text from the example textbox
 			
 			$('#selectable'+' .ui-selected').removeClass('ui-selected'); //unselects the chosen selectable
@@ -512,7 +531,7 @@ $("#delete_opinions").button().click(function(){
 
 	adminID = $('#AdminID').val();
 	reportID = $('#report_selected').val();
-	$.post("http://quebio.ca/testing/Jason/php/delete_opinions.php", {adminid: adminID, reportid: reportID, chkdbxs : checkedboxes}, function(data) {})
+	$.post("http://www.quebio.ca/testing/Jason/php/delete_opinions.php", {adminid: adminID, reportid: reportID, chkdbxs : checkedboxes}, function(data) {})
 })
 
 $("#insert_adminOp").button().click(function(){  //check if this works and use the hidden fields which contain the examples!
@@ -537,7 +556,7 @@ $("#insert_adminOp").button().click(function(){  //check if this works and use t
 	};
 	adminID = $('#AdminID').val();
 	reportID = $('#report_selected').val();
-	$.post("http://quebio.ca/testing/Jason/php/admin_opinions.php", {adminid: adminID, reportid: reportID, examples: filledTxts, adminFinalOpinions: adminOpinions, reportIds: report_ids, potavgs: potAvgs, altPay: payments}, function(data) {alert(data);})
+	$.post("http://www.quebio.ca/testing/Jason/php/admin_opinions.php", {adminid: adminID, reportid: reportID, examples: filledTxts, adminFinalOpinions: adminOpinions, reportIds: report_ids, potavgs: potAvgs, altPay: payments}, function(data) {alert(data);})
 })
 
 $("[id^=showReport]").button().click(function(){
@@ -574,10 +593,10 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 	}
 
 });
-						
-						$('#NEW_RE_BTN').button().click(function() {
-							
-							var theValid;
+
+$('#NEW_RE_BTN').button().click(function() {
+
+	var theValid;
 							var ridInput = document.getElementById("new_report"); // getting the textbox field on 1st tab
 							
 							if (ridInput && ridInput.value) { // ckeching if the textbox has value
@@ -615,25 +634,25 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 											tabCounter=2;
 											$('#tabs').tabs('disable', 5);  //disable the examples tab
 										}
-									if(userRole == "Administration")
-										if(tabCounter > 4)
-										{
-											tabCounter=4;
+										if(userRole == "Administration")
+											if(tabCounter > 4)
+											{
+												tabCounter=4;
 											$('#tabs').tabs('disable', 7);  //disable the examples tab
 										}
 
-								goToNextTab();
+										goToNextTab();
 								$('#tabs').tabs('enable', tabCounter-1);  //leave this tab enabled
 
-								}
-								else{
-									report_id = null;
-									alert(theValid+" Mauvais numéro de rapport! Entre un nouveau");
-									$("#new_report").focus();
-								}
 							}
+							else{
+								report_id = null;
+								alert(theValid+" Mauvais numéro de rapport! Entre un nouveau");
+								$("#new_report").focus();
+							}
+						}
 
-						});
+					});
 
 
 						$('#SE_BTN_BACK').button().click(function() {  //Back button on the ecological services
@@ -646,7 +665,7 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 							
 							$('.lists').hide();// hiding all of the seletables
 							if(se_item){ // than only showing the one which conrresponds to the selected sevive ecologic
-							 	$('#list'+se_item).show();
+								$('#list'+se_item).show();
 								$("#se_i").val(se_item); //ecological service id
 								
 								$("#se_name").val($("#"+se_item).text());
@@ -657,11 +676,11 @@ $('#RE_BTN_NEXT').button().click(function() { // NEXT button on the 1st tab
 							}
 						});
 
-$('#TAB9_BTN_NEXT').button().click(function() 
-{
+						$('#TAB9_BTN_NEXT').button().click(function() 
+						{
 	if(c_example && $('#newExample').val() != '' )  //did the user try to enter a new example AND select an existing example?
 	{
-		alert("SVP creer une nouvelle example ou choissisez une do ses examples!");
+		alert("SVP créer un nouvel exemple ou choissisez un des exemples!");
 		$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
 		c_example = 0;  //0 means that there are no examples selected
 		$('#newExample').val(""); //clear the text from the example textbox
@@ -671,9 +690,9 @@ $('#TAB9_BTN_NEXT').button().click(function()
 			if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
 				if (tabCounter > 5)
 					tabCounter=5;
-			if(userRole == "Administration")
-				if(tabCounter > 7)
-					tabCounter=7;
+				if(userRole == "Administration")
+					if(tabCounter > 7)
+						tabCounter=7;
 
 		if(c_example)  //was one of the examples selected 
 		{
@@ -687,7 +706,7 @@ $('#TAB9_BTN_NEXT').button().click(function()
 		}
 		else  //were there no examples given?
 		{
-			alert("Vous devez choisir une de ses examples ou creer un nouveau example(rien n'etez choisi)!");
+			alert("Vous devez choisir un des exemples ou en créer un nouveau");
 		}
 
 		$('#tabs').tabs('enable', tabCounter-1);  //enable this tab for the rest of the evaluation
@@ -779,8 +798,8 @@ $('#TAB11_BTN_NEXT').button().click(function() {
 		if(i_item && i2_item)  //did the user select a risk and/or oppurtunity, an impact and a dependence?
 		{
 	 	 	//go to the dependence tab
-			goToNextTab();
-		}
+	 	 	goToNextTab();
+	 	 }
 		else if (i_item && !i2_item)  //did the user only select a dependency and not an impact?
 		{
 			//go directly to the financial tab
@@ -789,12 +808,12 @@ $('#TAB11_BTN_NEXT').button().click(function() {
 		}
 		else
 		{
-					tabCounter++;
-					goToNextTab();
+			tabCounter++;
+			goToNextTab();
 		}
 	}
 	else
-	alert("S'il vous plaît sélectionnez une des options disponibles");	
+		alert("S'il vous plaît sélectionnez une des options disponibles");	
 });
 
 $('#TAB11_BTN_BACK').button().click(function() {
@@ -818,7 +837,6 @@ $('#C_BTN_BACK').button().click(function() {
 $('#C_BTN_NEXT').button().click(function() { 
 	if(c_item){
 		$("#c_i").val(c_item);
-		alert($("#c_i").val());
 		$("#c_i_val").val(($("#"+c_item).text()));
 		
 								var theDropdownDiv = $(document.createElement('div')) // a div which will contain a textbox
@@ -849,9 +867,9 @@ $('#C_BTN_NEXT').button().click(function() {
 										$("#divDD").hide(); // hide the div which has the dropdown list
 										$("#dd_btn").hide();
 
-								}
-								
-								goToNextTab();
+									}
+
+									goToNextTab();
 
 								$('.selectExamples').hide(); //hide all the examples
 								$('#example'+c_item).show();  //show the corresponding examples
@@ -862,7 +880,7 @@ $('#C_BTN_NEXT').button().click(function() {
 								alert("Aucune valeur n'a été sélectionnée"); // no classification selected
 							}
 							
-});
+						});
 
 $('#BTN_QUIT').button().click(function() { // close the window which is not currently working
 	event.preventDefault();
@@ -909,10 +927,10 @@ $('#submit').button().click(function() {  //submit to the database
 
 $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
 	
-		if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
-				tabCounter=5;
-		if(userRole == "Administration")
-				tabCounter=7;
+	if(userRole == "Participant" || userRole== "Unauthenticated")  //Is the user visiting this tab again?If so, then reset the counter
+		tabCounter=5;
+	if(userRole == "Administration")
+		tabCounter=7;
 
 	$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
 	c_example = 0;  //0 means that there are no examples selected
@@ -928,7 +946,7 @@ $('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back
 	goToPrevTab();
 
 	removeHTMLElements(); // remove all HTML elements
-							
+
 });
 
 $('#impact_btn_next').button().click(function() { 
@@ -1044,54 +1062,104 @@ $('#TAB14_BTN_BACK').button().click(function() {
 });
 
 $('#TAB14_CREATE_BTN').button().click(function() { 
-	var errorMessage = "";
+	var errorMessage = "";  //keeps track of fields the user didn't fill in
 	if ($('#nameEval').val() == "") 
-		errorMessage += "Indiquez le nom d'évaluation!"; 
+		errorMessage += "Indiquez le nom d'évaluation! "; 
 	if ($('#orgEval').val() == "") 
-		errorMessage += "Indiquez Le nom de l'organisation!"; 
+		errorMessage += "Indiquez le nom de l'organisation! "; 
 	if($('#objectiveText').val() == "")
-		errorMessage+="Indiquez l'objectif!"
+		errorMessage+="Indiquez l'objectif! "
 	if($('#defineText').val() == "")
-		errorMessage+="Indiquez la définition!"
+		errorMessage+="Indiquez la définition! "
 	if($('#limitText').val() == "")
-		errorMessage+="Indiquez les limites!"
+		errorMessage+="Indiquez les limites! "
 	if(!$('input[name=cir1]:checked').val() && !$('input[name=cir2]:checked').val() && !$('input[name=cir3]:checked').val())
-		errorMessage+="Indiquez le circonscription du périmètre d’analyse!"
-	if(!$('input[name=sysFunc]:checked').val())
-		errorMessage+="Indiquez le fonction du système!"
-	if(!$('input[name=niveau]:checked').val())
-		errorMessage+="Indiquez le niveau d’évaluation!"
-	if (errorMessage == "")
+		errorMessage+="Indiquez le circonscription du périmètre d’analyse! "
+	if(!$('input[name=sysFunc1]:checked').val() && !$('input[name=sysFunc2]:checked').val())
+		errorMessage+="Indiquez le fonction du système! "
+	if(!$('input[name=niveau1]:checked').val() && !$('input[name=niveau2]:checked').val() && !$('input[name=niveau3]:checked').val())
+		errorMessage+="Indiquez le niveau d’évaluation! "
+	if (errorMessage == "")  //did the user fill in all the fields?
 	{
 		var circonscription = "";
+		var cir = "";
+		var niveau1 = "";
+		var niveau2 = "";
+		var niveau3 = "";
 		if ($('input[name=cir1]:checked').val()) 
-		{ 
+		{ 	
 			circonscription = $('#sites1').val();
+			cir = $('input[name=cir1]:checked').val();
 		};
 
 		if ($('input[name=cir2]:checked').val()) 
 		{ 
 			circonscription = $('#sites2').val();
+			cir = $('input[name=cir2]:checked').val();
 		};
 
 		if ($('input[name=cir3]:checked').val()) 
 		{ 
 			circonscription = $('#sites3').val();
+			cir = $('input[name=cir3]:checked').val();
 		};
 
-	goToPrevTab();
-	AdID=$('#AdminID').val();  //gets the administrator's ID
-	var organisationName = $('#orgEval').val(); // Get The Organisation Name From The Drupal PHP Profile2 Fields.
-	//gets the file through the url, the next paramteer is the data being sent in for the file to se and then finally the last paramter
-	//is doing soemthing in a function as a response, in this case it would be calling another ajax post  
-	$.post("http://quebio.ca/testing/Jason/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val()}, function(data) {alert(data);
-			$.post("http://quebio.ca/testing/Jason/php/insertParameter.php", { objectiveText: $('#objectiveText').val(), limitText: $('#limitText').val(), 
-			defineText: $('#defineText').val(), cir: circonscription, represent: $('#sysRep').val(), fonction: $('#sysFunc').val(), perimeter: $('#geography').val(),
-			niveau: $('#niveau').val(),reportid: data, userid: AdID}, function(data){
-			// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
-			window.location.reload();
-			window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
-	});
+		if ($('input[name=sysFunc1]:checked').val()) 
+		{
+			sysFunc = $('input[name=sysFunc1]:checked').val();
+		}
+		
+		if ($('input[name=sysFunc2]:checked').val()) 
+		{
+			sysFunc = $('input[name=sysFunc2]:checked').val();
+		}
+
+		if ($('input[name=niveau1]:checked').val()) 
+		{
+			niveau1 = $('input[name=niveau1]:checked').val();
+		};
+
+		if ($('input[name=niveau2]:checked').val()) 
+		{
+			niveau2 += $('input[name=niveau2]:checked').val();
+		};
+
+		externe = "";
+
+		if ($('input[name=niveau3]:checked').val()) 
+		{
+			niveau3 = $('input[name=niveau3]:checked').val();
+			
+			if ($('input[name=externe]:checked').val()) 
+				externe = $('input[name=externe]:checked').val();
+			
+			if (externe == 'autre') 
+				externe = $('#externeInput').val(); 	
+		};
+
+	if (externe == '' && $('input[name=niveau3]:checked').val())  //is the textbox externeInput empty?
+	{
+		alert('Aucune valeus choisi ou texte mit dans le textbox!');
+	}
+	else{
+		var reportID = document.getElementById('select-resultadmin').value;
+			var firstTime = $('#firstTime').val();  //determines whether the user is editing or creating an evaluation
+			goToPrevTab();
+			AdID=$('#AdminID').val();  //gets the administrator's ID
+			var organisationName = $('#orgEval').val(); // Get The Organisation Name
+			//gets the file through the url, the next paramteer is the data being sent in for the file to se and then finally the last paramter
+			//is doing soemthing in a function as a response, in this case it would be calling another ajax post  
+			$.post("http://www.quebio.ca/testing/Jason/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val(), createOrEdit: firstTime, reportid: reportID}, function(data) {alert(data);
+					//var insertData = JSON.parse(data);
+					//alert(insertData);
+					$.post("http://www.quebio.ca/testing/Jason/php/insertParameter.php", { objectiveText: $('#objectiveText').val(), limitText: $('#limitText').val(), 
+						cir: circonscription, preCir: cir, represent: $('#sysRep').val(), fonction: sysFunc, perimeter: $('#geography').val(),
+						niv1: niveau1, niv2: niveau2, niv3: niveau3, funcTxt: $('#funcTxt').val(),reportid: reportID, newReportid: data, userid: AdID, Externe: externe, createOrEdit: firstTime}, function(data){
+					// Call The Rapport.php to do The Report Creating And Refresh The Page on Finish To Show The New Report.
+					window.location.reload();
+					window.location.replace("http://www.quebio.ca/entreprisebio/#tab4");});
+				});
+		}
 	}
 	else
 		alert(errorMessage);
@@ -1118,26 +1186,22 @@ $('#LAST_NEXT_BTN').button().click(function() { //back button of risk/oppurtunit
 	}
 
 	if(!i_item && i2_item)  //did the user only select an impact and not a dependancy?
-	{ 	$("#interdependanceAverage").val("");
-		$("#interdependancePotential").val("");
+		{ 	$("#interdependanceAverage").val("");
+	$("#interdependancePotential").val("");
+}
+
+$("#riskOrOpp").val($("#"+n_item).text());
+$("#riskOrOpp2").val($("#"+n2_item).text());
+
+	if((i_item && !n_item) || (i2_item && !n2_item))  //is the user selecting the available selectable lists?
+	{
+		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
+	}
+	else
+	{
+		goToNextTab();
 	}
 
-	$("#riskOrOpp").val($("#"+n_item).text());
-	$("#riskOrOpp2").val($("#"+n2_item).text());
-	if (n_item && i_item)  //did the user select anything?
-	{
-		goToNextTab();
-	}
-	else if(n2_item && i2_item)
-	{
-		goToNextTab();
-	}
-	else if(n2_item && i2_item && n_item && i_item)
-	{
-		goToNextTab();
-	}		
-	else  //the user did not select anything
-		alert("SVP choisissez une de ses Opportunité/risques et leur nature!");
 });
 
 $('#data_back_btn').button().click(function() {
@@ -1145,51 +1209,51 @@ $('#data_back_btn').button().click(function() {
 });
 
 $(function() {  //slider for the interdependencies
-    var select = $( "#slides" );
-    var slider = $('#slider').slider({
-      orientation: "vertical",
-      min: 1,
-      max: 5,
-      range: "min",
-      value: select[ 0 ].selectedIndex + 1,
-      slide: function( event, ui ) {
-        select[ 0 ].selectedIndex = ui.value - 1;
-        $('.OptionDivs').hide();
+	var select = $( "#slides" );
+	var slider = $('#slider').slider({
+		orientation: "vertical",
+		min: 1,
+		max: 5,
+		range: "min",
+		value: select[ 0 ].selectedIndex + 1,
+		slide: function( event, ui ) {
+			select[ 0 ].selectedIndex = ui.value - 1;
+			$('.OptionDivs').hide();
         var id= ui.value;  //get the id from the slider
 		$('#displayOption'+id).show();  //show the ranking
-      }
-    });
-    $( "#slides" ).change(function() {
-      slider.slider( "value", this.selectedIndex + 1 );
-      $('.OptionDivs').hide();
+	}
+});
+	$( "#slides" ).change(function() {
+		slider.slider( "value", this.selectedIndex + 1 );
+		$('.OptionDivs').hide();
       var id= this.selectedIndex + 1; //get the id from the drop dwon list
 	  $('#displayOption'+id).show();  //show the ranking
-    });
-  });
+	});
+});
 
 
 $(function() {  //slider for impact ranking
-    var impact = $( "#impact" );
-    var impactSlider = $('#impactSlider').slider({
-      orientation: "vertical",
-      min: 1,
-      max: 11,
-      range: "min",
-      value: impact[ 0 ].selectedIndex + 1,
-      slide: function( event, ui ) {
-        	impact[ 0 ].selectedIndex = ui.value - 1; 
+	var impact = $( "#impact" );
+	var impactSlider = $('#impactSlider').slider({
+		orientation: "vertical",
+		min: 1,
+		max: 11,
+		range: "min",
+		value: impact[ 0 ].selectedIndex + 1,
+		slide: function( event, ui ) {
+			impact[ 0 ].selectedIndex = ui.value - 1; 
         	var impactID= ui.value;  //get the id from the slider
         	$('.ImpactDivs').hide();
         	$('#displayImpact'+impactID).show();  //show the ranking
-    	}
-	});
-    $( "#impact" ).change(function() {
-      impactSlider.slider( "value", this.selectedIndex + 1 );
+        }
+    });
+	$( "#impact" ).change(function() {
+		impactSlider.slider( "value", this.selectedIndex + 1 );
       var impactID= this.selectedIndex + 1;  //get the id from the drop down list
       $('.ImpactDivs').hide();
       $("#displayImpact" + impactID).show(); //show the ranking
-    });
   });
+});
 
 function removeHTMLElements(){
 
@@ -1229,7 +1293,7 @@ function removeHTMLElements(){
 							if(newCounter>10){ // can't have more than 10 examples
 								alert("Pas plus que 10 exemples permit");
 							return false;
-							}   
+						}   
 
 							var newTextBoxDiv = $(document.createElement('div')) // a div which will contain a textbox
 							.attr("id", 'nTB' + newCounter);
@@ -1296,7 +1360,7 @@ function removeHTMLElements(){
 									'<option name="newTheNature' + newCounter +'" value="Atout">Atout</option>'+
 									'<option name="newTheNature' + newCounter +'" value="Opportunité">Opportunité</option>'+
 									'</select>'+'</div>');
-															
+
 
 								newSelect1Div.html('<div style="float: left; width: 150px;">'+'<br>'+
 									'<select name="newTheEvalu' + newCounter +'" title="Accordez une importance a votre exemple ou 1 est une trés base et 10 est une trés haute"  >'+
@@ -1458,9 +1522,9 @@ if ( userRole == "Administration" ) {
 							selected: function(event, ui) { 
 								$(ui.selected).addClass("ui-selected").siblings().removeClass("ui-selected");
 								$( ".ui-selected", this ).each(function() {
-								idd=$(this).attr("id");
+									idd=$(this).attr("id");
 								$('#select-resultadmin').val(idd); // Set The Report ID in a Hidden Field at The Bottom of The Page
-								});
+							});
 							},
 							unselecting: function(event, ui) {
 								$('#selectableadmin .ui-selected').removeClass('ui-selected');
@@ -1469,15 +1533,178 @@ if ( userRole == "Administration" ) {
 						});
 
 						$('#create_report').button().click(function() { // Create The Report Creation Button.
-							if(tabCounter > 2)
+							$('#nameEval').val('');
+							$('#orgEval').val('');
+							$('#objectiveText').val('');
+							$('#limitText').val('');
+
+							$( "#cir1" ).prop( "checked", false );
+							$("#sites1").hide();
+							$("#sites1").val("site");
+
+							$("#cir2").prop( "checked", false );
+							$("#sites2").hide();
+							$("#sites2").val("province");
+
+							$("#cir3").prop( "checked", false );
+							$("#sites3").hide();
+							$("#sites3").val("approvisionnements");
+
+							$('#sysRep').val(''); 
+
+							$( "#sysFunc1" ).prop( "checked", false );
+							$( "#sysFunc2" ).prop( "checked", false );
+
+							$('#geography').val('');
+							$('#map').html('');
+							$('#hidden_text').hide();
+							$('#funcTxt').val(''); 
+
+							$( "#niveau1" ).prop( "checked", false );
+
+							$( "#niveau2" ).prop( "checked", false );
+
+							$("#niveau3").prop("checked", false);
+							$('#hideList').hide();
+							$( "#externe1" ).prop( "checked", false );							
+							$( "#externe2" ).prop( "checked", false );
+							$( "#externe3" ).prop( "checked", false );
+							$( "#externe4" ).prop( "checked", false );
+							$( "#externe5" ).prop( "checked", false );
+							$( "#externe6" ).prop( "checked", false );
+							$('#externeInput').removeClass("show");
+							$('#externeInput').addClass("hide");
+							$("#externeInput").prop('disabled',false);
+							$('#externeInput').val('');
+
+							$('#firstTime').val('yes');
+							if(tabCounter > 2)  //in case the user went to other tabs before going to this one
 								tabCounter=2;
 							goToNextTab();
 							$('#tabs').tabs('enable', tabCounter-1);
+							Drupal.behaviors.diagbio_map.geography = $("input[name='geography']");
+							Drupal.behaviors.diagbio_map.clearOverlays();
+							$.when( Drupal.behaviors.diagbio_map.createMap('map') ).done(function() {
+                				google.maps.event.trigger(Drupal.behaviors.diagbio_map.map, "resize");
+            				});
 						});
+
+
+						$('#edit_report').button().click(function() { // Edit Report Button.
+							var reportID = document.getElementById('select-resultadmin').value; // Get The Current Selected Report ID From The Hidden Field at The Bottome of The Page.
+							if (reportID === "")  //did the user not select any report?
+							{
+								alert("Sélectionnez un rapport");
+							}
+							else
+							{
+								$('#firstTime').val('no');
+
+								if(tabCounter > 2)  //in case the user went to other tabs before going to this one
+									tabCounter=2;
+								goToNextTab();
+								$('#tabs').tabs('enable', tabCounter-1);
+
+								$.get("http://www.quebio.ca/testing/Jason/php/get_edit_data.php", { reportId: reportID , userId: $('#AdminID').val()}, 
+									function(editData){
+										//var editData = JSON.parse(data);
+
+									//set the data was already inserted into the database
+									$('#nameEval').val(editData.evalName);
+									$('#orgEval').val(editData.orgname);
+									$('#objectiveText').val(editData.objective);
+									$('#limitText').val(editData.limits);
+
+									if(editData.pre_circonscription == 'Opérationnel')
+									{
+										$( "#cir1" ).prop( "checked", true );
+										$("#sites1").show();
+										if (editData.circonscription == 'site')
+											$("#sites1").val("site");
+										if (editData.circonscription == 'ensemble site')
+											$("#sites1").val("ensemble site");
+										if (editData.circonscription == 'groupe')
+											$("#sites1").val("groupe");
+									}
+									if (editData.pre_circonscription == 'Spatial')
+									{
+										$( "#cir2" ).prop( "checked", true );
+										$("#sites2").show();
+										if (editData.circonscription == 'province')
+											$("#sites2").val("province");
+										if (editData.circonscription == 'region')
+											$("#sites2").val("region");
+										if (editData.circonscription == 'commune')
+											$("#sites2").val("commune");
+										if (editData.circonscription == 'site')
+											$("#sites2").val("site");
+									}
+									if (editData.pre_circonscription == 'Intrant')
+									{
+										$( "#cir3" ).prop( "checked", true );
+										$("#sites3").show();
+										if (editData.circonscription == 'approvisionnements')
+											$("#sites3").val("approvisionnements");
+										if (editData.circonscription == 'exportations')
+											$("#sites3").val("exportations");
+									}
+
+									$('#sysRep').val(editData.represent); 
+
+									if (editData.fonction == 'principales') 
+										$( "#sysFunc1" ).prop( "checked", true );
+									if (editData.fonction == 'secondaires') 
+										$( "#sysFunc2" ).prop( "checked", true );
+
+									Drupal.behaviors.diagbio_map.clearOverlays();
+									$('#geography').val(editData.perimeter);
+									Drupal.behaviors.diagbio_map.readGeoJSON();
+									$('#hidden_text').show();
+									$('#funcTxt').val(editData.function_text); 
+
+									if (editData.niveau1 != 'null')
+									{
+										$( "#niveau1" ).prop( "checked", true );
+									}
+
+									if (editData.niveau2 != 'null')
+									{
+										$( "#niveau2" ).prop( "checked", true );
+									}
+
+									if (editData.niveau3 != 'null')
+									{
+										$('#hideList').show();
+
+										$( "#niveau3" ).prop( "checked", true );
+										
+										if(editData.externe == 'habitants')
+											$( "#externe1" ).prop( "checked", true );
+										else if(editData.externe == 'autre organisation')
+											$( "#externe2" ).prop( "checked", true );
+										else if(editData.externe == 'gouvernement')
+											$( "#externe3" ).prop( "checked", true );
+										else if(editData.externe == 'agence')
+											$( "#externe4" ).prop( "checked", true );
+										else if(editData.externe == 'ong')
+											$( "#externe5" ).prop( "checked", true );
+										else
+										{
+											$( "#externe6" ).prop( "checked", true );
+											$('#externeInput').removeClass("hide");
+											$('#externeInput').addClass("show");
+											$("#externeInput").prop('disabled',false);
+											$('#externeInput').val(editData.externe);
+										}
+									}
+								});
+}
+});
 
 						$('#delete_report').button().click(function() { // Create The Report Deletion Button.
 							var reportID = document.getElementById('select-resultadmin').value; // Get The Current Selected Report ID From The Hidden Field at The Bottome of The Page.
 							var missingFields = "";
+							var deleteReport = 'yes';
 
 							if ( reportID == "" || reportID == null ){ // Make Sure a Valid Report ID is Available.
 								missingFields += "No report were selected.\n";
@@ -1485,7 +1712,7 @@ if ( userRole == "Administration" ) {
 							if ( missingFields=="" ){
 								if ( confirm("Are you sure you wish to delete this report?") ) // Prompt For Confirmation Incase of a Miss-click.
 									// Call The Rapport.php to do The Report Deletion And Refresh The Page on Finish TO Show The Updated Report List.
-								$.post("http://quebio.ca/testing/Jason/php/rapport.php", { reportid: reportID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
+								$.post("http://www.quebio.ca/testing/Jason/php/rapport.php", { deleteRep: deleteReport, reportid: reportID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://www.quebio.ca/entreprisebio/#tab4");});
 							}
 							else{
 								alert(missingFields); // Alert User Regarding The Missing Report ID.
@@ -1496,7 +1723,7 @@ if ( userRole == "Administration" ) {
 
 							var reportID = document.getElementById('select-resultadmin').value;
 							var adminID = document.getElementById(reportID).value;
-								
+
 							var missingFields = "";
 
 							if ( reportID=="" || reportID==null ){ // Make Sure a Valid Report ID is Available.
@@ -1504,7 +1731,7 @@ if ( userRole == "Administration" ) {
 							}
 
 							if ( missingFields=="" ){
-								$.post("http://quebio.ca/testing/Jason/php/getAdminInfo.php", {adminid: adminID, reportid: reportID}, function(data) { 
+								$.post("http://www.quebio.ca/testing/Jason/php/getAdminInfo.php", {adminid: adminID, reportid: reportID}, function(data) { 
 									alert(data);
 									document.getElementById('ajax').style.visibility = 'visible';
 									var adminInfo = JSON.parse(data);
@@ -1547,53 +1774,53 @@ if ( userRole == "Administration" ) {
 										title: {
 											text: 'Les impacts avérés',
 											labels: {
-                								style: {
-                    								color: 'purple',
-                    								fontSize:'20px'
-                										}
-            										}
+												style: {
+													color: 'purple',
+													fontSize:'20px'
+												}
+											}
 										},
 										xAxis: {	
 											categories:classifications,
 											labels: {
 												rotation: -90,
 												align: 'right',
-                								style: {
-                    								color: 'red',
-                    								fontSize:'16px'
-                								}
-            								}
+												style: {
+													color: 'red',
+													fontSize:'16px'
+												}
+											}
 										},
 										yAxis: {
 											tickPositions: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
 											min: -5,
 											max: 5,
 											labels: {
-                								style: {
-                    								
-                    								fontSize:'25px'
-                								}
-           									 }
+												style: {
+
+													fontSize:'25px'
+												}
+											}
 										},
-										 legend: {
-                							layout: 'vertical',
-                							align: 'right',
-                							verticalAlign: 'middle',
-                							borderWidth: 0,
-                							itemStyle: {
-										        color: '#000000',
-										        fontWeight: 'bold',
-										        fontSize: '16px'
-									    	}
-                						},
-                						series: [{
+										legend: {
+											layout: 'vertical',
+											align: 'right',
+											verticalAlign: 'middle',
+											borderWidth: 0,
+											itemStyle: {
+												color: '#000000',
+												fontWeight: 'bold',
+												fontSize: '16px'
+											}
+										},
+										series: [{
 											name: 'Impacts avérés',
 											data: avg_impacts
 										}
 										]
 									});
-							
-									var ii=0;
+
+var ii=0;
 									while (ii<adminInfo.xaxis.pot_c_names.length){  //formatting of the x Axis values
 										adminInfo.xaxis.pot_c_names[ii]=adminInfo.xaxis.pot_c_names[ii];
 										ii=ii+1;
@@ -1622,7 +1849,7 @@ if ( userRole == "Administration" ) {
 									}
 
 
-$('#impacts_pot').highcharts( {
+									$('#impacts_pot').highcharts( {
 										chart:{
 											type: 'column',
 											marginLeft: 120
@@ -1630,46 +1857,46 @@ $('#impacts_pot').highcharts( {
 										title: {
 											text: 'Les impacts potentiels',
 											labels: {
-                								style: {
-                    								color: 'purple',
-                    								fontSize:'20px'
-                										}
-            										}
+												style: {
+													color: 'purple',
+													fontSize:'20px'
+												}
+											}
 										},
 										xAxis: {	
 											categories:classifications2,
 											labels: {
 												rotation: -90,
 												align: 'right',
-                								style: {
-                    								color: 'red',
-                    								fontSize:'16px'
-                								}
-            								}
+												style: {
+													color: 'red',
+													fontSize:'16px'
+												}
+											}
 										},
 										yAxis: {
 											tickPositions: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5],
 											min: -5,
 											max: 5,
 											labels: {
-                								style: {
-                    								
-                    								fontSize:'25px'
-                								}
-           									 }
+												style: {
+
+													fontSize:'25px'
+												}
+											}
 										},
-										 legend: {
-                							layout: 'vertical',
-                							align: 'right',
-                							verticalAlign: 'middle',
-                							borderWidth: 0,
-                							itemStyle: {
-										        color: '#000000',
-										        fontWeight: 'bold',
-										        fontSize: '16px'
-									    	}
-                						},
-                						series: [{
+										legend: {
+											layout: 'vertical',
+											align: 'right',
+											verticalAlign: 'middle',
+											borderWidth: 0,
+											itemStyle: {
+												color: '#000000',
+												fontWeight: 'bold',
+												fontSize: '16px'
+											}
+										},
+										series: [{
 											name: 'Impacts potentiels',
 											data: pot_impacts,
 										}
@@ -1718,8 +1945,8 @@ $('#dependance_avg').highcharts( {
 			style: {
 				color: 'purple',
 				fontSize:'20px'
-					}
-				}
+			}
+		}
 	},
 	xAxis: {	
 		categories:classifications2,
@@ -1741,18 +1968,18 @@ $('#dependance_avg').highcharts( {
 				
 				fontSize:'25px'
 			}
-			 }
+		}
 	},
-	 legend: {
+	legend: {
 		layout: 'vertical',
 		align: 'right',
 		verticalAlign: 'middle',
 		borderWidth: 0,
 		itemStyle: {
-	        color: '#000000',
-	        fontWeight: 'bold',
-	        fontSize: '16px'
-    	}
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
 	},
 	series: [{
 		name: 'Dépendances avérés',
@@ -1790,75 +2017,75 @@ while (ii<adminInfo.xaxis.pot_dep_size - 1){	//average deoendance series
 }
 
 $('#dependance_pot').highcharts( {
-										chart:{
-											type: 'column',
-											marginLeft: 120
-										},
-										title: {
-											text: 'Les Dépendances potentiels',
-											labels: {
-                								style: {
-                    								color: 'purple',
-                    								fontSize:'20px'
-                										}
-            										}
-										},
-										xAxis: {	
-											categories:classifications4,
-											labels: {
-												rotation: -90,
-												align: 'right',
-                								style: {
-                    								color: 'red',
-                    								fontSize:'16px'
-                								}
-            								}
-										},
-										yAxis: {
-											tickPositions: [0, 1, 2, 3, 4, 5],	
-											min: 0,
-											max: 5,
-											labels: {
-                								style: {
-                    								
-                    								fontSize:'25px'
-                								}
-           									 }
-										},
-										 legend: {
-                							layout: 'vertical',
-                							align: 'right',
-                							verticalAlign: 'middle',
-                							borderWidth: 0,
-                							itemStyle: {
-										        color: '#000000',
-										        fontWeight: 'bold',
-										        fontSize: '16px'
-									    	}
-                						},
-                						series: [{
-											name: 'Dépendances potentiels',
-											data: pot_dependances,
-											
-										}
-										]
-									});
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
+	title: {
+		text: 'Les Dépendances potentiels',
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'20px'
+			}
+		}
+	},
+	xAxis: {	
+		categories:classifications4,
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		tickPositions: [0, 1, 2, 3, 4, 5],	
+		min: 0,
+		max: 5,
+		labels: {
+			style: {
+
+				fontSize:'25px'
+			}
+		}
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	series: [{
+		name: 'Dépendances potentiels',
+		data: pot_dependances,
+
+	}
+	]
+});
 
 var all_se_averages = [];  // temporarly store data in this array to sort it
 
 for (var loop = 0; loop < adminInfo.xaxis.se_categories_avgs.length; loop++)  //put the average dependances and c_names into the array
-{	if (loop != 0)
+	{	if (loop != 0)
 		all_se_averages[loop] = [adminInfo.xaxis.se_categories[loop], adminInfo.xaxis.se_categories_avgs[loop]];
-}
+	}
 
 all_se_averages.sort(function(a,b){return a[1]-b[1]});  //sort the average dependances and the c_names
 
 var se_averages = [];
 var se_names = [];
 for(var loop = 0; loop < adminInfo.xaxis.se_categories_avgs.length - 1; loop++)  //extract the data from the array
-{	if (all_se_averages[loop][1] == null || all_se_averages[loop][1] == "") 
-		se_averages[loop] = 0;
-	else
+	{	if (all_se_averages[loop][1] == null || all_se_averages[loop][1] == "") 
+se_averages[loop] = 0;
+else
 		se_averages[loop] = all_se_averages[loop][1];  //extract the values
 	se_names[loop] = all_se_averages[loop][0];  //extract the x-axis values
 }
@@ -1870,62 +2097,62 @@ while (ii<adminInfo.xaxis.se_categories_avgs.length - 1){	//average deoendance s
 }
 
 $('#average_ranking_se').highcharts( {
-										chart:{
-											type: 'column',
-											marginLeft: 120
-										},
-										title: {
-											text: 'Pourcentage de classifications par category',
-											labels: {
-                								style: {
-                    								color: 'purple',
-                    								fontSize:'20px'
-                										}
-            										}
-										},
-										xAxis: {	
-											categories:se_names,
-											labels: {
-												rotation: -90,
-												align: 'right',
-                								style: {
-                    								color: 'red',
-                    								fontSize:'16px'
-                								}
-            								}
-										},
-										yAxis: {
-											title: {
-                    							text: 'Pourcentage (%)'
-               								 },
-											tickPositions: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],	
-											min: 0,
-											max: adminInfo.totalPpl,
-											labels: {
-                								style: {
-                    								fontSize:'25px'
-                								}
-           									 }
-										},
-										 tooltip: {
-                							valueSuffix: '%'
-            							},
-										 legend: {
-                							layout: 'vertical',
-                							align: 'right',
-                							verticalAlign: 'middle',
-                							borderWidth: 0,
-                							itemStyle: {
-										        color: '#000000',
-										        fontWeight: 'bold',
-										        fontSize: '16px'
-									    	}
-                						},
-                						series: [{
-											name: 'Pourcentage de categories',
-											data: se_averages,										
-										}]
-									});
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
+	title: {
+		text: 'Pourcentage de classifications par category',
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'20px'
+			}
+		}
+	},
+	xAxis: {	
+		categories:se_names,
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		title: {
+			text: 'Pourcentage (%)'
+		},
+		tickPositions: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],	
+		min: 0,
+		max: adminInfo.totalPpl,
+		labels: {
+			style: {
+				fontSize:'25px'
+			}
+		}
+	},
+	tooltip: {
+		valueSuffix: '%'
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	series: [{
+		name: 'Pourcentage de categories',
+		data: se_averages,										
+	}]
+});
 
 se_money_neg = [];
 se_money_pos = [];
@@ -1946,64 +2173,64 @@ while(ii < adminInfo.se_money_pos.length )
 
 
 $('#money_ranking').highcharts( {
-chart:{
-	type: 'column',
-	marginLeft: 120
-},
-title: {
-	text: 'I.4.	Les paiements pour bénéficier des BSE' ,
-	labels: {
-		style: {
-			color: 'purple',
-			fontSize:'20px'
-				}
-			}
-},
-xAxis: {	
-	categories:se_names,
-	labels: {
-		rotation: -90,
-		align: 'right',
-		style: {
-			color: 'red',
-			fontSize:'16px'
-		}
-	}
-},
-yAxis: {
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
 	title: {
-		text: 'Pourcentage(%)'
-		 },
-	tickPositions: [-100,-80,-60,-40,-20,0,20,40,60,80,100],	
-	min: -100,
-	max: adminInfo.totalPpl,
-	labels: {
-		style: {
-			fontSize:'25px'
+		text: 'I.4.	Les paiements pour bénéficier des BSE' ,
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'20px'
+			}
 		}
-		 }
-},
- tooltip: {
-	valueSuffix: '%'
-},
- legend: {
-	layout: 'vertical',
-	align: 'right',
-	verticalAlign: 'middle',
-	borderWidth: 0,
-	itemStyle: {
-        color: '#000000',
-        fontWeight: 'bold',
-        fontSize: '16px'
-	}
-},
-series: [{
-	name: 'argent sans perte',
-	data: se_money_pos,
-	
-},{
-	name:'pertre d\'argent',
-	data: se_money_neg
+	},
+	xAxis: {	
+		categories:se_names,
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		title: {
+			text: 'Pourcentage(%)'
+		},
+		tickPositions: [-100,-80,-60,-40,-20,0,20,40,60,80,100],	
+		min: -100,
+		max: adminInfo.totalPpl,
+		labels: {
+			style: {
+				fontSize:'25px'
+			}
+		}
+	},
+	tooltip: {
+		valueSuffix: '%'
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	series: [{
+		name: 'argent sans perte',
+		data: se_money_pos,
+
+	},{
+		name:'pertre d\'argent',
+		data: se_money_neg
 	}]
 });
 
@@ -2014,61 +2241,61 @@ var red = parseInt(adminInfo.redMoney) / iii * 100;
 var autre = parseInt(adminInfo.autreMoney) / iii * 100;
 
 $('#money_detail').highcharts( {
-chart:{
-	type: 'column',
-	marginLeft: 120
-},
-title: {
-	text: 'Présente le nombre de paiements / nombre d’IDBSE identifiées dans chaque catégorie' ,
-	labels: {
-		style: {
-			color: 'purple',
-			fontSize:'20px'
-				}
-			}
-},
-xAxis: {	
-	categories:['Taxe','Paiement pour services environnementaux', 'Redevance', 'Autre'],
-	labels: {
-		rotation: -90,
-		align: 'right',
-		style: {
-			color: 'red',
-			fontSize:'16px'
-		}
-	}
-},
-yAxis: {
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
 	title: {
-		text: 'Importance relative (%) – paiements pour IDBSE'
-		 },
-	tickPositions: [0,10,20,30,40,50,60,70,80,90,100],	
-	min: 0,
-	max: 100,
-	labels: {
-		style: {
-			fontSize:'25px'
+		text: 'Présente le nombre de paiements / nombre d’IDBSE identifiées dans chaque catégorie' ,
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'20px'
+			}
 		}
-		 }
-},
- tooltip: {
-	valueSuffix: '%'
-},
- legend: {
-	layout: 'vertical',
-	align: 'right',
-	verticalAlign: 'middle',
-	borderWidth: 0,
-	itemStyle: {
-        color: '#000000',
-        fontWeight: 'bold',
-        fontSize: '16px'
-	}
-},
-series: [{
-	name: 'money',
-	data: [tax, envi, red, autre]	
-}]
+	},
+	xAxis: {	
+		categories:['Taxe','Paiement pour services environnementaux', 'Redevance', 'Autre'],
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		title: {
+			text: 'Importance relative (%) – paiements pour IDBSE'
+		},
+		tickPositions: [0,10,20,30,40,50,60,70,80,90,100],	
+		min: 0,
+		max: 100,
+		labels: {
+			style: {
+				fontSize:'25px'
+			}
+		}
+	},
+	tooltip: {
+		valueSuffix: '%'
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	series: [{
+		name: 'money',
+		data: [tax, envi, red, autre]	
+	}]
 });
 
 var iii= parseInt(adminInfo.finance_pro) + parseInt(adminInfo.mar_pro) + parseInt(adminInfo.rep_pro) + parseInt(adminInfo.op_pro) + parseInt(adminInfo.rule_pro);
@@ -2079,61 +2306,61 @@ var op = parseInt(adminInfo.op_pro) / iii * 100;
 var rule = parseInt(adminInfo.rule_pro) / iii * 100;
 
 $('#Operations').highcharts( {
-chart:{
-	type: 'column',
-	marginLeft: 120
-},
-title: {
-	text: 'Operations' ,
-	labels: {
-		style: {
-			color: 'purple',
-			fontSize:'20px'
-				}
-			}
-},
-xAxis: {	
-	categories:['Les finances', 'La gestion des opérations', 'Les opérations quotidiennes', 'Les ressources humaines', 'Le marketing (réputation, image, etc.)'],
-	labels: {
-		rotation: -90,
-		align: 'right',
-		style: {
-			color: 'red',
-			fontSize:'16px'
-		}
-	}
-},
-yAxis: {
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
 	title: {
-		text: 'Importance relative (%) – fonctions touchees par l’IDBSE'
-		 },
-	tickPositions: [0,10,20,30,40,50,60,70,80,90,100],	
-	min: 0,
-	max: 100,
-	labels: {
-		style: {
-			fontSize:'25px'
+		text: 'Operations' ,
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'20px'
+			}
 		}
-		 }
-},
- tooltip: {
-	valueSuffix: '%'
-},
- legend: {
-	layout: 'vertical',
-	align: 'right',
-	verticalAlign: 'middle',
-	borderWidth: 0,
-	itemStyle: {
-        color: '#000000',
-        fontWeight: 'bold',
-        fontSize: '16px'
-	}
-},
-series: [{
-	name: 'Operations',
-	data: [finance, mar, rep, op, rule]	
-}]
+	},
+	xAxis: {	
+		categories:['Les finances', 'La gestion des opérations', 'Les opérations quotidiennes', 'Les ressources humaines', 'Le marketing (réputation, image, etc.)'],
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		title: {
+			text: 'Importance relative (%) – fonctions touchees par l’IDBSE'
+		},
+		tickPositions: [0,10,20,30,40,50,60,70,80,90,100],	
+		min: 0,
+		max: 100,
+		labels: {
+			style: {
+				fontSize:'25px'
+			}
+		}
+	},
+	tooltip: {
+		valueSuffix: '%'
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	series: [{
+		name: 'Operations',
+		data: [finance, mar, rep, op, rule]	
+	}]
 });
 
 totalF = 0;
@@ -2218,74 +2445,74 @@ while(count < adminInfo.operation_ru.length)
 }
 
 $('#Operations_par_se').highcharts( {
-chart:{
-	type: 'column',
-	marginLeft: 120
-},
-title: {
-	text: 'Operations' ,
-	labels: {
-		style: {
-			color: 'purple',
-			fontSize:'16px'
+	chart:{
+		type: 'column',
+		marginLeft: 120
+	},
+	title: {
+		text: 'Operations' ,
+		labels: {
+			style: {
+				color: 'purple',
+				fontSize:'16px'
+			}
+		}
+	},
+	xAxis: {	
+		categories:se_names,
+		labels: {
+			rotation: -90,
+			align: 'right',
+			style: {
+				color: 'red',
+				fontSize:'16px'
+			}
+		}
+	},
+	yAxis: {
+		title: {
+			text: 'Importance relative (%) – fonctions touchees par l’IDBSE'
+		},
+		tickPositions: [0,50,100,150,200,250,300,350,400,450,500],	
+		min: 0,
+		max: 500,
+		stackLabels: {
+			enabled: true,
+			style: {
+				fontWeight: 'bold',
+			}
+		}	 
+	},
+	tooltip: {
+		valueSuffix: '%'
+	},
+	legend: {
+		layout: 'vertical',
+		align: 'right',
+		verticalAlign: 'middle',
+		borderWidth: 0,
+		itemStyle: {
+			color: '#000000',
+			fontWeight: 'bold',
+			fontSize: '16px'
+		}
+	},
+	plotOptions: {
+		column: {
+			stacking: 'normal',
+			dataLabels: {
+				enabled: true,
+				style: {
+					textShadow: '0 0 3px black, 0 0 3px black'
 				}
 			}
-},
-xAxis: {	
-	categories:se_names,
-	labels: {
-		rotation: -90,
-		align: 'right',
-		style: {
-			color: 'red',
-			fontSize:'16px'
 		}
-	}
-},
-yAxis: {
-	title: {
-		text: 'Importance relative (%) – fonctions touchees par l’IDBSE'
-		 },
-	tickPositions: [0,50,100,150,200,250,300,350,400,450,500],	
-	min: 0,
-	max: 500,
-	  stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                   }
-                }	 
-},
- tooltip: {
-	valueSuffix: '%'
-},
- legend: {
-	layout: 'vertical',
-	align: 'right',
-	verticalAlign: 'middle',
-	borderWidth: 0,
-	itemStyle: {
-        color: '#000000',
-        fontWeight: 'bold',
-        fontSize: '16px'
-	}
-},
-plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true,
-                       style: {
-                            textShadow: '0 0 3px black, 0 0 3px black'
-                        }
-                    }
-                }
-            },
-series: [{
-	name: 'Les finances',
-	data: operation_f
-},
-{	name: 'La gestion des opérations',
+	},
+	series: [{
+		name: 'Les finances',
+		data: operation_f
+	},
+	{	name: 'La gestion des opérations',
 	data: operation_m
 },
 {
@@ -2302,45 +2529,45 @@ series: [{
 }]
 });
 
-  	var chartBF = $('#impacts_avg').highcharts(); 
-  	var svgBF = chartBF.getSVG();
+var chartBF = $('#impacts_avg').highcharts(); 
+var svgBF = chartBF.getSVG();
 
-  	var chartBS = $('#impacts_pot').highcharts();
-  	var svgBS = chartBS.getSVG();
-	
-  	var chartSF = $('#dependance_avg').highcharts();
-  	var svgSF = chartSF.getSVG();
+var chartBS = $('#impacts_pot').highcharts();
+var svgBS = chartBS.getSVG();
 
-  	var chartSS = $('#dependance_pot').highcharts();
-  	var svgSS = chartSS.getSVG();
+var chartSF = $('#dependance_avg').highcharts();
+var svgSF = chartSF.getSVG();
 
-  	var chartAR = $('#average_ranking_se').highcharts();
-  	var svgAR = chartAR.getSVG();
+var chartSS = $('#dependance_pot').highcharts();
+var svgSS = chartSS.getSVG();
 
-  	var chartMO = $('#money_ranking').highcharts();
-  	var svgMO = chartMO.getSVG();
+var chartAR = $('#average_ranking_se').highcharts();
+var svgAR = chartAR.getSVG();
 
-  	var chartMD = $('#money_detail').highcharts();
-  	var svgMD = chartMD.getSVG();
+var chartMO = $('#money_ranking').highcharts();
+var svgMO = chartMO.getSVG();
 
-  	var chartOP = $('#Operations').highcharts();
-  	var svgOP = chartOP.getSVG();
+var chartMD = $('#money_detail').highcharts();
+var svgMD = chartMD.getSVG();
 
-	var chartOPS = $('#Operations_par_se').highcharts();
-	var svgOPS = chartOPS.getSVG();
+var chartOP = $('#Operations').highcharts();
+var svgOP = chartOP.getSVG();
 
-	var data = ({chartBF: svgBF, chartBS: svgBS, chartSF: svgSF, chartSS: svgSS, chartAR: svgAR, chartMO: svgMO, chartMD: svgMD, chartOP: svgOP, chartOPS: svgOPS});
+var chartOPS = $('#Operations_par_se').highcharts();
+var svgOPS = chartOPS.getSVG();
 
-  $.ajax({
+var data = ({chartBF: svgBF, chartBS: svgBS, chartSF: svgSF, chartSS: svgSS, chartAR: svgAR, chartMO: svgMO, chartMD: svgMD, chartOP: svgOP, chartOPS: svgOPS});
+
+$.ajax({
 	type: 'POST',
 	data: data,
-	url: 'http://quebio.ca/testing/Jason/php/hcexport.php',
+	url: 'http://www.quebio.ca/testing/Jason/php/hcexport.php',
 	async: false,
 	success: function(data){
- 	$.post("http://quebio.ca/testing/Jason/php/report.php", { reportInfo: adminInfo}, function(data) { document.getElementById('ajax').style.visibility = 'hidden'; window.location.replace("http://quebio.ca/testing/Jason/php/rapport.pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
+ 	$.post("http://www.quebio.ca/testing/Jason/php/report.php", { reportInfo: adminInfo}, function(data) { document.getElementById('ajax').style.visibility = 'hidden'; window.location.replace("http://www.quebio.ca/testing/Jason/php/rapport.pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
  }
 });	
-								});
+});
 }
 else{
 								alert(missingFields); // Alert User Regarding The Missing Report ID.
@@ -2356,7 +2583,7 @@ else{
 							}
 							if ( missingFields=="" ){
 								// Call The Rapport.php to Invert The Current View Of The Selected Report (Admin Only or All Users).
-								$.post("http://quebio.ca/testing/Jason/php/rapport.php", { reportid: reportID, viewable: 1}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4")});
+								$.post("http://www.quebio.ca/testing/Jason/php/rapport.php", { reportid: reportID, viewable: 1}, function(data) { alert(data); window.location.reload(); window.location.replace("http://www.quebio.ca/entreprisebio/#tab4")});
 							}
 							else{
 								alert(missingFields); // Alert User Regarding The Missing Report ID.
@@ -2373,13 +2600,13 @@ else{
 
 							if ( emailRecipient=="" || emailRecipient==null){ // Make Sure a E-mail Was Entered (Let Drupal_mail() see if it's valid of not).
 								missingFields += "E-mail field is empty.\n";
-							}
+						}
 							if ( reportID=="" || reportID=="" ){ // Make Sure a Valid Report ID is Available.
 								missingFields += "No report were selected.\n";
 							}
 							if ( missingFields=="" ){
 								// Call The Email.php to Send Out The E-mail Invitations Including all The Information We Appended.
-								$.post("http://quebio.ca/testing/Jason/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
+								$.post("http://www.quebio.ca/testing/Jason/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
 							}
 							else{
 								alert(missingFields);// Alert User Regarding The Missing Report ID or E-mail Addresses.

@@ -8,18 +8,24 @@
     geography: "", diagbio_mode:"",
 
     attach: function() {
-      this.geography = $("input[name='geography']");
+      //this.geography = $("input[name='geography']");
       this.attachEvents();
+      /*this.createMap();
+      this.readGeoJSON();
+      this.diagbio_mode='edit';
+      */
     },
 
-    createMap: function() {
+    createMap: function(mapname) {
       this.map_center = new google.maps.LatLng(50, -73);
-      this.map = new google.maps.Map($("#map")[0], {
+      this.map = new google.maps.Map($("#"+mapname)[0], {
         zoom: 5,
         center: this.map_center,
         mapTypeId: google.maps.MapTypeId.HYBRID,
-        disableDoubleClickZoom: true
+        disableDoubleClickZoom: true,
+        noClear: false,
       });
+      this.bounds = new google.maps.LatLngBounds();
       this.marker_icon = {
         url: '/testing/Jason/images/red-dot.png',
         origin: new google.maps.Point(0,0)
@@ -36,26 +42,28 @@
         origin: new google.maps.Point(0,0),
         anchor: new google.maps.Point(2, 2)
       };
+      google.maps.event.trigger(self.map, "resize");
     },
 
     readGeoJSON: function() {
       var self = this,
-          geojson = (this.geography.val().length > 0) ? $.parseJSON(this.geography.val()) : { features : []};
-          /*polygon = {};*/
-
+      geojson = (this.geography.val().length > 0) ? $.parseJSON(this.geography.val()) : { features : []};
+      /*polygon = {};*/
+      google.maps.event.trigger(self.map, "resize");
       $.each(geojson.features, function() {
         contentString=this.properties.infowin;
         switch (this.geometry.type) {
           case 'Point':
-            self.addMarker(self.createPoint(this.geometry.coordinates),contentString);
+          self.addMarker(self.createPoint(this.geometry.coordinates),contentString);
           break;
           case 'Polygon':
-            polygon = self.createPolygon();
-            this.geometry.coordinates[0].pop();
-            $.each(this.geometry.coordinates[0], function() {
-               self.addVertex(polygon, self.createPoint(this));
-            });
-            self.createPolyInfoWindow(polygon,contentString);
+          polygon = self.createPolygon();
+          this.geometry.coordinates[0].pop();
+          $.each(this.geometry.coordinates[0], function() {
+           self.addVertex(polygon, self.createPoint(this));
+         });
+          self.map.fitBounds(self.bounds);
+          self.createPolyInfoWindow(polygon,contentString);
           break;
         }
       });
@@ -64,10 +72,26 @@
     attachEvents: function() {
       var self = this,
           polygon = {};
-      $('#create_report').click(function() { // Create The Report Creation Button.
-          self.createMap();
-          self.readGeoJSON();
-          self.diagbio_mode='edit';
+      $('#edit_report').click(function() { // Create The Report Creation Button.
+            self.geography = $("input[name='geography']");
+            //self.clearOverlays();
+            //$("#map").html('');
+            $.when( self.createMap('map') ).done(function() {
+                google.maps.event.trigger(self.map, "resize");
+            });
+            //self.readGeoJSON();
+            self.diagbio_mode='edit';
+      });
+      $('#infoForUser').click(function() { // Create The Report Creation Button.
+            self.geography = $("input[name='geography1']");
+            self.clearOverlays();
+            $("#map1").html('');
+            $.when( self.createMap('map1') ).done(function() {
+                google.maps.event.trigger(self.map, "resize");
+            });
+            self.readGeoJSON();
+            self.diagbio_mode='view';
+            google.maps.event.trigger(self.map, "resize");
       });
       $('#edit-site-details').find("legend a").click(function() {
         google.maps.event.trigger(self.map, "resize");
@@ -207,7 +231,7 @@
         this.addVertexListener(path, vertex, path.length-1, 'drag');
         this.addVertexListener(path, vertex, path.length-1, 'dblclick');
       }
-
+      this.bounds.extend(position);
     },
 
     addVertexListener: function(path, vertex, index, type) {
@@ -260,6 +284,8 @@
       }else{
         this.addMarkerInfoWindowListener(marker,infowindow);
       }
+      this.bounds.extend(position);
+      this.map.fitBounds(this.bounds);
     },
 
     addMarkerListener: function(marker) {

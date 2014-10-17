@@ -1,4 +1,5 @@
 <?php 
+header("Access-Control-Allow-Origin: *");
         	// Include The Drupal Core jQuery UI Libraries.
 drupal_add_library('system', 'ui');
 drupal_add_library('system', 'ui.accordion');
@@ -32,7 +33,6 @@ include('Inter_main_php.php');
 include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 ?>
-
 			<body>
 				<div id="accinfo">
 				<input type="hidden" id="userRole" name="userRole" value=<?php echo json_encode($role); ?>>
@@ -59,6 +59,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<li id="sendData"><a href="#tab16">Enregistrer vos données</a></li>
 						<li id="viewOpinions"><a href="#tab17">Gestion des données</a></li>
 						<li id="adminOpinion"><a href="#tab18">Planification</a></li>
+						<li id="infoForUser"><a href="#tab19">Why Am I Here?</a></li>
 					</ul>
 					<div id="tab1"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
@@ -181,33 +182,10 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 				<div id="tab2"> <!-- Raw Information Dump from Philippe Auzel's Excel Documents. -->
 
 				<fieldset class="infoList"><legend class="font_legend"><b>Ce qu’il faut savoir</b></legend>
-				<ul>				
-					<li>Les organisations sont largement dépendantes de l’exploitation des services écosystémiques.</li>
-					<li>Or, les biens et services que génèrent les écosystèmes ne sont pas pris en compte parce</li> 
-					<li>que beaucoup sont considérés comme des cadeaux de la nature. Le travail des abeilles par</li>
-					<li>exemple, est très peu valorisé alors que toute l’industrie agroalimentaire repose sur la</li>
-					<li>pollinisation. Cela peut représenter une menace importante comme depuis quelques années en</li>
-					<li>Californie, où la productivité des producteurs d’amandes, d’avocats et de melons est mise</li> 
-					<li>en péril en raison d’un brusque déclin de la population d’abeilles pollinisatrices.</li>
-					<br>
-					<li>Certes, il existe des marchés pour le bois, le blé et les autres produits cultivés, mais il n’y a pas de marché pour la régulation</li>
-					<li>de l’eau par exemple. Effectivement, les bénéfices de ce service sont multiples : les systèmes fluviaux apportent de l’eau douce, de</li>
-					<li>l’énergie et des sites propices aux loisirs. Les zones humides littorales, elles, filtrent les pollutions, atténuent les effets des</li>
-					<li>inondations et sont des sites de reproduction indispensables aux pêcheries.</li>
-					<br>
-					<li>La quantité et la qualité des SE se dégradent à grande vitesse sous l’effet des activités humaines (15 des 24</li>
-					<li>services écosystémiques évalués dans l’étude se sont détériorés au cours du dernier demi-siècle) et si</li>
-					<li>  l’on ne s’en préoccupe pas, les conséquences seront catastrophiques.</li>
-				 	<br>
-				 	<li>Grâce à l’outil de diagnostic, nous vous proposons d’évaluer :</li>
-					<br>
-					<ul>
-					<li>L’importance des SE sur les activités de l’organisation (interdépendances)</li>
-					<li>Le type d’interdépendance entre l’organisation et la biodiversité (dépendances et impacts)</li>
-					<li>Si les SE donnent lieu à des transactions monétaires.</li>
-					<li>Les risques et opportunités de l’organisation liés à la biodiversité. »</li>
-					</ul>
-				</ul>
+								
+L’organisation comme un système : Pour étudier les interdépendances d’une organisation avec la biodiversité et les services écosystémiques, il est important de la considérer comme un système simplifié. Le système permet de représenter les différentes entités de l’organisation, et notamment, les flux économiques de la ou des chaines d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet également d’identifier les intrants (matière première issue des écosystèmes) et sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).
+<br><br>
+Déterminer les limites de chaque évaluation : l’organisation doit se fixer des objectifs réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque composante géographique du système comme une entité distinctes, Ceci permet de faire correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de ses activités.
 				</fieldset>
 
 				<fieldset class="infoList"><legend class="font_legend"><b>Choix du périmètre :</b></legend>
@@ -225,24 +203,11 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
     							</ul>
 							<div class="infoList" id="exampleFour"><br>
 							
-							Considérer le tout comme un système permet de représenter les différentes entités de l’organisation, ainsi que leurs<br>
-							échanges avec les parties prenantes externes (clients, fournisseurs, communautés locales, etc.). Lors de l’évaluation,<br>
-							il est nécessaire de procéder par étapes, car dépendamment de la taille de l’organisation (notamment si ses activités<br>
-							sont diversifiées), l’évaluation pourrait être trop fastidieuse. Il serait très ambitieux de vouloir faire une<br>
-							évaluation sur tous ses aspects en une seule fois. Les données, comme les résultats, seraient difficiles et à obtenir<br>
-							et très complexes à analyser. Fragmenter le système en différentes entités permettra d’y voir plus clair, en faisant<br>
-							correspondre un rapport (une évaluation), à chaque entité de l’entreprise.<br><br>
+							Considérer le tout comme un système permet de représenter les différentes entités de l’organisation, ainsi que leurs échanges avec les parties prenantes externes (clients, fournisseurs, communautés locales, etc.). Lors de l’évaluation, il est nécessaire de procéder par étapes, car dépendamment de la taille de l’organisation (notamment si ses activités sont diversifiées), l’évaluation pourrait être trop fastidieuse. Il serait très ambitieux de vouloir faire une évaluation sur tous ses aspects en une seule fois. Les données, comme les résultats, seraient difficiles et à obtenir et très complexes à analyser. Fragmenter le système en différentes entités permettra d’y voir plus clair, en faisant correspondre un rapport (une évaluation), à chaque entité de l’entreprise.<br><br>
 
-							L’organisation devra donc choisir un périmètre d’évaluation correspondant à un aspect particulier de ses activités et<br>
-							c’est pourquoi il est important de se questionner en premier lieu sur l’objectif de l’évaluation. Il peut s’agir des<br>
-							éléments de la chaine de valeur comme les fournisseurs, une catégorie de fournisseurs ou de clients, mais également<br>
-							d’une installation, d’un site, etc. Bien entendu, il est plus judicieux de choisir un périmètre représentant une<br>
-							grande importance stratégique pour l’entreprise, ou bien un secteur où les interactions avec les écosystèmes sont<br>
-							les plus susceptibles d’être sources de risques ou opportunités.<br><br>
+							L’organisation devra donc choisir un périmètre d’évaluation correspondant à un aspect particulier de ses activités et c’est pourquoi il est important de se questionner en premier lieu sur l’objectif de l’évaluation. Il peut s’agir des éléments de la chaine de valeur comme les fournisseurs, une catégorie de fournisseurs ou de clients, mais également d’une installation, d’un site, etc. Bien entendu, il est plus judicieux de choisir un périmètre représentant une grande importance stratégique pour l’entreprise, ou bien un secteur où les interactions avec les écosystèmes sont les plus susceptibles d’être sources de risques ou opportunités.<br><br>
 
-							À titre d’exemple, BC Hydro a choisi son barrage hydroélectrique de l’île de Vancouver sur le fleuve Campbell comme<br>
-							périmètre de son audit ESR (Ecosystem Services Review) et Rio Tinto a testé l’évaluation ESR sur une mine de cuivre<br>
-							en prospection au Pérou, en amont du projet, au stade d’étude de préfaisabilité. (World Ressources Institure 2008).<br>
+							À titre d’exemple, BC Hydro a choisi son barrage hydroélectrique de l’île de Vancouver sur le fleuve Campbell comme	périmètre de son audit ESR (Ecosystem Services Review) et Rio Tinto a testé l’évaluation ESR sur une mine de cuivre	en prospection au Pérou, en amont du projet, au stade d’étude de préfaisabilité. (World Ressources Institure 2008).<br>
 							</div>
 
 				</fieldset>
@@ -294,7 +259,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								}
 
 								?> 	<!-- Each Report List Item Has its ID as the Report ID Fetched From The Database. -->
-								<li class="ui-state-default" style="width: 400px" value=<?php echo "\"" . $row['adminid'] . "\""; ?> id=<?php echo "\"" . $row['reportid'] . "\""; ?>><?php echo $row['orgname']; echo " - "; echo $row['date']; echo " - " . $viewability; ?></li>
+								<li class="ui-state-default" style="width: 400px" value=<?php echo "\"" . $row['adminid'] . "\""; ?> id=<?php echo "\"" . $row['reportid'] . "\""; ?>><?php echo $row['evalName']; echo " - "; echo $row['date']; echo " - " . $viewability; ?></li>
 								<?php
 							}
 							?>
@@ -302,12 +267,13 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 						<input type="hidden" value="" id="select-resultadmin"> <!-- Stores The Currently Selected Report ID -->
 					</div>  
 					<span></span>
-					<div style="width: 300px; height: 200px; float: left; margin-left: 10px;">
+					<div style="width: 300px; height: 210px; float: left; margin-left: 10px;">
 						<h2>Actions possibles:</h2> <!-- All The Buttons That Are Used By The Admin -->
-						<button id="create_report" name="create_report" style="margin-bottom: 5px">Création d'un nouveau évaluation</button>
-						<button id="delete_report" name="delete_report" style="margin-bottom: 5px">Supprimer un évaluation</button>
-						<button id="view_report" name="view_report" style="margin-bottom: 5px">créer rapport</button>
-						<button id="viewable_report" name="viewable_report" style="margin-bottom: 5px">Changer la visibilité du évaluation</button>
+						<button id="create_report" name="create_report" style="margin-bottom: 5px">Création d'une nouvelle évaluation</button>
+						<button id="edit_report" name="edit_report" style="margin-bottom: 5px">Voir/Modifier l'évaluation</button>
+						<button id="delete_report" name="delete_report" style="margin-bottom: 5px">Supprimer une évaluation</button>
+						<button id="view_report" name="view_report" style="margin-bottom: 5px">Générer un rapport</button>
+						<button id="viewable_report" name="viewable_report" style="margin-bottom: 5px">Changer la visibilité de l'évaluation</button>
 						<br />
 						<img id='ajax' src="http://quebio.ca/testing/Jason/ajax-loader.gif" style="visibility:hidden; margin-left: 100px">
 					</div>
@@ -336,7 +302,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 								}
 								?>
 								<!--populating the selectable list with values fetched from database -->
-								<li class="ui-state-default" style="width: 400px" value=<?php echo "\"" . $row['adminid'] . "\""; ?> id=<?php echo "\"" . $row['reportid'] . "\""; ?>><?php echo $row['orgname']; echo " - "; echo $row['date']; echo " - " . $viewability; ?></li>
+								<li class="ui-state-default" style="width: 400px" value=<?php echo "\"" . $row['adminid'] . "\""; ?> id=<?php echo "\"" . $row['reportid'] . "\""; ?>><?php echo $row['evalName']; echo " - "; echo $row['date']; echo " - " . $viewability; ?></li>
 								<?php
 
 							}
@@ -899,36 +865,19 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					<br>
 					<h4>Nom de l'évaluation</h4><input type="text" name="nameEval" id="nameEval"><br>
 					<h4>Nom de l'organisation qui va être évaluée</h4><input type="text" name="orgEval" id="orgEval"><br>
-					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ? (Objectifs de l’organisation)</h4><br>
+					<h4>Quel(s) est/sont le(s) mandat(s) ou objectif(s) que votre organisation se donne pour cette évaluation ?</h4>
 					<textarea rows="4" cols="50" id="objectiveText"></textarea>
-					<h4>Quelles sont, selon vous les limites de cette évaluation ?</h4><br>
+					<h4>Quelles sont, selon vous les limites de cette évaluation ?</h4>
 					<textarea rows="4" cols="50" id="limitText"></textarea>
-					<h4>Définir le périmètre et déterminer les limites de l’évaluation<br></h4>
-					<textarea rows="4" cols="50" id="defineText"></textarea>
 					<br><br><br>
 					
 					<div id="tabs-3">
   						<ul>
     						<li><a href="#example2">Ce qu’il faut savoir</a></li>
     					</ul>
-						<div id="example2"><br>
-							<b>L’organisation comme un système :</b> Pour étudier les interdépendances d’une organisation<br>
-							avec la biodiversité et les services écosystémiques, il est important de la considérer<br>
-							comme un système simplifié. Le système permet de représenter les différentes entités <br>
-							de l’organisation, et notamment, les flux économiques de la ou des chaines <br>
-							d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet <br>
-							également d’identifier les intrants (matière première issue des écosystèmes) et <br>
-							sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec<br>
-							les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).<br>
-							<br>
-							<b>Déterminer les limites de chaque évaluation :</b> l’organisation doit se fixer des objectifs<br>
-							réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de<br>
-							ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de<br>
-							l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque<br>
-							composante géographique du système comme une entité distinctes, Ceci permet de faire <br>
-							correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation <br>
-							pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de <br>
-							ses activités.<br>
+						<div id="example2"><b>L’organisation comme un système</b> : Pour étudier les interdépendances d’une organisation avec la biodiversité et les services écosystémiques, il est important de la considérer comme un système simplifié. Le système permet de représenter les différentes entités de l’organisation, et notamment, les flux économiques de la ou des chaines d’approvisionnement (flux de matière, énergie, services, etc.). Le système permet également d’identifier les intrants (matière première issue des écosystèmes) et sortants (produits/services, profits/pertes, déchets, pollution etc.) et échanges avec les parties prenantes externes (clients, fournisseurs, communautés locales, etc.).<br><br>
+
+						<b>Déterminer les limites de chaque évaluation</b> : l’organisation doit se fixer des objectifs réalistes : il convient de prendre en compte la taille de l’organisation et la dispersion de ses sites. Il serait ambitieux de vouloir faire une évaluation sur toutes les activités de l’organisation en une seule fois. Nous privilégions une approche modulaire, qui étudie chaque composante géographique du système comme une entité distinctes, Ceci permet de faire correspondre une évaluation à chaque entité géographique de l’entreprise. L’organisation pourra également choisir un périmètre d’évaluation correspondant à un aspect particulier de ses activités.
 						</div>
 					</div>
 
@@ -962,6 +911,7 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 			        <button type="button" id="metabio-clear">Tout effacer</button>
 			        <input type="hidden" name="geography" id="geography">
 			        <div id="map" style="width:800px !important;height:500px !important;margin:10px 0 15px 0;"></div>
+
 					<!--
 					<h4>Comment souhaitez-vous faire apparaitre spatialement le système définit?<br></h4>
 					<input type="radio" name="define" id="define" value=""><b>Indiquer manuellement des points sur une carte.</b> L’opération va générer une entrée et une<br>
@@ -973,34 +923,33 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					  													 		géo référencée par les participants.<br><br><br>
 					-->
 					<h4>Fonction du système</h4>
-					<input type="radio" name="sysFunc" id="sysFunc" value="principales"><b>Principales <br>
-					<input type="radio" name="sysFunc" id="sysFunc" value="secondaires">Secondaires</b> <br><div hidden id="hidden_text"><br><br>
+					<input type="radio" name="sysFunc1" id="sysFunc1" value="principales"><b>Principales <br>
+					<input type="radio" name="sysFunc2" id="sysFunc2" value="secondaires">Secondaires</b> <br><div hidden id="hidden_text"><br><br>
 					<h4>Description</h4>
 					<textarea rows="4" cols="50" id="funcTxt"></textarea><br><br><br>
 					</div><br><br>
 					<h4>La portée de l’évaluation</h4>
-					Le nombre des participants et le niveau d’évaluation vont conditionner la portée du diagnostic<br>
-					et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
+					Le nombre de participants et le niveau d’évaluation vont conditionner la portée du diagnostic et la valeur qui lui sera reconnue autant en interne qu’en externe.<br><br>
 
 					<fieldset><legend><b>Niveau d’évaluation</b></legend>
-					<input type="checkbox" name="niveau" id="niveau1" value="Direction"><b>Direction<br>
-					<input type="checkbox" name="niveau" id="niveau2" value="Interne">Interne<br>
-					<input type="checkbox" name="niveau" id="niveau3" value="Externe">Externe<br>
+					<input type="checkbox" name="niveau1" id="niveau1" value="Direction"><b>Direction<br>
+					<input type="checkbox" name="niveau2" id="niveau2" value="Interne">Interne<br>
+					<input type="checkbox" name="niveau3" id="niveau3" value="Externe">Externe<br>
 					</fieldset>
 					<div id="hideList" hidden>
 					<fieldset><legend><b>Si c'est Externe : parties prenantes identifiées ?</b></legend>
-					<input type="radio" name="externe" id="externe" value="Direction" >Habitants<br>
-					<input type="radio" name="externe" id="externe"value="Interne" >Autre organisation<br>
-					<input type="radio" name="externe" id="externe" value="Externe" >Gouvernement/ Etat<br>
-					<input type="radio" name="externe" id="externe" value="Direction" >Agence de notation<br>
-					<input type="radio" name="externe" id="externe" value="Interne" >ONG<br>
-					<input type="radio" name="externe" id="externe" value="" >Autre<br><br>
-					<input type="text" name="externeInput" id="externeInput" style="width:300px;" disabled>
+					<input type="radio" name="externe" id="externe1" value="habitants" >Habitants<br>
+					<input type="radio" name="externe" id="externe2"value="autre organisation" >Autre organisation<br>
+					<input type="radio" name="externe" id="externe3" value="gouvernement" >Gouvernement/ Etat<br>
+					<input type="radio" name="externe" id="externe4" value="agence" >Agence de notation<br>
+					<input type="radio" name="externe" id="externe5" value="ong" >ONG<br>
+					<input type="radio" name="externe" id="externe6" value="autre" >Autre<br><br>
+					<input type="text" name="externeInput" id="externeInput" style="width:300px;">
 					</fieldset>
 					</div>
-					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  <!-- go to tab 10 -->
+					<button type="button" id="TAB14_BTN_BACK">Précédent</button>  
 					<button type="button" id="TAB14_CREATE_BTN">Créer l'évaluation</button>
-
+					<input type="hidden" name="firstTime" id="firstTime" value=""> <!-- determines wheterh the user wants to edit or create -->
 				</div>
 		
 		<div id="tab17" >
@@ -1191,13 +1140,59 @@ include('/var/www/quebio.ca/misc/dbaminfo.php');
 					echo '<input type="hidden" value="'.$potentialAvg[$counter].'" id="potentialAvg'.$counter.'">';
 					$counter++;
 				}
-
-				mysql_close($con);
 			?>
 			<button type="button" id="insert_adminOp">Insert</button>
 			<input type="hidden" value="" id="modify_report">
 			<input type="hidden" id="numOfOps" name="numOfOps" value="<?php echo $count;?>">		
 		</div>
+		
+		<div id="tab19">
+			<?php 
+				$getReportId = $_REQUEST['reportid'];
+				$query = "SELECT orgname FROM report WHERE reportid = '$getReportId'";
+				$result = mysql_query($query) or die('Error Fetching List From Database.');
+				$fetch=mysql_fetch_array($result);
+				$orgname=$fetch['orgname'];
+
+				$query = "SELECT objective, limits, circonscription, perimeter, represent, fonction, function_text, pre_circonscription FROM outil_parameter WHERE r_id = '$getReportId'";
+				$result = mysql_query($query) or die('Error Fetching List From Database.');
+				$fetch=mysql_fetch_array($result);
+				$objective=$fetch['objective'];
+				$limits=$fetch['limits'];
+				$circonscription=$fetch['circonscription'];
+				$represent=$fetch['represent'];
+				$fonction=$fetch['fonction'];
+				$function_text=$fetch['function_text'];
+				$pre_circonscription=$fetch['pre_circonscription'];
+				$perimeter=$fetch['perimeter'];
+			?>	
+			<fieldset class="infoList"><legend class="font_legend"><b>Nom de l'organisation évaluée</b></legend>
+					<?php echo $orgname; ?>
+			</fieldset>
+
+			<fieldset  class="infoList"><legend class="font_legend"><b>Objectif(s)</b></legend>
+					<?php echo $objective;  ?>
+			</fieldset><br>
+
+			<fieldset class="infoList"><legend class="font_legend"><b>Limites</b></legend>
+					<?php echo $limits; ?>
+			</fieldset><br>
+
+			<fieldset  class="infoList"><legend class="font_legend"><b>Circonscription du périmètre d’analyse: <?php echo $pre_circonscription.', '.$circonscription; ?></b></legend>
+					<?php echo $represent;  ?>
+			</fieldset><br>
+
+			<input type="hidden" name="geography1" id="geography1" value='<?php echo $perimeter;?>'>
+			<div id="map1" style="width:800px !important;height:500px !important;margin:10px 0 15px 0;"></div>        
+
+			<fieldset  class="infoList"><legend class="font_legend"><b>fonction: <?php echo $fonction; ?></b></legend>
+					<?php echo $function_text;  ?>
+			</fieldset><br>
+
+		</div>
+		<?php 
+			mysql_close($con);
+		?>
 	</div>	
 		
 		<!-- Hidden Container To Generate The Highchart Before Exporting it to The Server. -->
