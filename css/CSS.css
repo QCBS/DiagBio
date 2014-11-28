@@ -226,140 +226,6 @@ body{
 ol[id^= 'selectable'] .ui-selecting { background: #FECA40;}
 ol[id^= 'selectable'] .ui-selected { background: #F39814; color: white;}
 
-
-/*
-
-.ui-selecting { background: #FECA40; }
-.ui-selected { background: #F39814; color: white; }
-
-
-
-#selectable .ui-selecting { background: #FECA40; }
-#selectable .ui-selected { background: #F39814; color: white; }
-
-#selectable1 .ui-selecting { background: #FECA40;}
-#selectable1 .ui-selected { background: #F39814; color: white;}
-
-#selectable2 .ui-selecting { background: #FECA40; }
-#selectable2 .ui-selected { background: #F39814; color: white; }
-
-#selectable3 .ui-selecting { background: #FECA40; }
-#selectable3 .ui-selected { background: #F39814; color: white; }
-
-#selectable4 .ui-selecting { background: #FECA40; }
-#selectable4 .ui-selected { background: #F39814; color: white; }
-
-#selectable5 .ui-selecting { background: #FECA40; }
-#selectable5 .ui-selected { background: #F39814; color: white; }
-
-#selectable6 .ui-selecting { background: #FECA40; }
-#selectable6 .ui-selected { background: #F39814; color: white; }
-
-#selectable7 .ui-selecting { background: #FECA40; }
-#selectable7 .ui-selected { background: #F39814; color: white; }
-
-#selectable8 .ui-selecting { background: #FECA40; }
-#selectable8 .ui-selected { background: #F39814; color: white; }
-
-#selectable9 .ui-selecting { background: #FECA40; }
-#selectable9 .ui-selected { background: #F39814; color: white; }
-
-#selectable10 .ui-selecting { background: #FECA40; }
-#selectable10 .ui-selected { background: #F39814; color: white; }
-
-#selectable11 .ui-selecting { background: #FECA40; }
-#selectable11 .ui-selected { background: #F39814; color: white; }
-
-#selectable12 .ui-selecting { background: #FECA40; }
-#selectable12 .ui-selected { background: #F39814; color: white; }
-
-#selectable13 .ui-selecting { background: #FECA40; }
-#selectable13 .ui-selected { background: #F39814; color: white; }
-
-#selectable14 .ui-selecting { background: #FECA40; }
-#selectable14 .ui-selected { background: #F39814; color: white; }
-
-#selectable15 .ui-selecting { background: #FECA40; }
-#selectable15 .ui-selected { background: #F39814; color: white; }
-
-#selectable16 .ui-selecting { background: #FECA40; }
-#selectable16 .ui-selected { background: #F39814; color: white; }
-
-#selectable17 .ui-selecting { background: #FECA40; }
-#selectable17 .ui-selected { background: #F39814; color: white; }
-
-#selectable18 .ui-selecting { background: #FECA40; }
-#selectable18 .ui-selected { background: #F39814; color: white; }
-
-#selectable19 .ui-selecting { background: #FECA40; }
-#selectable19 .ui-selected { background: #F39814; color: white; }
-
-#selectable20 .ui-selecting { background: #FECA40; }
-#selectable20 .ui-selected { background: #F39814; color: white; }
-
-#selectable21 .ui-selecting { background: #FECA40; }
-#selectable21 .ui-selected { background: #F39814; color: white; }
-
-#selectable22 .ui-selecting { background: #FECA40; }
-#selectable22 .ui-selected { background: #F39814; color: white; }
-
-#selectable23 .ui-selecting { background: #FECA40; }
-#selectable23 .ui-selected { background: #F39814; color: white; }
-
-#selectable24 .ui-selecting { background: #FECA40; }
-#selectable24 .ui-selected { background: #F39814; color: white; }
-
-#selectable25 .ui-selecting { background: #FECA40; }
-#selectable25 .ui-selected { background: #F39814; color: white; }
-
-#selectable26 .ui-selecting { background: #FECA40; }
-#selectable26 .ui-selected { background: #F39814; color: white; }
-
-#selectable27 .ui-selecting { background: #FECA40; }
-#selectable27 .ui-selected { background: #F39814; color: white; }
-
-#selectable28 .ui-selecting { background: #FECA40; }
-#selectable28 .ui-selected { background: #F39814; color: white; }
-
-#selectable29 .ui-selecting { background: #FECA40; }
-#selectable29 .ui-selected { background: #F39814; color: white; }
-
-#selectable30 .ui-selecting { background: #FECA40; }
-#selectable30 .ui-selected { background: #F39814; color: white; }
-
-#selectable31 .ui-selecting { background: #FECA40; }
-#selectable31 .ui-selected { background: #F39814; color: white; }
-
-#selectable32 .ui-selecting { background: #FECA40; }
-#selectable32 .ui-selected { background: #F39814; color: white; }
-
-#selectable33 .ui-selecting { background: #FECA40; }
-#selectable33 .ui-selected { background: #F39814; color: white; }
-
-#selectable34 .ui-selecting { background: #FECA40; }
-#selectable34 .ui-selected { background: #F39814; color: white; }
-
-#selectable35 .ui-selecting { background: #FECA40; }
-#selectable35 .ui-selected { background: #F39814; color: white; }
-
-#selectable36 .ui-selecting { background: #FECA40; }
-#selectable36 .ui-selected { background: #F39814; color: white; }
-
-#selectable37 .ui-selecting { background: #FECA40; }
-#selectable37 .ui-selected { background: #F39814; color: white; }
-
-#selectable38 .ui-selecting { background: #FECA40; }
-#selectable38 .ui-selected { background: #F39814; color: white; }
-
-#selectable39 .ui-selecting { background: #FECA40; }
-#selectable39 .ui-selected { background: #F39814; color: white; }
-
-#selectable40 .ui-selecting { background: #FECA40; }
-#selectable40 .ui-selected { background: #F39814; color: white; }
-
-#selectable41 .ui-selecting { background: #FECA40; }
-#selectable41 .ui-selected { background: #F39814; color: white; }
-*/
 #feedback { font-size: 1.4em; }
 
 #selectableadmin .ui-selecting { background: #FECA40; }
@@ -378,3 +244,28 @@ ol[id^= 'selectable'] .ui-selected { background: #F39814; color: white;}
 .centreBTN1{text-align: center; width: 490px;}
 .centreBTN2{text-align: center; width: 700px;}
 .centreBTN3{text-align: center; width: 800px;}
+
+#tab14 h4{
+	padding-bottom:2px;
+	margin:15px 0 2px 0;
+}
+
+#example2{
+	font-weight:normal;
+}
+
+#map img, #map1 img{
+	background: none !important;
+	background-color: transparent !important;
+	border: none !important;
+	 max-width: none;
+}
+.gm-style img { max-width: none; }
+.gm-style label { width: auto; display: inline; }
+
+#map, #map1 {
+	background: none !important;
+	background-color: transparent !important;
+	border: none !important;
+	max-width: none;
+}

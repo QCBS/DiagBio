@@ -1,4 +1,6 @@
 <?php
+	header('content-type: application/json; charset=utf-8');
+	header("access-control-allow-origin: *");
 	include('/var/www/quebio.ca/misc/dbaminfo.php');
 	$path = $_SERVER['DOCUMENT_ROOT'];
 	chdir($path);
@@ -10,6 +12,7 @@
 
 	$adminid = $_POST['adminid'];
 	$reportid = $_POST['reportid'];
+
 
 	$account = user_load($adminid); // Load Themporary User with "Administration" Role.
 	$profile = profile2_load_by_user($account); // Load The Profile2 Data Associated to The User.
@@ -35,18 +38,20 @@
 	mysql_query("SET NAMES 'utf8'");
 	mysql_query("SET CHARACTER SET 'utf8'");
 	$query = "SELECT Direction, Interne, Externe FROM report WHERE reportid = '$reportid'";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$participant = mysql_fetch_row($results);
 
-	$query = "SELECT objective, limits, define, circonscription, represent, fonction, niveau FROM outil_parameter WHERE r_id = '$reportid'";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	//$query = "SELECT objective, limits, define, circonscription, represent, fonction, niveau FROM outil_parameter WHERE r_id = '$reportid'";
+	# Modified by Guillaume. define and niveau are missing fields
+	$query = "SELECT objective, limits, circonscription, represent, fonction FROM outil_parameter WHERE r_id = '$reportid'";
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$parameter = mysql_fetch_row($results);
 
 	$avg_impct_size=1;
 	$c_names = array();
 	$average_impact_levels = array();
 	$query = "SELECT c_name, avg(average_impact_level) as average_impact FROM interdependances WHERE r_id = '$reportid' AND average_impact_level IS NOT NULL GROUP BY c_name";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
 		$c_names[]=$ob['c_name'];
 		$average_impact_levels[]=$ob['average_impact'];
@@ -57,7 +62,7 @@
 	$potential_impacts = array();
 	$pot_c_names = array();
 	$query = "SELECT c_name, avg(potential_impact_level) as potential_impact FROM interdependances WHERE r_id = '$reportid' AND potential_impact_level IS NOT NULL GROUP BY c_name";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
 		$potential_impacts[] = $ob['potential_impact'];
 	    //$c_names[] = $ob['c_name'];
@@ -69,7 +74,7 @@
 	$avg_deps = array();
 	$avg_dep_c_names = array();
 	$query = "SELECT c_name, avg(average_dependance_level) as average_dependance FROM interdependances WHERE r_id = '$reportid' AND average_dependance_level IS NOT NULL GROUP BY c_name";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
 		$avg_deps[] = $ob['average_dependance'];
 	    //$c_names[] = $ob['c_name'];
@@ -81,7 +86,7 @@
 	$potential_deps = array();
 	$pot_dep_c_names = array();
 	$query = "SELECT c_name, avg(potential_dependance_level) as potential_dependance FROM interdependances WHERE r_id = '$reportid' AND potential_dependance_level IS NOT NULL GROUP BY c_name";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
 		$potential_deps[] = $ob['potential_dependance'];
 	    //$c_names[] = $ob['c_name'];
@@ -96,7 +101,7 @@ $se_categories_avgs[] = array();
 $count = 1;
 while($count < 12){
 	$query = "SELECT count( distinct c_id) as se_average FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count'";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
 	  
 	    $se_categories_avgs[] = $ob['se_average'];
@@ -109,14 +114,14 @@ $se_categories[] = array();
 $count = 1;
 while($count < 12){
 	$query = "SELECT se_name FROM services_ecologiques WHERE se_id = '$count'";  //get the x-axis values for the average impacts high charts
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
   		$se_categories[] = $ob['se_name'];}
   	$count++;
 }
 
 $query = "SELECT count(distinct u_id) FROM interdependances WHERE r_id = '$reportid'";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $totalPpl = mysql_fetch_row($results);
 
 //MONEY CHART DATA
@@ -125,7 +130,7 @@ $count = 1;
 $se_money_pos = [];
 while ($count < 12) {
 	$query = "SELECT count(distinct u_id) as se_money FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND gotMoney = 'Non'";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
   		$se_money_pos[] = $ob['se_money'];}
   	$count++;
@@ -135,7 +140,7 @@ $count = 1;
 $se_money_neg = [];
 while ($count < 12) {
 	$query = "SELECT count(distinct u_id) as se_money FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND gotMoney = 'Oui'";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	while($ob=mysql_fetch_array($results)){
   		$se_money_neg[] = $ob['se_money'];}
   	$count++;
@@ -153,7 +158,7 @@ $list_avg_dep = array();
 $list_pot_impact = array();
 $list_avg_impact = array();
 $query = "SELECT se_name, c_name, example, dependance, impact, niveau_impact, niveau_dependance, potential_dependance_level as pot_dep, average_dependance_level as avg_dep, average_impact_level as avg_impact, potential_impact_level as pot_impact FROM interdependances WHERE r_id = '$reportid' ";  
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$list_se_name[] = $ob['se_name'];
 	$list_c_name[] = $ob['c_name'];
@@ -177,7 +182,7 @@ $list4and5_dependance = [];
 $list4and5_impact = [];
 $list4and5_size = 0;
 $query = "SELECT se_name, c_name, example, dependance, impact FROM interdependances WHERE r_id = '$reportid' AND (niveau_dependance = 4 or niveau_dependance = 5 or niveau_impact = 4 or niveau_impact = 5)";  
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	if ($ob['dependance'] == 'null') {
 		$ob['dependance'] = '';
@@ -194,39 +199,39 @@ while($ob=mysql_fetch_array($results)){
 }
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND moneyType = 'Taxe'";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $taxMoney = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND moneyType = 'Paiement pour services environnementaux'";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $envirMoney = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND moneyType = 'Redevance'";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $redMoney = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND moneyType != 'Taxe' AND moneyType != 'Redevance' AND moneyType != 'Paiement pour services environnementaux'";  
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $autreMoney = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND (process = 'Les finances' or secondProcess = 'Les finances')";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $finance_pro = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND (process = 'La gestion des opérations' or secondProcess = 'La gestion des opérations')";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $mar_pro = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND (process = 'Les opérations quotidiennes' or secondProcess = 'Les opérations quotidiennes')";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $rep_pro = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND (process = 'Les ressources humaines' or secondProcess = 'Les ressources humaines')";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $op_pro = mysql_fetch_row($results);
 
 $query = "SELECT count(distinct example) FROM interdependances WHERE r_id = '$reportid' AND (process = 'Le marketing' or secondProcess = 'Le marketing')";  //get the x-axis values for the average impacts high charts
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 $rule_pro = mysql_fetch_row($results);
 
 $count = 1;
@@ -237,23 +242,23 @@ $operation_o = [];
 $operation_ru = [];
 while ($count < 12) {
 	$query = "SELECT count(distinct u_id) as operation_f FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND (process = 'Les finances' or secondProcess = 'Les finances')";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$operation_f[] = mysql_fetch_row($results);
 
 	$query = "SELECT count(distinct u_id) as operation_m FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND (process = 'La gestion des opérations' or secondProcess = 'La gestion des opérations')";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$operation_m[] = mysql_fetch_row($results);
 
 	$query = "SELECT count(distinct u_id) as operation_r FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND (process = 'Les opérations quotidiennes' or secondProcess = 'Les opérations quotidiennes')";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$operation_r[] = mysql_fetch_row($results);
 
 	$query = "SELECT count(distinct u_id) as operation_o FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND (process = 'Les ressources humaines' or secondProcess = 'Les ressources humaines')";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$operation_o[] = mysql_fetch_row($results);
 
 	$query = "SELECT count(distinct u_id) as operation_ru FROM interdependances WHERE r_id = '$reportid' AND se_id = '$count' AND (process = 'Le marketing' or secondProcess = 'Le marketing')";
-	$results = mysql_query($query) or die('Error Fetching List From Database.');
+	$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 	$operation_ru[] = mysql_fetch_row($results);
 
   	$count++;
@@ -266,7 +271,7 @@ $phones_D = [];
 $groups = [];
 $niveau_size = 0;
 $query = "SELECT name, last_name, email, phone, groupType FROM outil_contact_info WHERE r_id = '$reportid'";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$names_D[] = $ob['name'];
 	$last_names_D[] = $ob['last_name'];
@@ -284,7 +289,7 @@ $IA_size = 0;
 $paymentsIA = [];
 $query = "SELECT example, opinion, opinion_ids, impact_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND impact = 'Un impact avéré' AND (impact_niveau = 4 OR impact_niveau = 5)";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$examplesIA[] = $ob['example'];
 	$opinionsIA[] = $ob['opinion'];
@@ -302,7 +307,7 @@ $paymentsDA = [];
 $DA_size = 0;
 $query = "SELECT example, opinion, opinion_ids, dependance_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND dependance = 'Une dépendance avérée' AND (dependance_niveau = 4 OR dependance_niveau = 5)";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$examplesDA[] = $ob['example'];
 	$opinionsDA[] = $ob['opinion'];
@@ -321,7 +326,7 @@ $paymentsIP = [];
 $IP_size = 0;
 $query = "SELECT example, opinion, opinion_ids, impact_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND impact = 'Un impact potentiel' AND (impact_niveau = 4 OR impact_niveau = 5)";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$examplesIP[] = $ob['example'];
 	$opinionsIP[] = $ob['opinion'];
@@ -339,7 +344,7 @@ $paymentsDP = [];
 $DP_size = 0; 
 $query = "SELECT example, opinion, opinion_ids, dependance_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND dependance = 'Une dépendance potentielle' AND (dependance_niveau = 4 OR dependance_niveau = 5)";
-$results = mysql_query($query) or die('Error Fetching List From Database.');
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);
 while($ob=mysql_fetch_array($results)){
 	$examplesDP[] = $ob['example'];
 	$opinionsDP[] = $ob['opinion'];
@@ -356,7 +361,7 @@ $payments = [];
 $money_size = 0;
 $query = "SELECT example, dependance_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND dependance = 'Une dépendance avérée' AND (dependance_niveau = 5 OR dependance_niveau = 4) GROUP BY example ORDER BY example";
-$results = mysql_query($query) or die('Error Fetching List From Database.');				
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);				
 while ($row = mysql_fetch_assoc($results)) {
 	$money_examples[] = $row['example'];
 	$levels[] = $row['dependance_niveau'];
@@ -366,7 +371,7 @@ while ($row = mysql_fetch_assoc($results)) {
 
 $query = "SELECT example, impact_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND impact = 'Un impact avéré' AND (impact_niveau = 4  OR impact_niveau = 5) GROUP BY example ORDER BY example";
-$results = mysql_query($query) or die('Error Fetching List From Database.');				
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);				
 while ($row = mysql_fetch_assoc($results)) {
 	$money_examples[] = $row['example'];
 	$levels[] = $row['impact_niveau'];
@@ -380,7 +385,7 @@ $payments2 = [];
 $money_size2 = 0;
 $query = "SELECT example, dependance_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND dependance = 'Une dépendance potentielle' AND (dependance_niveau = 5 OR dependance_niveau = 4) GROUP BY example ORDER BY example";
-$results = mysql_query($query) or die('Error Fetching List From Database.');				
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);				
 while ($row = mysql_fetch_assoc($results)) {
 	$money_examples2[] = $row['example'];
 	$levels2[] = $row['dependance_niveau'];
@@ -390,7 +395,7 @@ while ($row = mysql_fetch_assoc($results)) {
 
 $query = "SELECT example, impact_niveau, payment FROM outil_admin_opinions WHERE 
 r_id = '$reportid' AND impact = 'Un impact potentielle' AND (impact_niveau = 4  OR impact_niveau = 5) GROUP BY example ORDER BY example";
-$results = mysql_query($query) or die('Error Fetching List From Database.');				
+$results = mysql_query($query) or die('Error Fetching List From Database.'.$query);				
 while ($row = mysql_fetch_assoc($results)) {
 	$money_examples2[] = $row['example'];
 	$levels2[] = $row['impact_niveau'];
@@ -442,17 +447,17 @@ mysql_close($con);
 		"organisationAddresse" => $organisationAddresse[0]['value'],
 		"organisationVille" => $organisationVille[0]['value'],
 		"organisationCP" => $organisationCP[0]['value'],
-		"motivation" => $motivation[o]['value'],
+		"motivation" => $motivation[0]['value'],
 		"direction" => $participant[0],
 		"interne" => $participant[1],
 		"externe" => $participant[2],
 		"objective" => $parameter[0],
 		"limit" => $parameter[1],
-		"define" => $parameter[2],
-		"circonscription" => $parameter[3],
-		"represent" => $parameter[4],
-		"fonction" => $parameter[5],
-		"niveau" => $parameter[6],
+		//"define" => $parameter[2],
+		"circonscription" => $parameter[2],
+		"represent" => $parameter[3],
+		"fonction" => $parameter[4],
+		//"niveau" => $parameter[5],
 		"totalPpl" => $totalPpl,
 		"se_money_neg" => $se_money_neg,
 		"se_money_pos" => $se_money_pos,

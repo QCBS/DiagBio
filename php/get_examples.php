@@ -1,4 +1,5 @@
 <?php
+header("access-control-allow-origin: *");
 include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 $con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');

@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 $SVGBF=$_POST['chartBF'];
 $SVGBS=$_POST['chartBS'];
 $SVGSF=$_POST['chartSF'];

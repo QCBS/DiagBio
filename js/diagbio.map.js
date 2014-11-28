@@ -17,6 +17,7 @@
     },
 
     createMap: function(mapname) {
+      var self=this;
       this.map_center = new google.maps.LatLng(50, -73);
       this.map = new google.maps.Map($("#"+mapname)[0], {
         zoom: 5,
