@@ -1380,10 +1380,9 @@ function admin_tab() {
 			if ( reportID=="" || reportID==null ){ // Make Sure a Valid Report ID is Available.
 				missingFields += "No report were selected.\n";
 			}
-
+			$('#adminajax').html("<img src='/evaluationbse/images/ajax-loader.gif' style='margin:0 auto;display:block;background-color:#fff;border:0px;'>");
 			if ( missingFields=="" ){
 				$.post("http://quebio.ca/evaluationbse/php/getAdminInfo.php", {adminid: adminID, reportid: reportID}, function(data) { 
-					alert(data);
 					//$('#ajax').style.visibility = 'visible';
 					//var adminInfo = JSON.parse(data);
 					var adminInfo = data;
@@ -2209,14 +2208,14 @@ function admin_tab() {
 		var svgOPS = chartOPS.getSVG();
 
 		var data = ({chartBF: svgBF, chartBS: svgBS, chartSF: svgSF, chartSS: svgSS, chartAR: svgAR, chartMO: svgMO, chartMD: svgMD, chartOP: svgOP, chartOPS: svgOPS});
-
+		var reportID = $('#the_report').val();
 		$.ajax({
 			type: 'POST',
 			data: data,
 			url: 'http://quebio.ca/evaluationbse/php/hcexport.php',
 			async: false,
 			success: function(data){
-		 	$.post("http://quebio.ca/evaluationbse/php/report.php", { reportInfo: adminInfo}, function(data) { $('#ajax').style.visibility = 'hidden'; window.location.replace("http://quebio.ca/evaluationbse/php/rapport.pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
+		 	$.post("http://quebio.ca/evaluationbse/php/report.php", {reportID:reportID, reportInfo: adminInfo}, function(data) { window.location.replace("http://quebio.ca/evaluationbse/pdf/rapport_"+reportID+".pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
 		 }
 		});	
 		});
@@ -2226,7 +2225,7 @@ function admin_tab() {
 			}
 		});
 		$('#viewable_report').button().click(function() { // Create View Switching Button.
-			var reportID = $('#select-resultadmin').value;
+			var reportID = $('#the_report').val();
 			var missingFields = "";
 
 			if ( reportID=="" || reportID=="" ){ // Make Sure a Valid Report ID is Available.
@@ -2257,7 +2256,7 @@ function admin_tab() {
 			}
 			if ( missingFields=="" ){
 				// Call The Email.php to Send Out The E-mail Invitations Including all The Information We Appended.
-				$.post("http://quebio.ca/evaluationbse/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
+				$.post("http://quebio.ca/evaluationbse/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) {});
 			}
 			else{
 				alert(missingFields);// Alert User Regarding The Missing Report ID or E-mail Addresses.
@@ -2361,17 +2360,17 @@ function create_evaluation_tab() {
 
 			if (externe == '' && $('input[name=niveau3]:checked').val())  //is the textbox externeInput empty?
 			{
-				alert('Aucune valeur choisie ou texte entré!');
+				alert('Aucune valeur choisie ou texte entrée!');
 			}
 			else{
-				var reportID = $('#select-resultadmin').value;
+				var reportID = $('#the_report').value;
 					var firstTime = $('#firstTime').val();  //determines whether the user is editing or creating an evaluation
 					goToPrevTab();
 					AdID=$('#AdminID').val();  //gets the administrator's ID
 					var organisationName = $('#orgEval').val(); // Get The Organisation Name
 					//gets the file through the url, the next paramteer is the data being sent in for the file to se and then finally the last paramter
 					//is doing soemthing in a function as a response, in this case it would be calling another ajax post  
-					$.post("http://www.quebio.ca/evaluationbse/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val(), createOrEdit: firstTime, reportid: reportID}, function(data) {alert(data);
+					$.post("http://www.quebio.ca/evaluationbse/php/rapport.php", { orgsname: organisationName, adminid: AdID, userid: $('#the_user').val(), nameEval: $('#nameEval').val(), createOrEdit: firstTime, reportid: reportID}, function(data) {
 							//var insertData = JSON.parse(data);
 							//alert(insertData);
 							$.post("http://www.quebio.ca/evaluationbse/php/insertParameter.php", { objectiveText: $('#objectiveText').val(), limitText: $('#limitText').val(), 

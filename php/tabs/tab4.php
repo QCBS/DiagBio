@@ -42,7 +42,7 @@ while ($row = mysql_fetch_assoc($results)) { // Display The Proper View Setting.
 	<button id="view_report" name="view_report" style="margin-bottom: 5px">Générer un rapport</button>
 	<button id="viewable_report" name="viewable_report" style="margin-bottom: 5px">Changer la visibilité de l'évaluation</button>
 	<br />
-	<img id='ajax' src="http://quebio.ca/testing/Jason/ajax-loader.gif" style="visibility:hidden; margin-left: 100px">
+	<div id="adminajax"><div>
 </div>
 
 <!-- Text Boxes and Button To Send E-mails -->

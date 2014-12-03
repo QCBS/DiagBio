@@ -5,6 +5,7 @@ require_once('tcpdf/tcpdf.php');
 include('/var/www/quebio.ca/misc/dbaminfo.php');
 
 $info = $_POST['reportInfo'];
+$reportID=$_POST['reportID'];
 
 if($info['represent'] == '')
 {
@@ -100,7 +101,7 @@ $pdf->AddPage();
 $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
 
 //getting data from the database
-$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
+$con = mysql_connect($mys_host, $mys_username, $mys_pass);
 
 mysql_select_db($mys_base, $con);
 mysql_query("SET NAMES 'utf8");
@@ -161,7 +162,7 @@ Graphique : Présente l’importance relative de toutes les interdépendances pa
 aux 11 classes de services écologiques. La moyenne décrit un niveau d’importance de
 la dépendance et l’écart type le niveau de consensus.<br>
 
-<img src="http://quebio.ca/testing/Jason/php/AR.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/AR.png" height="500" width="500">
 <br><br><r><br><br><br><br>
 <h5>I.3.1.  Les impacts avérés</h5>
 
@@ -169,7 +170,7 @@ Graphique : Présente l’importance relative des impacts avérés par rapport a
 classes de services écologiques. La moyenne décrit un niveau de sévérité de 
 l’impact et l’écart type le niveau de consensus.<br>
 
-<img src="http://quebio.ca/testing/Jason/php/BF.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/BF.png" height="500" width="500">
 <br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br>
 
@@ -179,7 +180,7 @@ Graphique : Présente l’importance relative des impacts potentiels par rapport
 11 classes de services écologiques. La moyenne décrit un niveau se sévérité 
 potentielle de l’impact et l’écart type le niveau de consensus.<br><br>
 
-<img src="http://quebio.ca/testing/Jason/php/BS.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/BS.png" height="500" width="500">
 <br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br>
 
@@ -190,7 +191,7 @@ Présente l’importance relative de toutes les dépendances avérées par rappo
 aux 11 classes de services écologiques. La moyenne décrit un niveau 
 d’importance de la dépendance avérée et l’écart type le niveau de consensus.<br><br>
 
-<img src="http://quebio.ca/testing/Jason/php/SF.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/SF.png" height="500" width="500">
 <br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br>
 
@@ -200,7 +201,7 @@ Graphique : Présente l’importance relative de toutes les dépendances potenti
 aux 11 classes de services écologiques. La moyenne décrit un niveau d’importance de la 
 dépendance potentielle et l’écart type le niveau de consensus.<br><bR>
 
-<img src="http://quebio.ca/testing/Jason/php/SS.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/SS.png" height="500" width="500">
 <br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br>
 
@@ -209,9 +210,9 @@ dépendance potentielle et l’écart type le niveau de consensus.<br><bR>
 Graphique : Présente l’importance relative des paiements pour bénéficier des SE par rapport aux
 11 classes de services écologiques.<br><br>
 
-<img src="http://quebio.ca/testing/Jason/php/MO.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/MO.png" height="500" width="500">
 
-<img src="http://quebio.ca/testing/Jason/php/MD.png" height="500" width="500">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/MD.png" height="500" width="500">
 <br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br><br>
 
@@ -227,14 +228,14 @@ En termes de fonction, je propose la liste suivante :<br>
 Graphique :<br>
 Présente le nombre d’IDBSE qui ont un impact sur les fonctions de l’organisation<br><br>
 
-<img src="http://quebio.ca/testing/Jason/php/OP.png" height="500" width="500"><br>
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/OP.png" height="500" width="500"><br>
 <br><br><br>
 Graphique : Présente l’importance relative de toutes les fonctions de l’organisation
 touchées par les interdépendances par rapport aux 11 classes de services écologiques.
 Les barres barres vont montrer l’importance relative des opérations touchees dans 
 chaque classe de service écologique.<br><br>
 
-<img src="http://quebio.ca/testing/Jason/php/OPS.png" height="800" width="600">
+<img src="http://quebio.ca/evaluationbse/pdf/tmp/OPS.png" height="800" width="600">
 <br>
 <h4>4. Les interdépendances aux BSE prioritaires</h4>
 
@@ -540,7 +541,7 @@ $pdf->writeHTMLCell($w=0, $h=0, $x='', $y='', $html, $border=0, $ln=1, $fill=0, 
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('rapport.pdf', 'F');
+$pdf->Output('../pdf/rapport_'.$reportID.'.pdf', 'F');
 
 //============================================================+
 // END OF FILE
