@@ -38,33 +38,6 @@ function getRole($data){
 	}
 }
 
-function mymodule_form_alter(&$form, &$form_state, $form_id){
-	if ($form_id == "user_register_form") {
-	  $form['account']['name']['#title'] = t('Full name');
-
-	  $form['city'] = array(
-	    '#type' => 'textfield', 
-	    '#title' => t('City'),
-	    '#size' => 15,
-	    '#required' => TRUE,
-	  );
-
-	  $form['state'] = array(
-	    '#type' => 'textfield', 
-	    '#title' => t('State'),
-	    '#size' => 15,
-	    '#required' => TRUE,
-	   );
-
-	   $form['#submit'][] = 'hook_from_alter_submit';
-	}
-
-}
-
-function mymodule_form_alter_submit($form, &$form_state) {
-	$city = $form_state['values']['city'];
-	$state = $form_state['values']['state'];
-}
 
 global $user;
 $account = user_load($user->uid); // Load Temporary User with "Administration" Role.

@@ -41,10 +41,11 @@ header("access-control-allow-origin: *");
 
 		$query = mysql_query("DELETE FROM report WHERE reportid = '$reportid'");
 		$query2 = mysql_query("DELETE FROM outil_parameter WHERE r_id = '$reportid'");
-		$query3 = mysql_query("DELETE FROM user_ids WHERE r_id = '$reportid'");
+		$query3 = mysql_query("DELETE FROM outil_user_evaluation WHERE r_id = '$reportid'");
 		$query4 = mysql_query("DELETE FROM interdependances WHERE r_id = '$reportid'");
 		$query5 = mysql_query("DELETE FROM outil_contact_info WHERE r_id = '$reportid'");
-		if($query && $query2 && $query3 && $query4 && $query5){ echo "Le rapport a été supprimer avec succès."; }
+		$query6 = mysql_query("DELETE FROM outil_invitations WHERE evaluation = '$reportid'");
+		if($query && $query2 && $query3 && $query4 && $query5 && $query6){ echo "Le rapport a été supprimer avec succès."; }
 		else{ echo "Une erreur s'est produite!"; }
 	}
 	else{ // Creating/Editing Report.
@@ -67,7 +68,7 @@ header("access-control-allow-origin: *");
 			$reportid = uniqid('QCBS'); // Generate Report ID.
 			
 			$query = mysql_query("INSERT INTO report VALUES ( '$orgname', '$reportid', CURDATE(), '$adminid', 1, 0, 0, 0, '$evalName')");
-			$query2 = mysql_query("INSERT INTO user_ids VALUES ( '$userid', '$reportid')");
+			$query2 = mysql_query("INSERT INTO outil_user_evaluation VALUES ( '$userid', '$reportid')");
 		
 			if($query && $query2){ echo $reportid; }  //the report was successfully created
 			else{ echo "Une erreur s'est produite!"; }

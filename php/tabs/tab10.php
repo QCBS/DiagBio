@@ -27,7 +27,7 @@
 	}
 	echo '</ol>';
 	echo  '</div>';
-	?>
+?>
 	
 	
 <?php
@@ -49,8 +49,8 @@
 	}
 	echo '</ol>';
 	echo  '</div>';
-	?>	
-	<br><br>
+?>
+<br><br>
 <input type="hidden" id="riskOrOpp" name="riskOrOpp" value="">
 <input type="hidden" id="riskOrOpp2" name="riskOrOpp2" value="">
 <button type="button" id="LAST_BACK_BTN">Précédent</button>  <!-- go to tab 9 -->

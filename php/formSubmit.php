@@ -1,19 +1,14 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-	ini_set('display_errors');
-	include('/var/www/quebio.ca/misc/dbaminfo.php');
-
-	$path = $_SERVER['DOCUMENT_ROOT'];
-	chdir($path);
-	define('DRUPAL_ROOT', getcwd());
-	require_once './includes/bootstrap.inc';
-	drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
-
-	// this file is in progress and it will  be done by 8th of may 2014
-	// Connect to the Database
-	$con = mysql_connect($mys_host, $mys_username, $mys_pass) or die('Could Not Connect To The Database.');
-	mysql_select_db($mys_base, $con);
-	mysql_query("SET NAMES 'utf8'");
+define('DRUPAL_ROOT','/var/www/quebio.ca/');
+require_once '/var/www/quebio.ca/includes/bootstrap.inc';
+drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+include('./Inter_main_php.php');
+include('/var/www/quebio.ca/misc/dbaminfo.php');
+$con = mysql_connect($mys_host, $mys_username, $mys_pass);
+mysql_select_db($mys_base, $con);
+mysql_query("SET NAMES 'utf8");
+mysql_query("SET CHARACTER SET 'utf8'");
 	mysql_query("SET CHARACTER SET 'utf8'");
 	// Get Data from Post.
 	$userRole = $_POST['userRole2'];
@@ -63,9 +58,7 @@ if ($userRole == 'Participant' && $numOfRows == 0) {
     $query = mysql_query("INSERT INTO outil_contact_info VALUES ( '$userid', '$reportid', '$firstName' , '$lastName', '$email', '$phoneNum', '$groupType')");
 }
 
-//INSERT DOES NOT WORK ILL HAVE TO MAKE NEW VARIABLES TO HOLD THOSE VALUES ADN MAKE SURE THE DATA
-//WAS DELETED, ONCE THATS DONE WORK ON THE getAdminInfo to show this data on the report:) wooo!!!!
-//friday!!!
+
 if ($userRole == 'Administration' && $numOfRows == 0) {
     $nom = field_get_items('profile2', $profile['administration'], 'field_nom');
     $prenom = field_get_items('profile2', $profile['administration'], 'field_prenom'); 
@@ -183,11 +176,7 @@ echo $firstName.' '.$lastName.' '.$email.' '.$phoneNum.' '.$groupType;
 
 	$query = "INSERT INTO interdependances (r_id, u_id, se_id, se_name, c_id, c_name, example, dependance, impact, process, secondProcess, average_dependance_level, potential_dependance_level, average_impact_level, potential_impact_level, gotMoney, moneyType, qualifyImpact, niveau_impact, niveau_dependance, opinion) VALUES ('$reportid', $userid, '$se_i', '$se_name', '$cid', '$c_name', '$example', '$dependance', '$impact', '$process', '$secondProcess', $averageDependanceLevel, $potentialDependanceLevel, $averageImpactLevel, $potentialImpactLevel, '$money', '$moneyType','$qualifyImpact', $niveauImpact, $niveauDependance, '$opinion')";	
 	
-	$result = mysql_query($query) or die('Error updating database: '.mysql_error());
+	$result = mysql_query($query);
 	
 	mysql_close($con);
-
-	$goto = "Location: http://quebio.ca/entreprisebio?reportid=" . $reportid;
-
-	Header($goto);
 ?>

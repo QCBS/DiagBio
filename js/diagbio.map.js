@@ -73,13 +73,14 @@
     attachEvents: function() {
       var self = this,
           polygon = {};
-      $('#edit_report').click(function() { // Create The Report Creation Button.
-            self.geography = $("input[name='geography']");
+      $('#edit_report').click(function() {
+           // self.geography = $("input[name='geography']");
             //self.clearOverlays();
             //$("#map").html('');
-            $.when( self.createMap('map') ).done(function() {
+            /*$.when( self.createMap('map') ).done(function() {
                 google.maps.event.trigger(self.map, "resize");
             });
+            */
             //self.readGeoJSON();
             self.diagbio_mode='edit';
       });

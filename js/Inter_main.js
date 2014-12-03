@@ -18,9 +18,10 @@ function getUrlVars() {
 		$("#info a,#question a,#parametertab a,#userview a,#infoForUser a,#entreprisetab a,#admintools a").click(function(){
 			var tab=$(this).attr('href').replace('#','');
 			var userid=$("#AdminID").val();
+			var reportid=$("#the_report").val();
 			$(".tabcontent").html("");
 			$('#'+tab).html("<img src='/evaluationbse/images/ajax-loader.gif' style='margin:0 auto;display:block;background-color:#fff;border:0px;'>");
-			$.post("http://quebio.ca/evaluationbse/php/get_tab.php",{tab: tab, userid: userid},
+			$.post("http://quebio.ca/evaluationbse/php/get_tab.php",{tab: tab, userid: userid, reportid: reportid},
 				function(data){
 					$('#'+tab).html(data);
 					onPageLoad(tab); 
@@ -41,19 +42,19 @@ function onPageLoad(tab) {
 			$('#tab4,#admintools,#tab14,#parametertab,#tab17,#viewOpinions,#tab18,#adminOpinion,#infoForUser,#entreprisetab').hide();
 		}
 		if (userRole == "Administration"){
-			$('#tab19,#infoForUser,#entreprisetab').remove();
-			$('#parametertab').hide();
+			$('#parametertab, #infoForUser, #entreprisetab').hide();
 		}
 		if ( userRole != "Unauthenticated" ){  //removes the following tab(s) 
 			$('#tab3,#login').remove();
 			//$('#servicetab,#classificationtab,#naturetab,#dependencetab,#moneytab,#impacttab,#risktab,#parametertab,#qualifytab,#sendData').remove();
 			if ( userRole == "Administration" ){
-				var disableTabs = [5,6,7];
+				//var disableTabs = [5,6,7];
+				var disableTabs = [];
 				var compensateTab = 1;
 			}
 			else {
 				//var disableTabs = [5];
-				//var disableTabs = [];
+				var disableTabs = [];
 				var compensateTab = 0;
 			}
 		}
@@ -226,37 +227,6 @@ function onPageLoad(tab) {
 		$( ".ui-selected" ).selectable({ tolerance: "fit" });  //fixes the issue with the click event not firing from time to time
 }
 
-function removeHTMLElements(){
-
-	if(newCounter > 0){
-		for (i = 1; i<newCounter; i++){ 
-									$("#nTB" + i ).remove(); // remove the row of new example
-									$("#nNature" + i).remove();
-									$("#nEvalu" + i).remove();
-									$("#nSD" + i).remove();
-									$("#nMoney" + i).remove();		
-								};
-								newCounter = 1; // set counter back to 0
-								$("#hiddenNewExamples").val("");
-
-							}
-
-							if(exiCounter > 0){
-								for (j = 1; j<exiCounter; j++){
-									$("#eTB" + j).remove(); // remove the row of existing example
-									$("#eNature" + j).remove();
-									$("#eEvalu" + j).remove();
-									$("#eSD" + j).remove();
-									$("#eMoney" + j).remove();		
-								};
-								exiCounter = 1; // set counter back to 0
-								$("#hiddenExistingExamples").val("");
-							}
-
-							$("#theDD").remove();
-
-}
-
 function goToNextTab(tabCounter)  //this counter will allow us to navigate forward through the tabs, starting at tab 3(reports list)
 	{
 			var active = $('#evaltabs').tabs('option', 'active');
@@ -276,6 +246,7 @@ function goToNextTab(tabCounter)  //this counter will allow us to navigate forwa
 
 function goToPrevTab(tabCounter)  //this counter will allow us to navigate backward through the tabs, starting at tab 3(reports list)
 	{
+			$('#evaltabs').tabs( { show: { effect: "slide", direction: "left", duration: 500}});
 			var active = $('#evaltabs').tabs('option', 'active');
 			$( "#evaltabs" ).tabs('enable', active-1);
 			//$( active ).slideDown()
@@ -284,6 +255,7 @@ function goToPrevTab(tabCounter)  //this counter will allow us to navigate backw
 			$('html,body').animate({
   				 scrollTop: $('h1.title').offset().top
 			});
+			$('#evaltabs').tabs( { show: { effect: "slide", direction: "right", duration: 500}});
 			/*
 			tabCounter--;  //decrememnt to current tab
 			$( "#evaltabs" ).tabs('enable', tabCounter).tabs('select', tabCounter); // go to the next tab and disable the 2rd one
@@ -294,7 +266,7 @@ function goToPrevTab(tabCounter)  //this counter will allow us to navigate backw
 	}
 
 function eval_tab(){
-	$('#evaltabs').tabs( { show: { effect: "slide", direction: "right", duration: 500},	hide: { effect: "slide", direction: "left", duration: 500 }});
+	$('#evaltabs').tabs( { show: { effect: "slide", direction: "right", duration: 500}});
 	//$('#evaltabs').tabs({ fxFade: true, fxSpeed: 'slow' });
 	$('#evaltabs ul').hide();
 	//$('#servicetab,#classificationtab,#naturetab,#dependencetab,#moneytab,#impacttab,#risktab,#parametertab,#qualifytab,#sendData','#exampletab').hide();
@@ -707,16 +679,6 @@ function eval_tab(){
 	});
 
 	$('#TAB11_BTN_BACK').button().click(function() {
-		$('#dep_txt').val("");
-		$("#interdependancePotential").val("");
-		$("#interdependance").val("");
-		$("#interdependanceAverage").val("");
-		$("#niveauDependance").val("");
-		$("#slider").slider('value', 1);  //set the value back to default for the slider
-		$( "#slides" ).val('1'); //set the value back to default for the dropdown 
-		$('.OptionDivs').hide();  //hide all the rankings of the interdependence slider
-		$('#displayOption1').show();  //show the first inital ranking of the interdependance slider
-		tabCounter--;  //skip the tab before the current tab, since it's only meant to be accessed when the user only chose an impact in the interdependancy tab 
 		goToPrevTab();
 	});
 
@@ -734,7 +696,7 @@ function eval_tab(){
 			.attr("id", 'theDD');
 
 			var request = new XMLHttpRequest();
-			var url = "/testing/sidra/php/get_examples.php";
+			var url = "/evaluationbse/php/get_examples.php";
 			var params = "rid="+report_id+"&cid="+c_item;
 			request.open('GET',url+"?"+params,false);
 			request.send(null);
@@ -786,28 +748,44 @@ function eval_tab(){
 		}
 	});
 
-	$('#BTN_RE_SE').button().click(function() // retour to services ecologique
+	$('#BTN_RE_LEAVE, #BTN_RESTART').button().click(function() // retour to services ecologique
 	{ 
+		var self=$(this);
 		event.preventDefault();
-		removeHTMLElements();
+		the_user=$('#the_user').val();
+		adminID = $('#AdminID').val();
+		userRole = $('#userRole').val();
+		the_report=$('#the_report').val();
+		se_i=$("input[name='se_i']" ).val();
+		se_name=$("input[name='se_name']" ).val();
+		c_i=$("input[name='c_i']" ).val();
+		c_i_val=$("input[name='c_i_val']" ).val();
+		chosenExample=$("input[name='chosenExample']" ).val();
+		inter=$("input[name='inter']" ).val();
+		inter2=$("input[name='inter2']" ).val();
+		riskOrOpp=$("input[name='riskOrOpp']" ).val();
+		riskOrOpp2=$("input[name='riskOrOpp2']" ).val();
+		interdependanceAverage=$("input[name='interdependanceAverage']" ).val();
+		interdependancePotential=$("input[name='interdependancePotential']" ).val();
+		hiddenImpactAverage=$("input[name='hiddenImpactAverage']" ).val();
+		hiddenImpactPotential=$("input[name='hiddenImpactPotential']" ).val();
+		gotMoney=$("input[name='gotMoney']").val();
+		typeOfMoney=$("input[name='typeOfMoney']" ).val();
+		qualifyImpact=$("input[name='qualifyImpact']" ).val();
+		niveauDependance=$("input[name='niveauDependance']" ).val();
+		niveauImpact=$("input[name='niveauImpact']" ).val();
+		impact_txt=$("#impact_txt" ).val();
+		dep_txt=$("#dep_txt" ).val();
 
-		if(userRole	== "Participant" || userRole== "Unauthenticated" || userRole== "Externe") 
-		{	
-			tabCounter=2; //reset the counter
-			$('#tabs').tabs('disable', 5);  //disable the examples tab
+	$.post("http://quebio.ca/evaluationbse/php/formSubmit.php", {adminid: adminID, the_report: the_report, the_user: the_user, se_i: se_i, se_name: se_name, c_i: c_i, c_i_val: c_i_val, chosenExample: chosenExample, inter: inter, inter2: inter2, riskOrOpp: riskOrOpp, riskOrOpp2: riskOrOpp2, interdependanceAverage: interdependanceAverage, interdependancePotential: interdependancePotential, hiddenImpactAverage: hiddenImpactAverage, hiddenImpactPotential: hiddenImpactPotential, gotMoney: gotMoney, typeOfMoney: typeOfMoney, qualifyImpact: qualifyImpact, niveauDependance: niveauDependance, niveauImpact: niveauImpact, impact_txt: impact_txt, dep_txt: dep_txt}, function(data) { 
+		if (self.attr('id')=="BTN_RE_LEAVE"){
+			$( '#info a' ).trigger('click');
+		}else{
+			$( '#entreprisetab a' ).trigger('click');
 		}
-		if(userRole == "Administration")
-		{
-			tabCounter=4; //reset the counter
-			$('#tabs').tabs('disable', 7);  //disable the examples tab
-		}
-		
-		goToNextTab(tabCounter);
+	}
+	)
 
-		if(userRole	== "Participant"  || userRole== "Unauthenticated" || userRole== "Externe") 
-			$('#tabs').tabs('enable', 2);  //keep this tab enabled
-		if(userRole == "Administration")
-			$('#tabs').tabs('enable', 4);  //keep this tab enabled
 	});
 
 	$('#submit').button().click(function() {  //submit to the database
@@ -816,26 +794,9 @@ function eval_tab(){
 	}); 
 
 	$('#LAST_BTN_BACK').button().click(function() { // on the last tab when the back button, it's removing all the HTML elements 
-		
-		if(userRole == "Participant" || userRole== "Unauthenticated" || userRole== "Externe")  //Is the user visiting this tab again?If so, then reset the counter
-			tabCounter=5;
-		if(userRole == "Administration")
-			tabCounter=7;
-
-		$('#selectable'+c_item+' .ui-selected').removeClass('ui-selected'); //unselects the chosen example
-		c_example = 0;  //0 means that there are no examples selected
-
-		$('#newExample').val(""); //clear the text from the example textbox
-
 		event.preventDefault(); // preventing from doing a post back when the button is clicked
 
-		$("c_i").val("");
-		$("chosenExample").val("");
-
-
 		goToPrevTab();
-
-		removeHTMLElements(); // remove all HTML elements
 
 	});
 
@@ -860,17 +821,6 @@ function eval_tab(){
 	});	
 
 	$('#back_to_money').button().click(function() {
-		$('#impact_txt').val("");
-		$("#hiddenImpact").val("");
-		$("#hiddenImpactAverage").val("");
-		$("#hiddenImpactPotential").val("");
-		$("#impactSlider").slider('value', -5);  //set the value back to default for the slider
-		$( "#impact" ).val('-5'); //set the value back to default for the dropdown 
-		$('.ImpactDivs').hide();
-		$('#displayImpact1').show();
-		$("niveauImpact").val("");
-		if(!i_item)  //do we skip the dependence tab when going back?
-			tabCounter--;
 		goToPrevTab();
 	});
 
@@ -940,7 +890,7 @@ function eval_tab(){
 					'<label>Une nouvelle exemple</label>' + '<br><br>'+'<input type="text" name="newTheExample' + newCounter + 
 					'"placeholder="Entrez une exemple" title="Entrez une nouvelle exemple" style="width: 200px;" />' + '</div></div>');
 			//dropdown list for the nature
-			newDropDownDiv.html('<div style="float: left; width: 150px;">'+'<label>Nature dinterdependance</label>'+'<br>'+
+			newDropDownDiv.html('<div style="float: left; width: 150px;">'+'<label>Nature d\'interdependance</label>'+'<br>'+
 				'<select name="newTheNature' + newCounter +'" title="Choisissez la nature pour votre exemple"  >'+
 				'<option name="newTheNature' + newCounter +'" value="Risque">Risque</option>'+
 				'<option name="newTheNature' + newCounter +'" value="Atout">Atout</option>'+
@@ -1413,7 +1363,7 @@ function admin_tab() {
 			if ( missingFields=="" ){
 			if ( confirm("Are you sure you wish to delete this report?") ) // Prompt For Confirmation Incase of a Miss-click.
 			// Call The Rapport.php to do The Report Deletion And Refresh The Page on Finish TO Show The Updated Report List.
-			$.post("http://www.quebio.ca/evaluationbse/php/rapport.php", { deleteRep: deleteReport, reportid: reportID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://www.quebio.ca/entreprisebio/#tab4");});
+			$.post("http://quebio.ca/evaluationbse/php/rapport.php", { deleteRep: deleteReport, reportid: reportID}, function(data) { alert(data); window.location.reload(); window.location.replace("http://quebio.ca/entreprisebio/#tab4");});
 			}
 			else{
 			alert(missingFields); // Alert User Regarding The Missing Report ID.
@@ -1422,8 +1372,8 @@ function admin_tab() {
 
 		$('#view_report').button().click(function() { // Create The View Report Button.
 
-			var reportID = $('#select-resultadmin').value;
-			var adminID = document.getElementById(reportID).value;
+			var adminID = $('#AdminID').val();
+			var reportID = $('#the_report').val();
 
 			var missingFields = "";
 
@@ -1432,10 +1382,11 @@ function admin_tab() {
 			}
 
 			if ( missingFields=="" ){
-				$.post("http://www.quebio.ca/testing/Jason/php/getAdminInfo.php", {adminid: adminID, reportid: reportID}, function(data) { 
+				$.post("http://quebio.ca/evaluationbse/php/getAdminInfo.php", {adminid: adminID, reportid: reportID}, function(data) { 
 					alert(data);
-					$('#ajax').style.visibility = 'visible';
-					var adminInfo = JSON.parse(data);
+					//$('#ajax').style.visibility = 'visible';
+					//var adminInfo = JSON.parse(data);
+					var adminInfo = data;
 					var xaxisarray = [];
 					
 					var ii=0;
@@ -2262,10 +2213,10 @@ function admin_tab() {
 		$.ajax({
 			type: 'POST',
 			data: data,
-			url: 'http://quebio.ca/evaluationbse/hcexport.php',
+			url: 'http://quebio.ca/evaluationbse/php/hcexport.php',
 			async: false,
 			success: function(data){
-		 	$.post("http://www.quebio.ca/testing/Jason/php/report.php", { reportInfo: adminInfo}, function(data) { $('#ajax').style.visibility = 'hidden'; window.location.replace("http://quebio.ca/evaluationbse/php/rapport.pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
+		 	$.post("http://quebio.ca/evaluationbse/php/report.php", { reportInfo: adminInfo}, function(data) { $('#ajax').style.visibility = 'hidden'; window.location.replace("http://quebio.ca/evaluationbse/php/rapport.pdf")}); // After Successfully Creating The .PNG Send The User To The PDF Generation Script.
 		 }
 		});	
 		});
@@ -2306,7 +2257,7 @@ function admin_tab() {
 			}
 			if ( missingFields=="" ){
 				// Call The Email.php to Send Out The E-mail Invitations Including all The Information We Appended.
-				$.post("http://www.quebio.ca/evaluationbse/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
+				$.post("http://quebio.ca/evaluationbse/php/email.php", {reportID: reportID, information: information, orgname: organisationName, toEmail: emailRecipient, userid: adminId}, function(data) { alert(data); });
 			}
 			else{
 				alert(missingFields);// Alert User Regarding The Missing Report ID or E-mail Addresses.

@@ -74,7 +74,7 @@ Le nombre de participants et le niveau d’évaluation vont conditionner la port
 <input type="checkbox" name="niveau3" id="niveau3" value="Externe">Externe<br>
 </fieldset>
 <div id="hideList" hidden>
-<fieldset><legend><b>Si c'est Externe : parties prenantes identifiées ?</b></legend>
+<fieldset><legend><b>Si c'est externe : parties prenantes identifiées ?</b></legend>
 <input type="radio" name="externe" id="externe1" value="habitants" >Habitants<br>
 <input type="radio" name="externe" id="externe2"value="autre organisation" >Autre organisation<br>
 <input type="radio" name="externe" id="externe3" value="gouvernement" >Gouvernement/ Etat<br>

@@ -11,7 +11,7 @@ if($info['represent'] == '')
     $info['represent'] = 'aucune';
 }
 
-
+/*
 $niveaus = '';  //make the data into presentable data and take out the nulls
 $commaCounter = 0;  //lets me know if I have to put commas
 if ($info['niveau1'] == '' || $info['niveau1'] == 'null') {
@@ -45,7 +45,7 @@ else
     }
      $niveaus .= $info['niveau3'];
 }
-
+*/
 // create new PDF document
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -129,7 +129,7 @@ $html = <<<EOD
 
     <div style="width:200px;height:100px;border:1px;">
         Motivation principale de l’organisation pour l’évaluation: {$info['motivation']}<br><br>
-        Niveau du diagnostic: {$niveaus}
+        Niveau du diagnostic: niveau
     </div><br>
     
 <h4>2. Portrait du système</h4><br>
@@ -140,7 +140,7 @@ $html = <<<EOD
     Circonscription du périmètre d’analyse: {$info['circonscription']}<br><br>
     Représentation du système: {$info['represent']}<br><br>
     Fonction du système: {$info['fonction']}<br><br>
-    Description du Fonction du système: {$info['function_text']}
+    Description du Fonction du système: {info['function_text']}
    
 </div><br>
 <br><br><br><br><br>

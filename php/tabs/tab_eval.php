@@ -9,7 +9,7 @@ mysql_select_db($mys_base, $con);
 mysql_query("SET NAMES 'utf8");
 mysql_query("SET CHARACTER SET 'utf8'");
 ?>
-<form id="the_form" action="formSubmit.php" method="POST" >
+<form id="the_form">
 <input type="hidden" id="userRole2" name="userRole2" value=<?php echo json_encode($role); ?>>
 <div id="evaltabs" style="min-height:500px;">
 	<ul>
