@@ -72,6 +72,9 @@
 	bottom: 75px;
 	left: 250px;
 }
+#evaltabs{
+	border-style: none !important;
+}
 
 .infoList{
 	background-color: #dfeffc;
