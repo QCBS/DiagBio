@@ -22,9 +22,9 @@ while($count <= $numOfRows)		//creates the selectble classifications
 			echo '<h4>Ressources naturelles non issues du vivant</h4>'; 
 			echo 'Les minéraux, substances nutritionnelles et énergie renouvelable <br> 
 				nous sont bénéfiques mais ne sont pas issus du vivant et ne peuvent <br> 
-				donc pas être considérés comme des services écosystémiques. Cependant,<br> 
-				ils ont un rôle à jouer pour la biodiversité et sont donc à prendre<br> 
-				en compte lors de l’évaluation.<br><br>';
+				donc pas être considérés comme des services écosystémiques.
+				 Cependant,ils ont un rôle à jouer pour la biodiversité et sont <br>
+				 donc à prendre en compte lors de l’évaluation.<br><br>';
 		}
 
 		if($row['c_name'] == "Énergie renouvelable issue du vivant")
